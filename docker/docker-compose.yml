@@ -1,0 +1,11 @@
+version: '2'
+services:
+        tf:
+               image: deep-learning
+               restart: always
+               ports:
+                       - "8888:8888"
+                       - "6006:6006"
+               volumes:
+                       - ../notebooks:/notebooks
+                       - ~/datasets:/datasets
