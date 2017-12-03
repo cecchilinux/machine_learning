@@ -1,5 +1,10 @@
 # How to use
 
+### dependences
+
+- docker
+- docker-compose
+
 ## Build the image (to do only the first time)
 
 - create a folder for yours datasets:
