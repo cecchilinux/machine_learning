@@ -9,3 +9,4 @@ services:
                volumes:
                        - ../notebooks:/notebooks
                        - ~/datasets:/datasets
+                       - ../scripts:/scripts

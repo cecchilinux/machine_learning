@@ -11,6 +11,7 @@
 
   ```bash
   mkdir ~/datasets
+  mkdir ~/scripts
   ```
 
 - open the terminal on the docker folder (where Dockerfile is placed)
@@ -51,4 +52,15 @@
   localhost:6006
   ```
 
-  ​
+
+
+
+## Connect on a new TTY
+
+```bash
+docker exec -it [container-id] bash
+```
+cartella degli scripts
+```bash
+cd ../scripts
+```
