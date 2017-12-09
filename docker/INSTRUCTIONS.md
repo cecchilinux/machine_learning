@@ -1,11 +1,11 @@
 # How to use
 
-### dependences
+## dependences
 
 - docker
 - docker-compose
 
-## Build the image (to do only the first time)
+## 1. Build the image (to do only the first time)
 
 - create a folder for yours datasets:
 
@@ -19,16 +19,14 @@
 - build with command (it can take a lot of time):
 
   ```bash
-  docker build -t ml-image .
+  docker build --no-cache=true -t ml-image .
   ```
 
+## 2. Run the image, Jupiter automatically starts
 
+- open the terminal on the docker folder (were docker-compose is placed)
 
-## Run the image
-
-- open the terminal on the folder
-
-- run with command:
+- run the container with the command:
 
   ```bash
   docker-compose up
@@ -39,8 +37,18 @@
   ```URL
   localhost:8888
   ```
+## 3. Connect on a new TTY (usufull to run some scripts outside Jupiter)
 
-- run :
+  ```bash
+  docker exec -it [container-id] bash
+  ```
+  scripts folder
+  ```bash
+  cd ../scripts
+  ```
+
+## Tensorboard
+- If you need to use tensorboard run :
 
   ```bash
   docker exec -it machine_learning_tf tensorboard --logdir tf_logs/
@@ -52,15 +60,22 @@
   localhost:6006
   ```
 
+  ## Clean up
+  - see all the images:
+  ```bash
+  docker images -a
+  ```
 
+  - when you modify the Dockerfile is good to clean the dangling images:
+  ```bash
+  docker images --filter "dangling=true"
+  docker rmi $(docker images -q --filter "dangling=true")
+  ```
 
-
-## Connect on a new TTY
+## other commands
 
 ```bash
-docker exec -it [container-id] bash
-```
-cartella degli scripts
-```bash
-cd ../scripts
+docker build --no-cache=true -t ml-image-gpu -f Dockerfile.gpu .
+
+docker-compose -f docker-compose.yml up
 ```

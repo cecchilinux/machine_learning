@@ -1,0 +1,13 @@
+version: '2'
+services:
+        tf:
+               image: ml-image 
+               restart: always
+               ports:
+                       - "8888:8888"
+                       - "6006:6006"
+               volumes:
+                       - ../notebooks:/notebooks
+                       - ~/notebooks:/notebooks/samples
+                       - ~/datasets:/datasets
+                       - ../scripts:/scripts
