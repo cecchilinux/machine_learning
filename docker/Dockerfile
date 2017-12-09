@@ -37,8 +37,6 @@ RUN apt-get update && apt-get upgrade && apt-get install -y --no-install-recomme
         python-dev \
         python3.6 \
         python3.6-dev \
-        unzip \
-        tar \
         htop \
         openssl \
         ca-certificates \
