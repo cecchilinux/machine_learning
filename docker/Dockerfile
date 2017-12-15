@@ -44,9 +44,8 @@ RUN apt-get update && apt-get upgrade && apt-get install -y --no-install-recomme
         software-properties-common \
         libxtst6 \
         libglu1 \
-        && \
-    apt-get clean && \
-    rm -rf /var/lib/apt-get/lists/*
+        && apt-get clean \
+        && rm -rf /var/lib/apt-get/lists/* /tmp/* /var/tmp/*
 
 # Get pip
 RUN wget https://bootstrap.pypa.io/get-pip.py && \
@@ -67,7 +66,7 @@ RUN conda update -y conda && \
     conda update -y --all && \
     conda config --add channels conda-forge && \
     conda create -n deep_learning_lab && \
-  /bin/bash -c "source activate deep_learning_lab" && \
+    /bin/bash -c "source activate deep_learning_lab" && \
     conda install -y \
     jupyter \
     jupyterlab \
