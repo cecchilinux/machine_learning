@@ -1,4 +1,4 @@
 # Specifies intentionally untracked files to ignore
 
-*.npy
-.ipynb_checkpoints/
+.*
+!/.gitignore
