@@ -1,65 +1,81 @@
-FROM nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+FROM nvidia/cuda:8.0-cudnn6-runtime-ubuntu16.04
 
-LABEL maintainer="Craig Citro <craigcitro@google.com>"
+ENV CONDA_DIR=/Miniconda3
+
+ENV PATH=/Miniconda3/bin:${PATH}
 
 # Pick up some TF dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        pkg-config \
+RUN apt-get update && apt-get upgrade && apt-get install -y --no-install-recommends \
         build-essential \
         curl \
+        wget \
+        python \
+        python-dev \
+        htop \
+        openssl \
+        ca-certificates \
+        pkg-config \
+        software-properties-common \
+        libxtst6 \
+        libglu1 \
         libfreetype6-dev \
         libpng12-dev \
         libzmq3-dev \
-        pkg-config \
-        python \
-        python-dev \
         rsync \
-        software-properties-common \
-        unzip \
-        libxtst6 \
-        libglu1 \
         && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN add-apt-repository ppa:jonathonf/python-3.6 && \
-    apt-get update -y && \
-    apt-get install -y python3.6 python3.6-dev
+  apt-get update -y && \
+  apt-get install -y python3.6 python3.6-dev
 
-RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
+# Get pip
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.6 get-pip.py && \
     rm get-pip.py
 
-RUN pip install virtualenv && \
-    python -m virtualenv --python=python3.6 .venv
+# ---> Install Miniconda 3 <---
 
-RUN bash -c "source .venv/bin/activate" && \
-    pip --no-cache-dir install \
-        Pillow \
-        h5py \
-        ipykernel \
-        jupyter \
-        matplotlib \
-        numpy \
-        pandas \
-        scikit-learn \
-        scipy \
-        sklearn \
-        ipykernel \
-        jupyter \
-        matplotlib \
-        datalab \
-        tensorflow \
-        keras \
-        scikit-image \
-        glob2 \
-        && \
-    python -m ipykernel install --user --name=python3.6
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -p $CONDA_DIR -b && \
+    rm Miniconda3-latest-Linux-x86_64.sh
+
+RUN conda update -y conda && \
+    conda update -y --all && \
+    conda config --add channels conda-forge && \
+    conda create -n deep_learning_lab && \
+    /bin/bash -c "source activate deep_learning_lab" && \
+    conda install -y \
+    jupyter \
+    jupyterlab \
+    jupyter_contrib_nbextensions \
+    ipykernel \
+    numpy \
+    pandas \
+    scikit-learn \
+    dask \
+    altair \
+    matplotlib \
+    bokeh \
+    seaborn \
+    flask \
+    flake8 \
+    pytest \
+    scikit-image \
+    glob2 \
+    opencv
+
+
+# Install TensorFlow GPU version.
+RUN pip --no-cache-dir install \
+    http://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.3.0-cp36-cp36m-linux_x86_64.whl
+# --- ~ DO NOT EDIT OR DELETE BETWEEN THE LINES --- #
 
 # RUN ln -s /usr/bin/python3 /usr/bin/python#
 
 # Set up our notebook config.
-ENV PASSWORD=replicant
+ENV PASSWORD=ml
 COPY jupyter_notebook_config.py /root/.jupyter/
 
 # Copy sample notebooks.
@@ -74,9 +90,7 @@ COPY run_jupyter.sh /
 ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
 
 # TensorBoard
-EXPOSE 6006
-# IPython
-EXPOSE 8888
+EXPOSE 8888 6006
 
 WORKDIR "/notebooks"
 

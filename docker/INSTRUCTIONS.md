@@ -79,3 +79,17 @@ docker build --no-cache=true -t ml-image-gpu -f Dockerfile.gpu .
 
 docker-compose -f docker-compose.yml up
 ```
+
+```bash
+nvidia-docker run \
+--rm \
+--device /dev/nvidia0:/dev/nvidia0 \
+--device /dev/nvidiactl:/dev/nvidiactl \
+--device /dev/nvidia-uvm:/dev/nvidia-uvm \
+-p 8888:8888 \
+-v ~/ML_fileLocali/notebooks:/notebooks/samples \
+-v ~/ML_fileLocali/datasets:/datasets \
+-v ~/git-repo/mine-repo/machine_learning/notebooks:/notebooks \
+-v ~/git-repo/mine-repo/machine_learning/scripts:/scripts \
+ml-final-8-6
+```
