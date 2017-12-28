@@ -1,0 +1,94 @@
+FROM nvidia/cuda:8.0-cudnn6-runtime-ubuntu16.04
+
+ENV CONDA_DIR=/Miniconda3
+
+ENV PATH=/Miniconda3/bin:${PATH}
+
+# Pick up some TF dependencies
+RUN apt-get update && apt-get upgrade && apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        wget \
+        python \
+        python-dev \
+        htop \
+        openssl \
+        ca-certificates \
+        pkg-config \
+        software-properties-common \
+        libxtst6 \
+        libglu1 \
+        libfreetype6-dev \
+        libpng12-dev \
+        libzmq3-dev \
+        rsync \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN add-apt-repository ppa:jonathonf/python-3.6 && \
+  apt-get update -y && \
+  apt-get install -y python3.6 python3.6-dev
+
+# Get pip
+RUN wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.6 get-pip.py && \
+    rm get-pip.py
+
+# ---> Install Miniconda 3 <---
+
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -p $CONDA_DIR -b && \
+    rm Miniconda3-latest-Linux-x86_64.sh
+
+RUN conda update -y conda && \
+    conda update -y --all && \
+    conda config --add channels conda-forge && \
+    conda create -n deep_learning_lab && \
+    /bin/bash -c "source activate deep_learning_lab" && \
+    conda install -y \
+    jupyter \
+    jupyterlab \
+    jupyter_contrib_nbextensions \
+    ipykernel \
+    numpy \
+    pandas \
+    scikit-learn \
+    dask \
+    altair \
+    matplotlib \
+    bokeh \
+    seaborn \
+    flask \
+    flake8 \
+    pytest \
+    scikit-image \
+    glob2 \
+    opencv
+
+
+# Install TensorFlow GPU version.
+RUN pip --no-cache-dir install \
+    http://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.3.0-cp36-cp36m-linux_x86_64.whl
+# --- ~ DO NOT EDIT OR DELETE BETWEEN THE LINES --- #
+
+# RUN ln -s /usr/bin/python3 /usr/bin/python#
+
+# Set up our notebook config.
+ENV PASSWORD=ml
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Copy sample notebooks.
+# COPY notebooks /notebooks
+
+# Jupyter has issues with being run directly:
+#   https://github.com/ipython/ipython/issues/7062
+# We just add a little wrapper script.
+COPY run_jupyter.sh /
+
+# TensorBoard
+EXPOSE 8888 6006
+
+WORKDIR "/notebooks"
+
+CMD ["/run_jupyter.sh", "--allow-root"]
