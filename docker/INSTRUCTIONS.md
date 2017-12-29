@@ -37,7 +37,7 @@
   ```URL
   localhost:8888
   ```
-## 3. Connect on a new TTY (usufull to run some scripts outside Jupiter)
+## 3. Connect on a new TTY (usefull to run some scripts outside Jupiter)
 
   ```bash
   docker exec -it [container-id] bash
