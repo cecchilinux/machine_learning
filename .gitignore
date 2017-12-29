@@ -5,3 +5,5 @@
 
 notebooks/models/
 notebooks/training.log
+scripts/models/
+scripts/training.log
