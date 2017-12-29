@@ -1,0 +1,299 @@
+2017-12-28 18:12:36,238 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:19:05,616 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:19:05,616 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:20:46,227 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:20:46,227 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:20:46,227 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:21,769 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:21,769 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:21,769 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:29,755 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:29,755 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:29,755 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:34,046 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:34,046 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:34,046 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:40,598 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:40,598 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:23:40,598 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:08,352 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:08,352 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:08,352 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:24,052 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:24,052 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:24,052 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:45,356 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:45,356 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:24:45,356 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:25:08,354 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:25:08,354 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:25:08,354 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:26:30,234 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:26:30,234 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:26:30,234 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:26:30,234 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:33:33,393 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:33:33,393 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:33:33,393 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:33:33,393 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:33:33,393 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:37:33,919 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:21,959 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:24,607 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:41,525 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:54,425 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:39:58,721 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:40:09,788 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:42:22,424 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:46:32,303 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:05,956 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-28 18:47:34,628 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:51:08,060 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:55:16,889 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:55:16,889 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:56:22,071 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:56:22,071 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 08:56:22,071 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:00:05,976 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:00:05,976 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:00:05,976 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:00:05,976 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:00:16,990 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:00:16,990 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:00:16,990 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:00:16,990 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:00:16,991 INFO Training error = 0.916 Validation error = 0.907
+2017-12-29 09:00:16,991 INFO Training error = 0.916 Validation error = 0.907
+2017-12-29 09:00:16,991 INFO Training error = 0.916 Validation error = 0.907
+2017-12-29 09:00:16,991 INFO Training error = 0.916 Validation error = 0.907
+2017-12-29 09:00:27,826 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:00:27,826 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:00:27,826 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:00:27,826 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:00:27,827 INFO Training error = 0.823 Validation error = 0.821
+2017-12-29 09:00:27,827 INFO Training error = 0.823 Validation error = 0.821
+2017-12-29 09:00:27,827 INFO Training error = 0.823 Validation error = 0.821
+2017-12-29 09:00:27,827 INFO Training error = 0.823 Validation error = 0.821
+2017-12-29 09:00:39,472 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:00:39,472 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:00:39,472 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:00:39,472 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:00:39,473 INFO Training error = 0.746 Validation error = 0.744
+2017-12-29 09:00:39,473 INFO Training error = 0.746 Validation error = 0.744
+2017-12-29 09:00:39,473 INFO Training error = 0.746 Validation error = 0.744
+2017-12-29 09:00:39,473 INFO Training error = 0.746 Validation error = 0.744
+2017-12-29 09:01:10,109 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:01:10,109 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:01:10,109 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:01:10,109 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:03:03,548 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:03:03,548 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:03:03,548 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:03:03,548 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:03:03,548 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:03:14,644 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:03:14,644 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:03:14,644 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:03:14,644 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:03:14,644 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:03:14,645 INFO Training error = 0.945 Validation error = 0.945
+2017-12-29 09:03:14,645 INFO Training error = 0.945 Validation error = 0.945
+2017-12-29 09:03:14,645 INFO Training error = 0.945 Validation error = 0.945
+2017-12-29 09:03:14,645 INFO Training error = 0.945 Validation error = 0.945
+2017-12-29 09:03:14,645 INFO Training error = 0.945 Validation error = 0.945
+2017-12-29 09:03:25,354 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:03:25,354 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:03:25,354 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:03:25,354 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:03:25,354 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:03:25,354 INFO Training error = 0.941 Validation error = 0.939
+2017-12-29 09:03:25,354 INFO Training error = 0.941 Validation error = 0.939
+2017-12-29 09:03:25,354 INFO Training error = 0.941 Validation error = 0.939
+2017-12-29 09:03:25,354 INFO Training error = 0.941 Validation error = 0.939
+2017-12-29 09:03:25,354 INFO Training error = 0.941 Validation error = 0.939
+2017-12-29 09:03:35,984 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:03:35,984 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:03:35,984 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:03:35,984 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:03:35,984 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:03:35,984 INFO Training error = 0.918 Validation error = 0.915
+2017-12-29 09:03:35,984 INFO Training error = 0.918 Validation error = 0.915
+2017-12-29 09:03:35,984 INFO Training error = 0.918 Validation error = 0.915
+2017-12-29 09:03:35,984 INFO Training error = 0.918 Validation error = 0.915
+2017-12-29 09:03:35,984 INFO Training error = 0.918 Validation error = 0.915
+2017-12-29 09:03:36,328 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:03:36,328 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:03:36,328 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:03:36,328 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:03:36,328 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:23,089 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:34,218 INFO Training error = 0.928 Validation error = 0.921
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,096 INFO EPOCH 2 - 22 sec ...
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:45,097 INFO Training error = 0.886 Validation error = 0.891
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,809 INFO EPOCH 3 - 33 sec ...
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:55,810 INFO Training error = 0.809 Validation error = 0.803
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:04:56,523 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:07:38,614 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:09,650 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO EPOCH 1 - 11 sec ...
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:20,347 INFO Training error = 0.901 Validation error = 0.900
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,834 INFO EPOCH 2 - 21 sec ...
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:30,835 INFO Training error = 0.825 Validation error = 0.825
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,304 INFO EPOCH 3 - 32 sec ...
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,305 INFO Training error = 0.751 Validation error = 0.750
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet
+2017-12-29 09:08:41,822 INFO Restoring parameters from ./models/lenet

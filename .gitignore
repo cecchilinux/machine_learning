@@ -2,3 +2,6 @@
 
 .*
 !/.gitignore
+
+notebooks/models/
+notebooks/training.log
