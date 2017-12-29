@@ -115,7 +115,7 @@ print("Number of validation examples =", n_valid)
 print("Number of testing examples =", n_test)
 
 # print("Image data shape =", image_shape)
-print("Number of classes =\n\n", n_classes)
+print("Number of classes =", n_classes, "\n")
 
 
 #print("dataset cardinality : {}".format(len(dataset)))
@@ -320,7 +320,7 @@ X_test = X_test_transf
 y_train = y_train_transf
 
 #EPOCHS = 150
-EPOCHS = 50
+EPOCHS = 3
 BATCH_SIZE = 128
 dropout = .3
 
@@ -377,3 +377,11 @@ with tf.Session() as sess:
     print('Accuracy Model On Training Images: {:.2f}'.format(evaluate(X_train, y_train)))
     print('Accuracy Model On Validation Images: {:.2f}'.format(evaluate(X_valid, y_valid)))
     print('Accuracy Model On Test Images: {:.2f}'.format(evaluate(X_test, y_test)))
+
+# Write  accuracies  in accuracy_output.txt file
+    out = 'Accuracy Model On Training Images:' + str(evaluate(X_train, y_train)) + '\n'
+    out += 'Accuracy Model On Validation Images:' + str(evaluate(X_valid, y_valid)) + '\n'
+    out += 'Accuracy Model On Test Images:' + str(evaluate(X_test, y_test))
+
+    with open("accuracy_output.txt", 'w+') as outfile:
+    	outfile.write(out)
