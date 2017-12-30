@@ -4,7 +4,8 @@
 !/.gitignore
 
 notebooks/models/
-notebooks/training.log
 scripts/models/
 scripts/training.log
 scripts/accuracy_output.txt
+
+dataset.npy

@@ -10,3 +10,4 @@ services:
                        - ~/ML_fileLocali/datasets:/datasets
                        - ../notebooks:/notebooks
                        - ../scripts:/scripts
+                       - ../logs:/logs
