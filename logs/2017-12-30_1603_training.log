@@ -313,3 +313,8 @@
 2017-12-30 16:12:35,428 INFO Accuracy Model On Training Images: 1.00
 2017-12-30 16:12:35,511 INFO Accuracy Model On Validation Images: 0.96
 2017-12-30 16:12:35,828 INFO Accuracy Model On Test Images: 0.96
+2017-12-30 16:24:58,665 INFO Restoring parameters from ./models/lenet
+2017-12-30 16:24:58,707 INFO 
+2017-12-30 16:24:59,715 INFO Accuracy Model On Training Images: 0.995
+2017-12-30 16:24:59,803 INFO Accuracy Model On Validation Images: 0.961
+2017-12-30 16:25:00,134 INFO Accuracy Model On Test Images: 0.965

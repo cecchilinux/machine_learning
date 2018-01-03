@@ -9,3 +9,4 @@ scripts/training.log
 scripts/accuracy_output.txt
 
 dataset.npy
+__pycache__/
