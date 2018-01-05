@@ -1,0 +1,3 @@
+Accuracy Model On Training Images:0.988012825206
+Accuracy Model On Validation Images:0.958007480226
+Accuracy Model On Test Images:0.957490223187

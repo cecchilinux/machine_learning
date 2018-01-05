@@ -1,0 +1,530 @@
+2018-01-04 15:25:06,122 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 15:25:30,775 INFO EPOCH 1 - 24 sec ...
+2018-01-04 15:25:30,776 INFO Training error = 0.946 Validation error = 0.948
+2018-01-04 15:25:53,549 INFO EPOCH 2 - 47 sec ...
+2018-01-04 15:25:53,549 INFO Training error = 0.926 Validation error = 0.924
+2018-01-04 15:26:16,540 INFO EPOCH 3 - 70 sec ...
+2018-01-04 15:26:16,540 INFO Training error = 0.905 Validation error = 0.904
+2018-01-04 15:26:39,245 INFO EPOCH 4 - 93 sec ...
+2018-01-04 15:26:39,246 INFO Training error = 0.845 Validation error = 0.848
+2018-01-04 15:27:01,973 INFO EPOCH 5 - 115 sec ...
+2018-01-04 15:27:01,973 INFO Training error = 0.766 Validation error = 0.773
+2018-01-04 15:27:24,638 INFO EPOCH 6 - 138 sec ...
+2018-01-04 15:27:24,639 INFO Training error = 0.730 Validation error = 0.739
+2018-01-04 15:27:47,340 INFO EPOCH 7 - 161 sec ...
+2018-01-04 15:27:47,340 INFO Training error = 0.698 Validation error = 0.712
+2018-01-04 15:28:10,036 INFO EPOCH 8 - 183 sec ...
+2018-01-04 15:28:10,036 INFO Training error = 0.659 Validation error = 0.668
+2018-01-04 15:28:32,693 INFO EPOCH 9 - 206 sec ...
+2018-01-04 15:28:32,693 INFO Training error = 0.634 Validation error = 0.646
+2018-01-04 15:28:55,292 INFO EPOCH 10 - 229 sec ...
+2018-01-04 15:28:55,293 INFO Training error = 0.604 Validation error = 0.607
+2018-01-04 15:29:18,103 INFO EPOCH 11 - 252 sec ...
+2018-01-04 15:29:18,103 INFO Training error = 0.587 Validation error = 0.591
+2018-01-04 15:29:40,804 INFO EPOCH 12 - 274 sec ...
+2018-01-04 15:29:40,804 INFO Training error = 0.568 Validation error = 0.568
+2018-01-04 15:30:03,623 INFO EPOCH 13 - 297 sec ...
+2018-01-04 15:30:03,623 INFO Training error = 0.554 Validation error = 0.560
+2018-01-04 15:30:26,814 INFO EPOCH 14 - 320 sec ...
+2018-01-04 15:30:26,815 INFO Training error = 0.534 Validation error = 0.539
+2018-01-04 15:30:49,706 INFO EPOCH 15 - 343 sec ...
+2018-01-04 15:30:49,707 INFO Training error = 0.518 Validation error = 0.521
+2018-01-04 15:31:13,030 INFO EPOCH 16 - 366 sec ...
+2018-01-04 15:31:13,031 INFO Training error = 0.509 Validation error = 0.511
+2018-01-04 15:31:36,424 INFO EPOCH 17 - 390 sec ...
+2018-01-04 15:31:36,424 INFO Training error = 0.486 Validation error = 0.493
+2018-01-04 15:31:59,277 INFO EPOCH 18 - 413 sec ...
+2018-01-04 15:31:59,278 INFO Training error = 0.475 Validation error = 0.484
+2018-01-04 15:32:22,132 INFO EPOCH 19 - 436 sec ...
+2018-01-04 15:32:22,133 INFO Training error = 0.463 Validation error = 0.469
+2018-01-04 15:32:44,902 INFO EPOCH 20 - 458 sec ...
+2018-01-04 15:32:44,902 INFO Training error = 0.454 Validation error = 0.464
+2018-01-04 15:33:07,518 INFO EPOCH 21 - 481 sec ...
+2018-01-04 15:33:07,518 INFO Training error = 0.434 Validation error = 0.445
+2018-01-04 15:33:30,210 INFO EPOCH 22 - 504 sec ...
+2018-01-04 15:33:30,210 INFO Training error = 0.426 Validation error = 0.431
+2018-01-04 15:33:53,578 INFO EPOCH 23 - 527 sec ...
+2018-01-04 15:33:53,578 INFO Training error = 0.408 Validation error = 0.422
+2018-01-04 15:34:16,732 INFO EPOCH 24 - 550 sec ...
+2018-01-04 15:34:16,732 INFO Training error = 0.393 Validation error = 0.403
+2018-01-04 15:34:41,149 INFO EPOCH 25 - 575 sec ...
+2018-01-04 15:34:41,149 INFO Training error = 0.375 Validation error = 0.388
+2018-01-04 15:35:03,876 INFO EPOCH 26 - 597 sec ...
+2018-01-04 15:35:03,876 INFO Training error = 0.362 Validation error = 0.378
+2018-01-04 15:35:27,396 INFO EPOCH 27 - 621 sec ...
+2018-01-04 15:35:27,397 INFO Training error = 0.343 Validation error = 0.361
+2018-01-04 15:35:50,785 INFO EPOCH 28 - 644 sec ...
+2018-01-04 15:35:50,786 INFO Training error = 0.335 Validation error = 0.349
+2018-01-04 15:36:14,391 INFO EPOCH 29 - 668 sec ...
+2018-01-04 15:36:14,391 INFO Training error = 0.322 Validation error = 0.338
+2018-01-04 15:36:37,783 INFO EPOCH 30 - 691 sec ...
+2018-01-04 15:36:37,784 INFO Training error = 0.307 Validation error = 0.324
+2018-01-04 15:37:01,420 INFO EPOCH 31 - 715 sec ...
+2018-01-04 15:37:01,420 INFO Training error = 0.298 Validation error = 0.316
+2018-01-04 15:37:24,759 INFO EPOCH 32 - 738 sec ...
+2018-01-04 15:37:24,759 INFO Training error = 0.288 Validation error = 0.306
+2018-01-04 15:37:47,598 INFO EPOCH 33 - 761 sec ...
+2018-01-04 15:37:47,600 INFO Training error = 0.281 Validation error = 0.297
+2018-01-04 15:38:10,456 INFO EPOCH 34 - 784 sec ...
+2018-01-04 15:38:10,456 INFO Training error = 0.266 Validation error = 0.281
+2018-01-04 15:38:33,490 INFO EPOCH 35 - 807 sec ...
+2018-01-04 15:38:33,490 INFO Training error = 0.258 Validation error = 0.273
+2018-01-04 15:38:57,438 INFO EPOCH 36 - 831 sec ...
+2018-01-04 15:38:57,438 INFO Training error = 0.258 Validation error = 0.272
+2018-01-04 15:39:21,221 INFO EPOCH 37 - 855 sec ...
+2018-01-04 15:39:21,221 INFO Training error = 0.246 Validation error = 0.260
+2018-01-04 15:39:44,498 INFO EPOCH 38 - 878 sec ...
+2018-01-04 15:39:44,498 INFO Training error = 0.241 Validation error = 0.258
+2018-01-04 15:40:08,598 INFO EPOCH 39 - 902 sec ...
+2018-01-04 15:40:08,598 INFO Training error = 0.229 Validation error = 0.246
+2018-01-04 15:40:32,372 INFO EPOCH 40 - 926 sec ...
+2018-01-04 15:40:32,373 INFO Training error = 0.224 Validation error = 0.243
+2018-01-04 15:40:55,807 INFO EPOCH 41 - 949 sec ...
+2018-01-04 15:40:55,808 INFO Training error = 0.212 Validation error = 0.234
+2018-01-04 15:41:19,534 INFO EPOCH 42 - 973 sec ...
+2018-01-04 15:41:19,534 INFO Training error = 0.206 Validation error = 0.227
+2018-01-04 15:41:42,574 INFO EPOCH 43 - 996 sec ...
+2018-01-04 15:41:42,577 INFO Training error = 0.203 Validation error = 0.224
+2018-01-04 15:42:05,935 INFO EPOCH 44 - 1019 sec ...
+2018-01-04 15:42:05,935 INFO Training error = 0.195 Validation error = 0.218
+2018-01-04 15:42:28,904 INFO EPOCH 45 - 1042 sec ...
+2018-01-04 15:42:28,904 INFO Training error = 0.191 Validation error = 0.211
+2018-01-04 15:42:51,693 INFO EPOCH 46 - 1065 sec ...
+2018-01-04 15:42:51,693 INFO Training error = 0.189 Validation error = 0.210
+2018-01-04 15:43:14,346 INFO EPOCH 47 - 1088 sec ...
+2018-01-04 15:43:14,347 INFO Training error = 0.179 Validation error = 0.199
+2018-01-04 15:43:39,268 INFO EPOCH 48 - 1113 sec ...
+2018-01-04 15:43:39,268 INFO Training error = 0.175 Validation error = 0.202
+2018-01-04 15:44:01,878 INFO EPOCH 49 - 1135 sec ...
+2018-01-04 15:44:01,879 INFO Training error = 0.169 Validation error = 0.194
+2018-01-04 15:44:24,583 INFO EPOCH 50 - 1158 sec ...
+2018-01-04 15:44:24,583 INFO Training error = 0.165 Validation error = 0.194
+2018-01-04 15:44:24,643 INFO Restoring parameters from ./models/lenet
+2018-01-04 15:59:49,498 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:10:52,562 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:27:05,625 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:27:30,179 INFO EPOCH 1 - 24 sec ...
+2018-01-04 16:27:30,179 INFO Training error = 0.927 Validation error = 0.922
+2018-01-04 16:27:54,845 INFO EPOCH 2 - 49 sec ...
+2018-01-04 16:27:54,845 INFO Training error = 0.899 Validation error = 0.901
+2018-01-04 16:28:19,755 INFO EPOCH 3 - 74 sec ...
+2018-01-04 16:28:19,755 INFO Training error = 0.845 Validation error = 0.846
+2018-01-04 16:28:19,832 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:37:27,986 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:38:25,144 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:39:29,517 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:40:28,057 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:42:33,931 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:42:56,749 INFO EPOCH 1 - 22 sec ...
+2018-01-04 16:42:56,749 INFO Training error = 0.924 Validation error = 0.923
+2018-01-04 16:43:19,608 INFO EPOCH 2 - 45 sec ...
+2018-01-04 16:43:19,609 INFO Training error = 0.852 Validation error = 0.866
+2018-01-04 16:43:42,494 INFO EPOCH 3 - 68 sec ...
+2018-01-04 16:43:42,495 INFO Training error = 0.779 Validation error = 0.792
+2018-01-04 16:43:42,569 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:46:33,261 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:46:56,228 INFO EPOCH 1 - 23 sec ...0.383562
+2018-01-04 16:46:56,229 INFO Training error = 0.945 Validation error = 0.940
+2018-01-04 16:47:19,071 INFO EPOCH 2 - 45 sec ...0.764279
+2018-01-04 16:47:19,072 INFO Training error = 0.913 Validation error = 0.905
+2018-01-04 16:47:41,936 INFO EPOCH 3 - 68 sec ...1.145346
+2018-01-04 16:47:41,936 INFO Training error = 0.883 Validation error = 0.883
+2018-01-04 16:47:42,013 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:50:32,763 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:50:55,616 INFO EPOCH 1 - 22 sec ...0.1515084632 min
+2018-01-04 16:50:55,616 INFO Training error = 0.956 Validation error = 0.954
+2018-01-04 16:51:18,330 INFO EPOCH 2 - 45 sec ...0.1515084632 min
+2018-01-04 16:51:18,330 INFO Training error = 0.940 Validation error = 0.943
+2018-01-04 16:51:41,051 INFO EPOCH 3 - 68 sec ...1.1515084632 min
+2018-01-04 16:51:41,051 INFO Training error = 0.923 Validation error = 0.926
+2018-01-04 16:51:41,111 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:54:53,345 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:55:16,167 INFO EPOCH 1 - 22 sec ...0.1515084893 min
+2018-01-04 16:55:16,169 INFO Training error = 0.934 Validation error = 0.936
+2018-01-04 16:55:39,490 INFO EPOCH 2 - 46 sec ...0.1515084893 min
+2018-01-04 16:55:39,490 INFO Training error = 0.894 Validation error = 0.899
+2018-01-04 16:55:39,553 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:56:14,764 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:56:37,730 INFO EPOCH 1 - 23 sec ...0.1515084997 min
+2018-01-04 16:56:37,731 INFO Training error = 0.948 Validation error = 0.953
+2018-01-04 16:57:00,504 INFO EPOCH 2 - 45 sec ...0.1515085020 min
+2018-01-04 16:57:00,504 INFO Training error = 0.908 Validation error = 0.910
+2018-01-04 16:57:00,566 INFO Restoring parameters from ./models/lenet
+2018-01-04 16:59:00,635 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:59:19,135 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 16:59:42,166 INFO EPOCH 1 - 23 sec ...0.1515085182 min
+2018-01-04 16:59:42,166 INFO Training error = 0.950 Validation error = 0.948
+2018-01-04 17:00:05,100 INFO EPOCH 2 - 46 sec ...0.1515085205 min
+2018-01-04 17:00:05,100 INFO Training error = 0.929 Validation error = 0.932
+2018-01-04 17:00:05,172 INFO Restoring parameters from ./models/lenet
+2018-01-04 17:01:03,911 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 17:01:28,714 INFO EPOCH 1 - 24 sec ...0.24 min
+2018-01-04 17:01:28,714 INFO Training error = 0.934 Validation error = 0.932
+2018-01-04 17:01:51,938 INFO EPOCH 2 - 48 sec ...0.48 min
+2018-01-04 17:01:51,938 INFO Training error = 0.870 Validation error = 0.871
+2018-01-04 17:01:52,015 INFO Restoring parameters from ./models/lenet
+2018-01-04 17:08:03,908 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 17:13:43,174 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 17:15:23,680 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 17:16:56,852 INFO 
+
+
+Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.0001
+2018-01-04 17:17:19,777 INFO EPOCH 1 - 22 sec ...0.22 min
+2018-01-04 17:17:19,777 INFO Training error = 0.948 Validation error = 0.947
+2018-01-04 17:17:42,725 INFO EPOCH 2 - 45 sec ...0.45 min
+2018-01-04 17:17:42,726 INFO Training error = 0.934 Validation error = 0.936
+2018-01-04 17:18:07,114 INFO EPOCH 3 - 70 sec ...1.10 min
+2018-01-04 17:18:07,114 INFO Training error = 0.906 Validation error = 0.908
+2018-01-04 17:18:31,512 INFO EPOCH 4 - 94 sec ...1.34 min
+2018-01-04 17:18:31,512 INFO Training error = 0.853 Validation error = 0.862
+2018-01-04 17:18:54,305 INFO EPOCH 5 - 117 sec ...1.57 min
+2018-01-04 17:18:54,305 INFO Training error = 0.810 Validation error = 0.812
+2018-01-04 17:19:17,029 INFO EPOCH 6 - 140 sec ...2.20 min
+2018-01-04 17:19:17,029 INFO Training error = 0.766 Validation error = 0.768
+2018-01-04 17:19:39,907 INFO EPOCH 7 - 163 sec ...2.43 min
+2018-01-04 17:19:39,908 INFO Training error = 0.713 Validation error = 0.721
+2018-01-04 17:20:02,520 INFO EPOCH 8 - 185 sec ...3.5 min
+2018-01-04 17:20:02,520 INFO Training error = 0.661 Validation error = 0.666
+2018-01-04 17:20:25,088 INFO EPOCH 9 - 208 sec ...3.28 min
+2018-01-04 17:20:25,090 INFO Training error = 0.633 Validation error = 0.631
+2018-01-04 17:20:47,654 INFO EPOCH 10 - 230 sec ...3.50 min
+2018-01-04 17:20:47,655 INFO Training error = 0.609 Validation error = 0.609
+2018-01-04 17:21:10,319 INFO EPOCH 11 - 253 sec ...4.13 min
+2018-01-04 17:21:10,320 INFO Training error = 0.589 Validation error = 0.600
+2018-01-04 17:21:32,981 INFO EPOCH 12 - 276 sec ...4.36 min
+2018-01-04 17:21:32,981 INFO Training error = 0.567 Validation error = 0.571
+2018-01-04 17:21:55,529 INFO EPOCH 13 - 298 sec ...4.58 min
+2018-01-04 17:21:55,529 INFO Training error = 0.546 Validation error = 0.552
+2018-01-04 17:22:18,208 INFO EPOCH 14 - 321 sec ...5.21 min
+2018-01-04 17:22:18,209 INFO Training error = 0.530 Validation error = 0.536
+2018-01-04 17:22:40,729 INFO EPOCH 15 - 343 sec ...5.43 min
+2018-01-04 17:22:40,729 INFO Training error = 0.514 Validation error = 0.518
+2018-01-04 17:23:03,264 INFO EPOCH 16 - 366 sec ...6.6 min
+2018-01-04 17:23:03,265 INFO Training error = 0.493 Validation error = 0.501
+2018-01-04 17:23:25,888 INFO EPOCH 17 - 389 sec ...6.29 min
+2018-01-04 17:23:25,889 INFO Training error = 0.478 Validation error = 0.488
+2018-01-04 17:23:48,449 INFO EPOCH 18 - 411 sec ...6.51 min
+2018-01-04 17:23:48,449 INFO Training error = 0.460 Validation error = 0.469
+2018-01-04 17:24:11,046 INFO EPOCH 19 - 434 sec ...7.14 min
+2018-01-04 17:24:11,046 INFO Training error = 0.441 Validation error = 0.453
+2018-01-04 17:24:34,834 INFO EPOCH 20 - 458 sec ...7.38 min
+2018-01-04 17:24:34,834 INFO Training error = 0.426 Validation error = 0.436
+2018-01-04 17:24:57,935 INFO EPOCH 21 - 481 sec ...8.1 min
+2018-01-04 17:24:57,935 INFO Training error = 0.407 Validation error = 0.422
+2018-01-04 17:25:20,504 INFO EPOCH 22 - 503 sec ...8.23 min
+2018-01-04 17:25:20,504 INFO Training error = 0.397 Validation error = 0.409
+2018-01-04 17:25:43,107 INFO EPOCH 23 - 526 sec ...8.46 min
+2018-01-04 17:25:43,108 INFO Training error = 0.378 Validation error = 0.392
+2018-01-04 17:26:05,604 INFO EPOCH 24 - 548 sec ...9.8 min
+2018-01-04 17:26:05,604 INFO Training error = 0.364 Validation error = 0.379
+2018-01-04 17:26:28,135 INFO EPOCH 25 - 571 sec ...9.31 min
+2018-01-04 17:26:28,135 INFO Training error = 0.351 Validation error = 0.366
+2018-01-04 17:26:50,683 INFO EPOCH 26 - 593 sec ...9.53 min
+2018-01-04 17:26:50,683 INFO Training error = 0.336 Validation error = 0.353
+2018-01-04 17:27:13,168 INFO EPOCH 27 - 616 sec ...10.16 min
+2018-01-04 17:27:13,169 INFO Training error = 0.321 Validation error = 0.339
+2018-01-04 17:27:35,750 INFO EPOCH 28 - 638 sec ...10.38 min
+2018-01-04 17:27:35,750 INFO Training error = 0.312 Validation error = 0.328
+2018-01-04 17:27:58,296 INFO EPOCH 29 - 661 sec ...11.1 min
+2018-01-04 17:27:58,296 INFO Training error = 0.298 Validation error = 0.313
+2018-01-04 17:28:20,771 INFO EPOCH 30 - 683 sec ...11.23 min
+2018-01-04 17:28:20,771 INFO Training error = 0.284 Validation error = 0.303
+2018-01-04 17:28:43,170 INFO EPOCH 31 - 706 sec ...11.46 min
+2018-01-04 17:28:43,170 INFO Training error = 0.276 Validation error = 0.289
+2018-01-04 17:29:05,673 INFO EPOCH 32 - 728 sec ...12.8 min
+2018-01-04 17:29:05,674 INFO Training error = 0.266 Validation error = 0.284
+2018-01-04 17:29:28,150 INFO EPOCH 33 - 751 sec ...12.31 min
+2018-01-04 17:29:28,150 INFO Training error = 0.258 Validation error = 0.271
+2018-01-04 17:29:50,620 INFO EPOCH 34 - 773 sec ...12.53 min
+2018-01-04 17:29:50,620 INFO Training error = 0.250 Validation error = 0.264
+2018-01-04 17:30:13,102 INFO EPOCH 35 - 796 sec ...13.16 min
+2018-01-04 17:30:13,102 INFO Training error = 0.240 Validation error = 0.252
+2018-01-04 17:30:35,562 INFO EPOCH 36 - 818 sec ...13.38 min
+2018-01-04 17:30:35,562 INFO Training error = 0.231 Validation error = 0.248
+2018-01-04 17:30:57,991 INFO EPOCH 37 - 841 sec ...14.1 min
+2018-01-04 17:30:57,992 INFO Training error = 0.223 Validation error = 0.236
+2018-01-04 17:31:20,469 INFO EPOCH 38 - 863 sec ...14.23 min
+2018-01-04 17:31:20,469 INFO Training error = 0.216 Validation error = 0.232
+2018-01-04 17:31:42,916 INFO EPOCH 39 - 886 sec ...14.46 min
+2018-01-04 17:31:42,917 INFO Training error = 0.213 Validation error = 0.224
+2018-01-04 17:32:05,360 INFO EPOCH 40 - 908 sec ...15.8 min
+2018-01-04 17:32:05,361 INFO Training error = 0.200 Validation error = 0.218
+2018-01-04 17:32:27,869 INFO EPOCH 41 - 931 sec ...15.31 min
+2018-01-04 17:32:27,870 INFO Training error = 0.190 Validation error = 0.206
+2018-01-04 17:32:50,276 INFO EPOCH 42 - 953 sec ...15.53 min
+2018-01-04 17:32:50,276 INFO Training error = 0.182 Validation error = 0.200
+2018-01-04 17:33:12,687 INFO EPOCH 43 - 975 sec ...16.15 min
+2018-01-04 17:33:12,687 INFO Training error = 0.179 Validation error = 0.195
+2018-01-04 17:33:35,213 INFO EPOCH 44 - 998 sec ...16.38 min
+2018-01-04 17:33:35,213 INFO Training error = 0.174 Validation error = 0.192
+2018-01-04 17:33:57,627 INFO EPOCH 45 - 1020 sec ...17.0 min
+2018-01-04 17:33:57,627 INFO Training error = 0.166 Validation error = 0.183
+2018-01-04 17:34:20,081 INFO EPOCH 46 - 1043 sec ...17.23 min
+2018-01-04 17:34:20,081 INFO Training error = 0.160 Validation error = 0.180
+2018-01-04 17:34:42,480 INFO EPOCH 47 - 1065 sec ...17.45 min
+2018-01-04 17:34:42,481 INFO Training error = 0.160 Validation error = 0.177
+2018-01-04 17:35:04,864 INFO EPOCH 48 - 1088 sec ...18.8 min
+2018-01-04 17:35:04,865 INFO Training error = 0.150 Validation error = 0.170
+2018-01-04 17:35:27,276 INFO EPOCH 49 - 1110 sec ...18.30 min
+2018-01-04 17:35:27,277 INFO Training error = 0.146 Validation error = 0.162
+2018-01-04 17:35:49,747 INFO EPOCH 50 - 1132 sec ...18.52 min
+2018-01-04 17:35:49,747 INFO Training error = 0.148 Validation error = 0.166
+2018-01-04 17:36:12,102 INFO EPOCH 51 - 1155 sec ...19.15 min
+2018-01-04 17:36:12,103 INFO Training error = 0.136 Validation error = 0.154
+2018-01-04 17:36:34,482 INFO EPOCH 52 - 1177 sec ...19.37 min
+2018-01-04 17:36:34,483 INFO Training error = 0.131 Validation error = 0.149
+2018-01-04 17:36:56,933 INFO EPOCH 53 - 1200 sec ...20.0 min
+2018-01-04 17:36:56,934 INFO Training error = 0.125 Validation error = 0.142
+2018-01-04 17:37:19,339 INFO EPOCH 54 - 1222 sec ...20.22 min
+2018-01-04 17:37:19,339 INFO Training error = 0.124 Validation error = 0.143
+2018-01-04 17:37:41,752 INFO EPOCH 55 - 1244 sec ...20.44 min
+2018-01-04 17:37:41,752 INFO Training error = 0.120 Validation error = 0.140
+2018-01-04 17:38:04,137 INFO EPOCH 56 - 1267 sec ...21.7 min
+2018-01-04 17:38:04,137 INFO Training error = 0.116 Validation error = 0.136
+2018-01-04 17:38:26,503 INFO EPOCH 57 - 1289 sec ...21.29 min
+2018-01-04 17:38:26,504 INFO Training error = 0.112 Validation error = 0.131
+2018-01-04 17:38:48,859 INFO EPOCH 58 - 1312 sec ...21.52 min
+2018-01-04 17:38:48,860 INFO Training error = 0.110 Validation error = 0.128
+2018-01-04 17:39:11,288 INFO EPOCH 59 - 1334 sec ...22.14 min
+2018-01-04 17:39:11,288 INFO Training error = 0.106 Validation error = 0.122
+2018-01-04 17:39:33,693 INFO EPOCH 60 - 1356 sec ...22.36 min
+2018-01-04 17:39:33,694 INFO Training error = 0.104 Validation error = 0.121
+2018-01-04 17:39:56,041 INFO EPOCH 61 - 1379 sec ...22.59 min
+2018-01-04 17:39:56,041 INFO Training error = 0.100 Validation error = 0.120
+2018-01-04 17:40:18,465 INFO EPOCH 62 - 1401 sec ...23.21 min
+2018-01-04 17:40:18,465 INFO Training error = 0.101 Validation error = 0.117
+2018-01-04 17:40:40,806 INFO EPOCH 63 - 1423 sec ...23.43 min
+2018-01-04 17:40:40,806 INFO Training error = 0.097 Validation error = 0.114
+2018-01-04 17:41:03,161 INFO EPOCH 64 - 1446 sec ...24.6 min
+2018-01-04 17:41:03,162 INFO Training error = 0.091 Validation error = 0.109
+2018-01-04 17:41:25,565 INFO EPOCH 65 - 1468 sec ...24.28 min
+2018-01-04 17:41:25,566 INFO Training error = 0.090 Validation error = 0.109
+2018-01-04 17:41:47,956 INFO EPOCH 66 - 1491 sec ...24.51 min
+2018-01-04 17:41:47,957 INFO Training error = 0.087 Validation error = 0.104
+2018-01-04 17:42:10,286 INFO EPOCH 67 - 1513 sec ...25.13 min
+2018-01-04 17:42:10,287 INFO Training error = 0.085 Validation error = 0.104
+2018-01-04 17:42:32,704 INFO EPOCH 68 - 1535 sec ...25.35 min
+2018-01-04 17:42:32,704 INFO Training error = 0.082 Validation error = 0.100
+2018-01-04 17:42:55,058 INFO EPOCH 69 - 1558 sec ...25.58 min
+2018-01-04 17:42:55,060 INFO Training error = 0.080 Validation error = 0.101
+2018-01-04 17:43:17,450 INFO EPOCH 70 - 1580 sec ...26.20 min
+2018-01-04 17:43:17,450 INFO Training error = 0.079 Validation error = 0.099
+2018-01-04 17:43:39,859 INFO EPOCH 71 - 1603 sec ...26.43 min
+2018-01-04 17:43:39,860 INFO Training error = 0.076 Validation error = 0.094
+2018-01-04 17:44:02,261 INFO EPOCH 72 - 1625 sec ...27.5 min
+2018-01-04 17:44:02,261 INFO Training error = 0.074 Validation error = 0.095
+2018-01-04 17:44:24,682 INFO EPOCH 73 - 1647 sec ...27.27 min
+2018-01-04 17:44:24,683 INFO Training error = 0.073 Validation error = 0.092
+2018-01-04 17:44:47,086 INFO EPOCH 74 - 1670 sec ...27.50 min
+2018-01-04 17:44:47,086 INFO Training error = 0.072 Validation error = 0.092
+2018-01-04 17:45:09,446 INFO EPOCH 75 - 1692 sec ...28.12 min
+2018-01-04 17:45:09,446 INFO Training error = 0.072 Validation error = 0.090
+2018-01-04 17:45:31,871 INFO EPOCH 76 - 1715 sec ...28.35 min
+2018-01-04 17:45:31,871 INFO Training error = 0.067 Validation error = 0.088
+2018-01-04 17:45:54,256 INFO EPOCH 77 - 1737 sec ...28.57 min
+2018-01-04 17:45:54,257 INFO Training error = 0.065 Validation error = 0.086
+2018-01-04 17:46:16,641 INFO EPOCH 78 - 1759 sec ...29.19 min
+2018-01-04 17:46:16,642 INFO Training error = 0.063 Validation error = 0.085
+2018-01-04 17:46:38,971 INFO EPOCH 79 - 1782 sec ...29.42 min
+2018-01-04 17:46:38,971 INFO Training error = 0.061 Validation error = 0.082
+2018-01-04 17:47:01,355 INFO EPOCH 80 - 1804 sec ...30.4 min
+2018-01-04 17:47:01,355 INFO Training error = 0.059 Validation error = 0.083
+2018-01-04 17:47:23,702 INFO EPOCH 81 - 1826 sec ...30.26 min
+2018-01-04 17:47:23,703 INFO Training error = 0.061 Validation error = 0.083
+2018-01-04 17:47:46,045 INFO EPOCH 82 - 1849 sec ...30.49 min
+2018-01-04 17:47:46,045 INFO Training error = 0.058 Validation error = 0.080
+2018-01-04 17:48:08,443 INFO EPOCH 83 - 1871 sec ...31.11 min
+2018-01-04 17:48:08,444 INFO Training error = 0.055 Validation error = 0.078
+2018-01-04 17:48:30,804 INFO EPOCH 84 - 1893 sec ...31.33 min
+2018-01-04 17:48:30,805 INFO Training error = 0.057 Validation error = 0.079
+2018-01-04 17:48:53,153 INFO EPOCH 85 - 1916 sec ...31.56 min
+2018-01-04 17:48:53,154 INFO Training error = 0.053 Validation error = 0.078
+2018-01-04 17:49:15,596 INFO EPOCH 86 - 1938 sec ...32.18 min
+2018-01-04 17:49:15,596 INFO Training error = 0.051 Validation error = 0.076
+2018-01-04 17:49:37,965 INFO EPOCH 87 - 1961 sec ...32.41 min
+2018-01-04 17:49:37,965 INFO Training error = 0.050 Validation error = 0.076
+2018-01-04 17:50:00,310 INFO EPOCH 88 - 1983 sec ...33.3 min
+2018-01-04 17:50:00,310 INFO Training error = 0.048 Validation error = 0.071
+2018-01-04 17:50:22,694 INFO EPOCH 89 - 2005 sec ...33.25 min
+2018-01-04 17:50:22,694 INFO Training error = 0.050 Validation error = 0.074
+2018-01-04 17:50:45,020 INFO EPOCH 90 - 2028 sec ...33.48 min
+2018-01-04 17:50:45,021 INFO Training error = 0.045 Validation error = 0.071
+2018-01-04 17:51:07,373 INFO EPOCH 91 - 2050 sec ...34.10 min
+2018-01-04 17:51:07,374 INFO Training error = 0.044 Validation error = 0.068
+2018-01-04 17:51:29,770 INFO EPOCH 92 - 2072 sec ...34.32 min
+2018-01-04 17:51:29,770 INFO Training error = 0.044 Validation error = 0.070
+2018-01-04 17:51:52,081 INFO EPOCH 93 - 2095 sec ...34.55 min
+2018-01-04 17:51:52,081 INFO Training error = 0.043 Validation error = 0.069
+2018-01-04 17:52:14,392 INFO EPOCH 94 - 2117 sec ...35.17 min
+2018-01-04 17:52:14,392 INFO Training error = 0.043 Validation error = 0.069
+2018-01-04 17:52:36,789 INFO EPOCH 95 - 2139 sec ...35.39 min
+2018-01-04 17:52:36,789 INFO Training error = 0.041 Validation error = 0.066
+2018-01-04 17:52:59,122 INFO EPOCH 96 - 2162 sec ...36.2 min
+2018-01-04 17:52:59,122 INFO Training error = 0.040 Validation error = 0.064
+2018-01-04 17:53:21,496 INFO EPOCH 97 - 2184 sec ...36.24 min
+2018-01-04 17:53:21,496 INFO Training error = 0.041 Validation error = 0.066
+2018-01-04 17:53:43,952 INFO EPOCH 98 - 2207 sec ...36.47 min
+2018-01-04 17:53:43,953 INFO Training error = 0.038 Validation error = 0.064
+2018-01-04 17:54:06,930 INFO EPOCH 99 - 2230 sec ...37.10 min
+2018-01-04 17:54:06,930 INFO Training error = 0.036 Validation error = 0.061
+2018-01-04 17:54:29,340 INFO EPOCH 100 - 2252 sec ...37.32 min
+2018-01-04 17:54:29,341 INFO Training error = 0.037 Validation error = 0.065
+2018-01-04 17:54:51,768 INFO EPOCH 101 - 2274 sec ...37.54 min
+2018-01-04 17:54:51,768 INFO Training error = 0.036 Validation error = 0.061
+2018-01-04 17:55:14,155 INFO EPOCH 102 - 2297 sec ...38.17 min
+2018-01-04 17:55:14,155 INFO Training error = 0.036 Validation error = 0.064
+2018-01-04 17:55:36,526 INFO EPOCH 103 - 2319 sec ...38.39 min
+2018-01-04 17:55:36,526 INFO Training error = 0.033 Validation error = 0.061
+2018-01-04 17:55:58,899 INFO EPOCH 104 - 2342 sec ...39.2 min
+2018-01-04 17:55:58,900 INFO Training error = 0.035 Validation error = 0.062
+2018-01-04 17:56:21,308 INFO EPOCH 105 - 2364 sec ...39.24 min
+2018-01-04 17:56:21,308 INFO Training error = 0.032 Validation error = 0.060
+2018-01-04 17:56:43,645 INFO EPOCH 106 - 2386 sec ...39.46 min
+2018-01-04 17:56:43,645 INFO Training error = 0.033 Validation error = 0.060
+2018-01-04 17:57:06,043 INFO EPOCH 107 - 2409 sec ...40.9 min
+2018-01-04 17:57:06,044 INFO Training error = 0.031 Validation error = 0.059
+2018-01-04 17:57:28,445 INFO EPOCH 108 - 2431 sec ...40.31 min
+2018-01-04 17:57:28,445 INFO Training error = 0.030 Validation error = 0.061
+2018-01-04 17:57:50,824 INFO EPOCH 109 - 2454 sec ...40.54 min
+2018-01-04 17:57:50,825 INFO Training error = 0.030 Validation error = 0.061
+2018-01-04 17:58:13,196 INFO EPOCH 110 - 2476 sec ...41.16 min
+2018-01-04 17:58:13,197 INFO Training error = 0.030 Validation error = 0.058
+2018-01-04 17:58:35,578 INFO EPOCH 111 - 2498 sec ...41.38 min
+2018-01-04 17:58:35,581 INFO Training error = 0.029 Validation error = 0.056
+2018-01-04 17:58:57,955 INFO EPOCH 112 - 2521 sec ...42.1 min
+2018-01-04 17:58:57,955 INFO Training error = 0.027 Validation error = 0.058
+2018-01-04 17:59:22,470 INFO EPOCH 113 - 2545 sec ...42.25 min
+2018-01-04 17:59:22,470 INFO Training error = 0.027 Validation error = 0.057
+2018-01-04 17:59:44,816 INFO EPOCH 114 - 2568 sec ...42.48 min
+2018-01-04 17:59:44,816 INFO Training error = 0.025 Validation error = 0.055
+2018-01-04 18:00:07,148 INFO EPOCH 115 - 2590 sec ...43.10 min
+2018-01-04 18:00:07,149 INFO Training error = 0.025 Validation error = 0.054
+2018-01-04 18:00:29,524 INFO EPOCH 116 - 2612 sec ...43.32 min
+2018-01-04 18:00:29,524 INFO Training error = 0.026 Validation error = 0.054
+2018-01-04 18:00:51,832 INFO EPOCH 117 - 2635 sec ...43.55 min
+2018-01-04 18:00:51,834 INFO Training error = 0.025 Validation error = 0.055
+2018-01-04 18:01:14,133 INFO EPOCH 118 - 2657 sec ...44.17 min
+2018-01-04 18:01:14,133 INFO Training error = 0.024 Validation error = 0.055
+2018-01-04 18:01:36,525 INFO EPOCH 119 - 2679 sec ...44.39 min
+2018-01-04 18:01:36,526 INFO Training error = 0.023 Validation error = 0.054
+2018-01-04 18:01:58,824 INFO EPOCH 120 - 2702 sec ...45.2 min
+2018-01-04 18:01:58,824 INFO Training error = 0.023 Validation error = 0.052
+2018-01-04 18:02:21,186 INFO EPOCH 121 - 2724 sec ...45.24 min
+2018-01-04 18:02:21,186 INFO Training error = 0.022 Validation error = 0.052
+2018-01-04 18:02:43,540 INFO EPOCH 122 - 2746 sec ...45.46 min
+2018-01-04 18:02:43,540 INFO Training error = 0.022 Validation error = 0.052
+2018-01-04 18:03:05,868 INFO EPOCH 123 - 2769 sec ...46.9 min
+2018-01-04 18:03:05,868 INFO Training error = 0.021 Validation error = 0.050
+2018-01-04 18:03:28,188 INFO EPOCH 124 - 2791 sec ...46.31 min
+2018-01-04 18:03:28,188 INFO Training error = 0.020 Validation error = 0.053
+2018-01-04 18:03:50,585 INFO EPOCH 125 - 2813 sec ...46.53 min
+2018-01-04 18:03:50,585 INFO Training error = 0.020 Validation error = 0.052
+2018-01-04 18:04:12,963 INFO EPOCH 126 - 2836 sec ...47.16 min
+2018-01-04 18:04:12,963 INFO Training error = 0.020 Validation error = 0.052
+2018-01-04 18:04:35,316 INFO EPOCH 127 - 2858 sec ...47.38 min
+2018-01-04 18:04:35,317 INFO Training error = 0.021 Validation error = 0.052
+2018-01-04 18:04:57,699 INFO EPOCH 128 - 2880 sec ...48.0 min
+2018-01-04 18:04:57,699 INFO Training error = 0.019 Validation error = 0.050
+2018-01-04 18:05:20,071 INFO EPOCH 129 - 2903 sec ...48.23 min
+2018-01-04 18:05:20,072 INFO Training error = 0.019 Validation error = 0.050
+2018-01-04 18:05:42,435 INFO EPOCH 130 - 2925 sec ...48.45 min
+2018-01-04 18:05:42,435 INFO Training error = 0.019 Validation error = 0.052
+2018-01-04 18:06:04,799 INFO EPOCH 131 - 2947 sec ...49.7 min
+2018-01-04 18:06:04,799 INFO Training error = 0.018 Validation error = 0.048
+2018-01-04 18:06:27,163 INFO EPOCH 132 - 2970 sec ...49.30 min
+2018-01-04 18:06:27,164 INFO Training error = 0.019 Validation error = 0.049
+2018-01-04 18:06:49,514 INFO EPOCH 133 - 2992 sec ...49.52 min
+2018-01-04 18:06:49,515 INFO Training error = 0.019 Validation error = 0.048
+2018-01-04 18:07:11,889 INFO EPOCH 134 - 3015 sec ...50.15 min
+2018-01-04 18:07:11,890 INFO Training error = 0.016 Validation error = 0.048
+2018-01-04 18:07:34,297 INFO EPOCH 135 - 3037 sec ...50.37 min
+2018-01-04 18:07:34,297 INFO Training error = 0.016 Validation error = 0.048
+2018-01-04 18:07:56,642 INFO EPOCH 136 - 3059 sec ...50.59 min
+2018-01-04 18:07:56,642 INFO Training error = 0.019 Validation error = 0.052
+2018-01-04 18:08:19,060 INFO EPOCH 137 - 3082 sec ...51.22 min
+2018-01-04 18:08:19,060 INFO Training error = 0.016 Validation error = 0.048
+2018-01-04 18:08:41,374 INFO EPOCH 138 - 3104 sec ...51.44 min
+2018-01-04 18:08:41,374 INFO Training error = 0.015 Validation error = 0.047
+2018-01-04 18:09:03,727 INFO EPOCH 139 - 3126 sec ...52.6 min
+2018-01-04 18:09:03,727 INFO Training error = 0.016 Validation error = 0.050
+2018-01-04 18:09:26,144 INFO EPOCH 140 - 3149 sec ...52.29 min
+2018-01-04 18:09:26,145 INFO Training error = 0.015 Validation error = 0.049
+2018-01-04 18:09:48,492 INFO EPOCH 141 - 3171 sec ...52.51 min
+2018-01-04 18:09:48,492 INFO Training error = 0.014 Validation error = 0.047
+2018-01-04 18:10:10,838 INFO EPOCH 142 - 3194 sec ...53.14 min
+2018-01-04 18:10:10,838 INFO Training error = 0.014 Validation error = 0.047
+2018-01-04 18:10:33,248 INFO EPOCH 143 - 3216 sec ...53.36 min
+2018-01-04 18:10:33,249 INFO Training error = 0.014 Validation error = 0.047
+2018-01-04 18:10:55,577 INFO EPOCH 144 - 3238 sec ...53.58 min
+2018-01-04 18:10:55,578 INFO Training error = 0.014 Validation error = 0.046
+2018-01-04 18:11:17,952 INFO EPOCH 145 - 3261 sec ...54.21 min
+2018-01-04 18:11:17,953 INFO Training error = 0.012 Validation error = 0.044
+2018-01-04 18:11:40,349 INFO EPOCH 146 - 3283 sec ...54.43 min
+2018-01-04 18:11:40,349 INFO Training error = 0.013 Validation error = 0.044
+2018-01-04 18:12:02,710 INFO EPOCH 147 - 3305 sec ...55.5 min
+2018-01-04 18:12:02,712 INFO Training error = 0.013 Validation error = 0.045
+2018-01-04 18:12:25,074 INFO EPOCH 148 - 3328 sec ...55.28 min
+2018-01-04 18:12:25,074 INFO Training error = 0.013 Validation error = 0.045
+2018-01-04 18:12:47,432 INFO EPOCH 149 - 3350 sec ...55.50 min
+2018-01-04 18:12:47,432 INFO Training error = 0.013 Validation error = 0.045
+2018-01-04 18:13:09,795 INFO EPOCH 150 - 3372 sec ...56.12 min
+2018-01-04 18:13:09,796 INFO Training error = 0.012 Validation error = 0.042
+2018-01-04 18:13:09,848 INFO Restoring parameters from ./models/lenet
