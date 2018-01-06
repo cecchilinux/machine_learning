@@ -320,7 +320,7 @@ X_test = X_test_transf
 y_train = y_train_transf
 
 #EPOCHS = 150
-EPOCHS = 150
+EPOCHS = 3
 BATCH_SIZE = 128
 dropout = .3
 
@@ -368,22 +368,28 @@ with tf.Session() as sess:
             print('Accuracy Model On Test Images: {}'.format(evaluate(X_test,y_test)))
             break
 
+
+    log("Accuracy Model On Training Images: {:.3f}".format(evaluate(X_train, y_train)))
+    log("Accuracy Model On Validation Images: {:.3f}".format(evaluate(X_valid, y_valid)))
+    log("Accuracy Model On Test Images: {:.3f}".format(evaluate(X_test, y_test)))
+
     saver.save(sess, './models/lenet')
+
 
 #-----------------------------------------------------------------------------
 #Printing accuracy of the model on Training, validation and Testing set.
 #-----------------------------------------------------------------------------
 
-with tf.Session() as sess:
-    saver.restore(sess, tf.train.latest_checkpoint('./models'))
-    print('Accuracy Model On Training Images: {:.2f}'.format(evaluate(X_train, y_train)))
-    print('Accuracy Model On Validation Images: {:.2f}'.format(evaluate(X_valid, y_valid)))
-    print('Accuracy Model On Test Images: {:.2f}'.format(evaluate(X_test, y_test)))
-
-# Write  accuracies  in accuracy_output.txt file
-    out = 'Accuracy Model On Training Images:' + str(evaluate(X_train, y_train)) + '\n'
-    out += 'Accuracy Model On Validation Images:' + str(evaluate(X_valid, y_valid)) + '\n'
-    out += 'Accuracy Model On Test Images:' + str(evaluate(X_test, y_test))
-
-    with open("accuracy_output.txt", 'w+') as outfile:
-    	outfile.write(out)
+# with tf.Session() as sess:
+#     saver.restore(sess, tf.train.latest_checkpoint('./models'))
+#     print('Accuracy Model On Training Images: {:.3f}'.format(evaluate(X_train, y_train)))
+#     print('Accuracy Model On Validation Images: {:.3f}'.format(evaluate(X_valid, y_valid)))
+#     print('Accuracy Model On Test Images: {:.3f}'.format(evaluate(X_test, y_test)))
+#
+# # Write  accuracies  in accuracy_output.txt file
+#     out = 'Accuracy Model On Training Images:' + str(evaluate(X_train, y_train)) + '\n'
+#     out += 'Accuracy Model On Validation Images:' + str(evaluate(X_valid, y_valid)) + '\n'
+#     out += 'Accuracy Model On Test Images:' + str(evaluate(X_test, y_test))
+#
+#     with open("accuracy_output.txt", 'w+') as outfile:
+#     	outfile.write(out)
