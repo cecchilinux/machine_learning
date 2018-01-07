@@ -18,31 +18,43 @@ ANNOTATION_FILE = '/notebooks/signnames.csv'
 FINAL_ANNOTATION_FILE = '/notebooks/GT-final_test.csv'
 
 IMAGE_SIZE = 32
-LR = 1e-3
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("--net", help='The net you wanna use (LeNet, )', default='LeNet')
-parser.add_argument("--epoch", help='The number of epoch', default='150')
+parser.add_argument("--epochs", help='The number of epochs', default='150')
 parser.add_argument("--learning_rate", help='', default='1e-3')
+parser.add_argument("--batch_size", help='', default='128')
+parser.add_argument("--dropout", help='', default='.3')
 parser.add_argument('--debug', help='Print debug messages', action='store_true')
 parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
 
 args = parser.parse_args()
 #problem_name = args.problem
 net_name = args.net
-epoch_num = args.epoch
-debug = '--debug' if args.debug else ''
+EPOCHS = int(args.epochs)
+LR = float(args.learning_rate)
+BATCH_SIZE = int(args.batch_size)
+dropout = float(args.dropout)
 
-print(net_name)
+debug = '--debug' if args.debug else ''
+quiet = '--quiet' if args.quiet else ''
+
+print("net {}".format(net_name))
+print("epochs: {}".format(EPOCHS))
+print("learning rate: {}".format(LR))
+print("bath size: {}".format(BATCH_SIZE))
+print("dropout: {}".format(dropout))
 print(debug)
+print(quiet)
 
 
 
 # -----------------------------
 # log module test
 # -----------------------------
-log.setup_file_logger('/logs/{}_training.log'.format(time.strftime("%Y-%m-%d_%H%M")))
+log.setup_file_logger('/logs/{}_{}_{}_{}_{}_{}.log'.format(time.strftime("%Y-%m-%d_%H%M"),
+net_name, EPOCHS, LR, BATCH_SIZE, dropout))
 
 # -----------------------------
 
@@ -181,9 +193,8 @@ X_test = X_test_transf
 y_train = y_train_transf
 
 #EPOCHS = 150
-EPOCHS = int(epoch_num)
-BATCH_SIZE = 128
-dropout = .3
+#BATCH_SIZE = 128
+#dropout = .3
 
 errors = list()
 

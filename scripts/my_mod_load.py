@@ -10,9 +10,14 @@ def load_dataset_labeled_by_dirs(dataset, path, image_size):
     this function look for images on the subfolders of the given path and label
     them with the name of the folder where the image is stored
 
-    :param database: the dictionary where to add the images
-    :param path: the path where the images divided into folders are stored
-    :returns:
+    Parameters
+    ----------
+    dataset : the dictionary where to add the images
+    path : the path where the images divided into folders are stored
+
+    Returns
+    -------
+    
     """
 
 
@@ -40,13 +45,17 @@ def load_dataset_labeled_by_csv(dataset, path, file_csv, delimiter, index_col, l
     this function look for images on the subfolders of the given path and label
     them with the corrisponding label stored on a csv file
 
-    :param database: the dictionary where to add the images
-    :param path: the path where the images divided into folders are stored
-    :param file_csv: the path of the csv file
-    :param delimiter: the delimeter used to separate coloumns of the csv file
-    :param index_col: the name of the index coloumn
-    :param label_col: the name of the label coloumn
-    :returns:
+    Parameters
+    ----------
+    dataset : the dictionary where to add the images
+    path : the path where the images divided into folders are stored
+    file_csv : the path of the csv file
+    delimiter : the delimeter used to separate coloumns of the csv file
+    index_col : the name of the index coloumn
+    label_col : the name of the label coloumn
+
+    Returns
+    -------
 
     """
 
