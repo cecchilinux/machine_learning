@@ -217,13 +217,18 @@ with tf.Session() as sess:
                 batch_x, batch_y = X_train[offset:end], y_train[offset:end]
                 sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1 - dropout})
 
-#             print("After Train %d sec"%(time() - start))
+#           print("After Train %d sec"%(time() - start))
 
             validation_accuracy = evaluate(X_valid, y_valid)
             training_accuracy = evaluate(X_train, y_train)
 
             errors.append((training_accuracy,validation_accuracy))
-            log.log("EPOCH %d - %d sec ..."%(i+1, time() - start), True)
+
+#           calculatiing minutes format
+            minutes = int((time() - start)/60)
+            seconds = ((time() - start) - (minutes*60))
+
+            log.log("EPOCH %d - %d sec ....%d.%d min"%(i+1, time() - start,  minutes, seconds), True)
             log.log("Training error = {:.3f} Validation error = {:.3f}".format(1- training_accuracy , 1- validation_accuracy), True)
 
             print()
