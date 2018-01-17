@@ -21,7 +21,7 @@ IMAGE_SIZE = 32
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
-parser.add_argument("--net", help='The net you wanna use (LeNet, )', default='LeNet')
+parser.add_argument("--net", help='The net you wanna use (LeNet, LeNet_adv ...)', default='LeNet')
 parser.add_argument("--epochs", help='The number of epochs', default='150')
 parser.add_argument("--learning_rate", help='', default='1e-3')
 parser.add_argument("--batch_size", help='', default='128')
@@ -40,7 +40,7 @@ dropout = float(args.dropout)
 debug = '--debug' if args.debug else ''
 quiet = '--quiet' if args.quiet else ''
 
-print("net {}".format(net_name))
+print("\nnet {}".format(net_name))
 print("epochs: {}".format(EPOCHS))
 print("learning rate: {}".format(LR))
 print("bath size: {}".format(BATCH_SIZE))
@@ -140,9 +140,14 @@ one_hot_y = tf.one_hot(y, 43)
 
 
 #Variabili necessarie per la fase di training e di testing
+if args.net in 'LeNet':
+    logits = nets.LeNet(x, keep_prob)
+    log.log("used net = LeNet", False)
+else:
+    logits = nets.LeNet_adv(x, keep_prob)
+    log.log("used net = LeNet_adv", False)
 
-logits = nets.LeNet(x, keep_prob)
-log.log("used net = LeNet", False)
+
 #softmax_cross_entropy_with_logits(_sentinel, labels, logits, dim, name)
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=one_hot_y)
 loss_operation = tf.reduce_mean(cross_entropy)
