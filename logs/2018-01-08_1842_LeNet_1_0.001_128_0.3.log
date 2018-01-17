@@ -1,0 +1,16 @@
+2018-01-08 18:43:13,170 INFO Dataset dimension on /datasets/GTSRB/Images/ = 39209
+2018-01-08 18:43:18,078 INFO Dataset dimension on /datasets/GTSRB/Final_Test/Images/ = 12630
+2018-01-08 18:43:18,078 INFO Final dimension = 51839
+2018-01-08 18:43:18,111 INFO 	Number of training examples = 36287
+2018-01-08 18:43:18,111 INFO 	Number of validation examples = 3111
+2018-01-08 18:43:18,111 INFO 	Number of testing examples = 12441
+2018-01-08 18:43:18,111 INFO Number of classes = 43
+2018-01-08 18:43:20,643 INFO used net = LeNet
+2018-01-08 18:43:20,994 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.001
+2018-01-08 18:43:50,543 INFO EPOCH 1 - 29 sec ....0.29 min
+2018-01-08 18:43:50,543 INFO Training error = 0.681 Validation error = 0.693
+2018-01-08 18:43:50,695 INFO Restoring parameters from ./models/lenet
+2018-01-08 18:43:50,743 INFO ACCURACY:
+2018-01-08 18:43:59,378 INFO Accuracy Model On Training Images: 0.319
+2018-01-08 18:44:00,113 INFO Accuracy Model On Validation Images: 0.307
+2018-01-08 18:44:03,160 INFO Accuracy Model On Test Images: 0.324
