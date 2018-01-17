@@ -62,7 +62,7 @@ net_name, EPOCHS, LR, BATCH_SIZE, dropout))
 
 
 #--------------------------------------------------
-# Step 0: Load the Dataset
+# Step 0: Load the Dataset from folders
 #--------------------------------------------------
 
 from sklearn.model_selection import train_test_split
@@ -82,6 +82,34 @@ X, y = dataset['features'], dataset['labels']
 #prende il 70% per il train e il 30% per il vaild
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 X_test, X_valid, y_test, y_valid = train_test_split(X_test, y_test, test_size=0.2)
+
+
+#--------------------------------------------------
+# Step 0: Load the Dataset from pickle
+# comment the step 0 above and use this
+#--------------------------------------------------
+
+# Load pickled data
+# import pickle
+# import warnings
+# warnings.filterwarnings('ignore')
+#
+# training_file = '/datasets/traffic-signs-data/train.p'
+# validation_file= '/datasets/traffic-signs-data/valid.p'
+# testing_file = '/datasets/traffic-signs-data/test.p'
+#
+# with open(training_file, mode='rb') as f:
+#     train = pickle.load(f)
+# with open(validation_file, mode='rb') as f:
+#     valid = pickle.load(f)
+# with open(testing_file, mode='rb') as f:
+#     test = pickle.load(f)
+#
+# X_train, y_train = train['features'], train['labels']
+# X_valid, y_valid = valid['features'], valid['labels']
+# X_test, y_test = test['features'], test['labels']
+
+
 
 n_train = len(X_train) # Number of training examples
 n_test = len(X_test) # Number of testing examples.
