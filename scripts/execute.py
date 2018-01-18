@@ -1,9 +1,11 @@
 #!/usr/local/bin/python3
 
+import sys
 import argparse
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+
 
 import my_mod_logs as log
 import my_mod_load as load
@@ -12,8 +14,8 @@ import my_mod_nets as nets
 #import my_mod_eval_predict as eval_pred
 import time
 
-DATASET_DIR = '/datasets/GTSRB/Images/'
-FINALTEST_DIR = '/datasets/GTSRB/Final_Test/Images/'
+DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
+FINALTEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
 ANNOTATION_FILE = '/notebooks/signnames.csv'
 FINAL_ANNOTATION_FILE = '/notebooks/GT-final_test.csv'
 
@@ -67,24 +69,39 @@ net_name, EPOCHS, LR, BATCH_SIZE, dropout))
 
 from sklearn.model_selection import train_test_split
 
-dataset = {}
-dataset['features'] = []
-dataset['labels'] = []
-load.load_dataset_labeled_by_dirs(dataset, DATASET_DIR, IMAGE_SIZE)
-log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
-dataset_dim = len(dataset['features'])
-load.load_dataset_labeled_by_csv(dataset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
-log.log("Dataset dimension on {} = {}".format(FINALTEST_DIR, len(dataset['features'])- dataset_dim), False)
-log.log("Final dimension = {}".format(len(dataset['features'])), False)
-#np.save('dataset.npy', dataset)
+# dataset = {}
+# dataset['features'] = []
+# dataset['labels'] = []
+# load.load_dataset_labeled_by_dirs(dataset, DATASET_DIR, IMAGE_SIZE)
+# log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
+# dataset_dim = len(dataset['features'])
+# load.load_dataset_labeled_by_csv(dataset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+# log.log("Dataset dimension on {} = {}".format(FINALTEST_DIR, len(dataset['features'])- dataset_dim), False)
+# log.log("Final dimension = {}".format(len(dataset['features'])), False)
+# #np.save('dataset.npy', dataset)
+#
+# X, y = dataset['features'], dataset['labels']
+# #prende il 70% per il train e il 30% per il vaild
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+# X_test, X_valid, y_test, y_valid = train_test_split(X_test, y_test, test_size=0.2)
 
-X, y = dataset['features'], dataset['labels']
-#prende il 70% per il train e il 30% per il vaild
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-X_test, X_valid, y_test, y_valid = train_test_split(X_test, y_test, test_size=0.2)
+trainingset = {}
+trainingset['features'] = []
+trainingset['labels'] = []
+validset= {}
+validset['features'] = []
+validset['labels'] = []
+load.load_trainset_validset(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
+# log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
+# dataset_dim = len(dataset['features'])
+testset = {}
+testset['features'] = []
+testset['labels'] = []
+
+sys.exit()
 
 
-#--------------------------------------------------
+#-------------------------------------------------
 # Step 0: Load the Dataset from pickle
 # comment the step 0 above and use this
 #--------------------------------------------------

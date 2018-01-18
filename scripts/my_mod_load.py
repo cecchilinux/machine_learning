@@ -2,6 +2,43 @@ import cv2 # resize the images
 import numpy as np
 import pandas as pd
 import os # to work with directories
+import csv
+
+def row_count(filename):
+    with open(filename) as in_file:
+        return sum(1 for _ in in_file)
+
+
+def load_trainset_validset(trainset, validset, path, image_size):
+    """Load a dataset of images divided by folders
+
+    this function look for images on the subfolders of the given path and label
+    them with the name of the folder where the image is stored
+
+    Parameters
+    ----------
+    dataset : the dictionary where to add the images
+    path : the path where the images divided into folders are stored
+
+    Returns
+    -------
+
+    """
+
+    for root, dirs, files in os.walk(path):
+        for dirname in dirs:
+            subdir_path = os.path.join(path, dirname)
+
+            in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
+            reader = csv.reader(open(in_filename), delimiter=';')
+
+            last_line_number = row_count(in_filename)
+            for row in reader:
+                if last_line_number == reader.line_num:
+                    print("classe:{}\tnum track:{}".format(dirname, int(row[0][:5]))) # non considerando la track zero
+
+
+
 
 
 def load_dataset_labeled_by_dirs(dataset, path, image_size):
@@ -17,7 +54,7 @@ def load_dataset_labeled_by_dirs(dataset, path, image_size):
 
     Returns
     -------
-    
+
     """
 
 
@@ -35,7 +72,6 @@ def load_dataset_labeled_by_dirs(dataset, path, image_size):
 
                 dataset['features'].append(np.asarray(img))
                 dataset['labels'].append(label)
-
 
 
 
