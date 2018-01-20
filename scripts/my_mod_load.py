@@ -3,13 +3,14 @@ import numpy as np
 import pandas as pd
 import os # to work with directories
 import csv
+import random
 
 def row_count(filename):
     with open(filename) as in_file:
         return sum(1 for _ in in_file)
 
 
-def load_trainset_validset(trainset, validset, path, image_size):
+def load_trainset_validset(trainingset, validset, path, image_size):
     """Load a dataset of images divided by folders
 
     this function look for images on the subfolders of the given path and label
@@ -26,7 +27,7 @@ def load_trainset_validset(trainset, validset, path, image_size):
     """
 
     for root, dirs, files in os.walk(path):
-        for dirname in dirs:
+        for dirname in sorted(dirs):
             subdir_path = os.path.join(path, dirname)
 
             in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
@@ -35,7 +36,44 @@ def load_trainset_validset(trainset, validset, path, image_size):
             last_line_number = row_count(in_filename)
             for row in reader:
                 if last_line_number == reader.line_num:
-                    print("classe:{}\tnum track:{}".format(dirname, int(row[0][:5]))) # non considerando la track zero
+
+                    #aggiungo +1 per stampare il numero corretto di track
+                    n_track = int(row[0][:5])+1
+                    print("classe:{}\tnum track:{}".format(dirname, n_track))
+
+            #estraggo un numero random tra 0 e il numero di track
+            track_rnd = random.randint(0,n_track-1)
+
+            #controllo per risalire all'etichetta parziale della track
+            if track_rnd < 10:
+                str_track_rnd = '0000'+str(track_rnd)
+            else:
+                str_track_rnd = '000'+str(track_rnd)
+            print("Random track: {}".format(str_track_rnd))
+
+            for f in os.walk(subdir_path):
+                #creo un array contenente i nomi dei file .ppm
+                file_list = sorted(f[2])
+
+                #ciclo che controlla tutte i file .ppm e controlla se coincidono con la track estratta
+                for item in file_list:
+                    label = int(dirname)
+                    imgPath = os.path.join(subdir_path, item)
+                    img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
+                    #Se le prime 5 cifre del file coincidono con la track allora --_>  validset
+                    if item[:5] == str_track_rnd:
+                        validset['features'].append(np.asarray(img))
+                        validset['labels'].append(label)
+                    #per tutto il resto c'è mastercard....
+                    #...il resto viene campionato come training set
+                    else:
+                        trainingset['features'].append(np.asarray(img))
+                        trainingset['labels'].append(label)
+                        #assign
+                # ATTENZIONE: exit() per evitare di far eseguire tutti i cicli..
+                #  .. per la computazione completa RIMUOVERLO
+                exit()
+
 
 
 
