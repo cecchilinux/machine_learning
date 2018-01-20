@@ -75,8 +75,59 @@ def load_trainset_validset(trainingset, validset, path, image_size):
                 exit()
 
 
+def load_trainset_validset_2(trainingset, validset, path, image_size):
 
 
+    for root, dirs, files in os.walk(path):
+
+        #per ogni classe
+        for dirname in sorted(dirs):
+            subdir_path = os.path.join(path, dirname)
+
+            in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
+            #reader = csv.reader(open(in_filename), delimiter=';')
+            d = {} # dizionario in cui la chiave è la track e il valore è la lista dei nomi delle immagini
+
+            #leggo il csv
+            with open(in_filename, 'r') as data_file:
+                data_file.readline() # Skip first line
+                reader = csv.reader(data_file, delimiter=';')
+                trackName = ""
+
+                # per ogni file della classe
+                for name, _, _, _, _, _, _, classId in reader:
+                    track = name[:5] # nome della track corrente
+                    if(trackName != track): # se è una track nuova
+                        d[track] = [] # inizializzo la lista per la nuova track
+                        trackName = track
+                    d[track].append(name) # appendo l'immagine alla sua track
+                    #print(classId + "  ," + name[:5] + " ," + name)
+
+                n_track = len(d.keys()) # numero di track per la classe
+                #estraggo un numero random tra 0 e il numero di track
+                track_rnd = random.randint(0,n_track-1)
+
+                #controllo per risalire all'etichetta parziale della track
+                if track_rnd < 10:
+                    str_track_rnd = '0000'+str(track_rnd)
+                else:
+                    str_track_rnd = '000'+str(track_rnd)
+
+                # scorro il dizionario track by track
+                for key in d:
+                    # per ogni immagine
+                    for imgName in d[key]:
+                        label = int(os.path.basename(subdir_path))
+                        imgPath = os.path.join(subdir_path, imgName)
+                        img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
+                        if(key != str_track_rnd):
+                            trainingset['features'].append(np.asarray(img))
+                            trainingset['labels'].append(label)
+                        else:
+                            validset['features'].append(np.asarray(img))
+                            validset['labels'].append(label)
+
+                
 
 
 def load_dataset_labeled_by_dirs(dataset, path, image_size):

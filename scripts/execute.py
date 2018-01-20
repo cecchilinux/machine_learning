@@ -91,14 +91,19 @@ trainingset['labels'] = []
 validset= {}
 validset['features'] = []
 validset['labels'] = []
-load.load_trainset_validset(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
+load.load_trainset_validset_2(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
 # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
 # dataset_dim = len(dataset['features'])
 testset = {}
 testset['features'] = []
 testset['labels'] = []
 
-sys.exit()
+load.load_dataset_labeled_by_csv(testset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+
+X_train, y_train = trainingset['features'], trainingset['labels']
+X_valid, y_valid = validset['features'], validset['labels']
+X_test, y_test = testset['features'], testset['labels']
+#sys.exit()
 
 
 #-------------------------------------------------
