@@ -17,7 +17,7 @@ import time
 DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
 FINALTEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
 ANNOTATION_FILE = '/notebooks/signnames.csv'
-FINAL_ANNOTATION_FILE = '/notebooks/GT-final_test.csv'
+FINAL_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
 
 IMAGE_SIZE = 32
 
