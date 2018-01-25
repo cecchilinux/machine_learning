@@ -30,7 +30,7 @@ parser.add_argument("--batch_size", help='', default='128')
 parser.add_argument("--dropout", help='', default='.3')
 parser.add_argument('--debug', help='Print debug messages', action='store_true')
 parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
-
+parser.add_argument("--augmentation", help="Using augment data or not", action='store_true')
 args = parser.parse_args()
 #problem_name = args.problem
 net_name = args.net
@@ -41,6 +41,7 @@ dropout = float(args.dropout)
 
 debug = '--debug' if args.debug else ''
 quiet = '--quiet' if args.quiet else ''
+augmentation = '--augmentation' if args.augmentation else ''
 
 print("\nnet {}".format(net_name))
 print("epochs: {}".format(EPOCHS))
@@ -49,6 +50,8 @@ print("bath size: {}".format(BATCH_SIZE))
 print("dropout: {}".format(dropout))
 print(debug)
 print(quiet)
+print(args.augmentation)
+print(augmentation)
 
 
 
@@ -138,10 +141,10 @@ n_test = len(X_test) # Number of testing examples.
 n_valid = len(X_valid) # Number of testing examples.
 n_classes = len(np.unique(y_train)) # How many unique classes/labels there are in the dataset.
 
-log.log("\tNumber of training examples = {}".format(n_train), False)
-log.log("\tNumber of validation examples = {}".format(n_valid), False)
-log.log("\tNumber of testing examples = {}".format(n_test) , False)
-log.log("Number of classes = {}".format(n_classes), False)
+log.log("Number of training examples = {}".format(n_train), False)
+log.log("Number of validation examples = {}".format(n_valid), False)
+log.log("Number of testing examples = {}".format(n_test) , False)
+log.log("Number of classes = {}\n".format(n_classes), False)
 
 
 
@@ -152,6 +155,8 @@ log.log("Number of classes = {}".format(n_classes), False)
 #------------------------------------------------------------
 
 # Transform all images and augment training data
+print("Data augmentation\n")
+
 X_train_transf = list()
 y_train_transf = list()
 X_test_transf = list()
@@ -164,6 +169,13 @@ for ii in range(len(X_train)):
     imgout.shape = imgout.shape + (1,)
     X_train_transf.append(imgout)
     y_train_transf.append(label)
+
+    if args.augmentation:
+        for j in range(10):
+            imgout = manipulate.augment_img(img)
+            imgout.shape = imgout.shape + (1,)
+            X_train_transf.append(imgout)
+            y_train_transf.append(label)
 
 for ii in range(len(X_valid)):
     img = X_valid[ii]
