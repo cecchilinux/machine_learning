@@ -23,14 +23,15 @@ IMAGE_SIZE = 32
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
-parser.add_argument("--net", help='The net you wanna use (LeNet, LeNet_adv ...)', default='LeNet')
-parser.add_argument("--epochs", help='The number of epochs', default='150')
-parser.add_argument("--learning_rate", help='', default='1e-3')
-parser.add_argument("--batch_size", help='', default='128')
-parser.add_argument("--dropout", help='', default='.3')
+parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
+parser.add_argument("-b", "--batch_size", help='', default='128')
+parser.add_argument("-d", "--dropout", help='', default='.3')
+parser.add_argument("-e", "--epochs", help='The number of epochs', default='150')
+parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
+parser.add_argument("-n", "--net", help='The net you wanna use (LeNet, LeNet_adv ...)', default='LeNet')
+parser.add_argument("--dataset", help='(online, pickle)', default='online')
 parser.add_argument('--debug', help='Print debug messages', action='store_true')
 parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
-parser.add_argument("--augmentation", help="Using augment data or not", action='store_true')
 args = parser.parse_args()
 #problem_name = args.problem
 net_name = args.net
@@ -38,101 +39,89 @@ EPOCHS = int(args.epochs)
 LR = float(args.learning_rate)
 BATCH_SIZE = int(args.batch_size)
 dropout = float(args.dropout)
+dataset_gtsrb = args.dataset
 
-debug = '--debug' if args.debug else ''
-quiet = '--quiet' if args.quiet else ''
-augmentation = '--augmentation' if args.augmentation else ''
+debug = True if args.debug else False
+quiet = True if args.quiet else False
+augmentation = True if args.augmentation else False
 
 print("\nnet {}".format(net_name))
 print("epochs: {}".format(EPOCHS))
 print("learning rate: {}".format(LR))
 print("bath size: {}".format(BATCH_SIZE))
 print("dropout: {}".format(dropout))
-print(debug)
-print(quiet)
-print(args.augmentation)
-print(augmentation)
-
+# print(debug)
+# print(quiet)
+# print(augmentation)
 
 
 # -----------------------------
-# log module test
+# load the log file
 # -----------------------------
-log.setup_file_logger('/logs/{}_{}_{}_{}_{}_{}.log'.format(time.strftime("%Y-%m-%d_%H%M"),
-net_name, EPOCHS, LR, BATCH_SIZE, dropout))
+log_file_name = "{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
+    net_name, EPOCHS, LR, BATCH_SIZE, dropout)
 
-# -----------------------------
+if augmentation :
+    log_file_name += "_augm"
+
+log.setup_file_logger('/logs/{}.log'.format(log_file_name))
+
 
 
 
 
 #--------------------------------------------------
-# Step 0: Load the Dataset from folders
+# Step 0: Load the Dataset
 #--------------------------------------------------
 
-from sklearn.model_selection import train_test_split
 
-# dataset = {}
-# dataset['features'] = []
-# dataset['labels'] = []
-# load.load_dataset_labeled_by_dirs(dataset, DATASET_DIR, IMAGE_SIZE)
-# log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
-# dataset_dim = len(dataset['features'])
-# load.load_dataset_labeled_by_csv(dataset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
-# log.log("Dataset dimension on {} = {}".format(FINALTEST_DIR, len(dataset['features'])- dataset_dim), False)
-# log.log("Final dimension = {}".format(len(dataset['features'])), False)
-# #np.save('dataset.npy', dataset)
-#
-# X, y = dataset['features'], dataset['labels']
-# #prende il 70% per il train e il 30% per il vaild
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-# X_test, X_valid, y_test, y_valid = train_test_split(X_test, y_test, test_size=0.2)
+if dataset_gtsrb == "online" :
+    #--------------------------------------------------
+    # Load the Dataset from folders
+    #--------------------------------------------------
 
-trainingset = {}
-trainingset['features'] = []
-trainingset['labels'] = []
-validset= {}
-validset['features'] = []
-validset['labels'] = []
-load.load_trainset_validset_2(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
-# log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
-# dataset_dim = len(dataset['features'])
-testset = {}
-testset['features'] = []
-testset['labels'] = []
+    trainingset = {}
+    trainingset['features'] = []
+    trainingset['labels'] = []
+    validset= {}
+    validset['features'] = []
+    validset['labels'] = []
+    load.load_trainset_validset_2(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
+    # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
+    # dataset_dim = len(dataset['features'])
+    testset = {}
+    testset['features'] = []
+    testset['labels'] = []
 
-load.load_dataset_labeled_by_csv(testset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+    load.load_dataset_labeled_by_csv(testset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
 
-X_train, y_train = trainingset['features'], trainingset['labels']
-X_valid, y_valid = validset['features'], validset['labels']
-X_test, y_test = testset['features'], testset['labels']
-#sys.exit()
+    X_train, y_train = trainingset['features'], trainingset['labels']
+    X_valid, y_valid = validset['features'], validset['labels']
+    X_test, y_test = testset['features'], testset['labels']
 
+elif dataset_gtsrb == "pickle" :
+    #-------------------------------------------------
+    # Load the Dataset from pickle (.p files)
+    #--------------------------------------------------
 
-#-------------------------------------------------
-# Step 0: Load the Dataset from pickle
-# comment the step 0 above and use this
-#--------------------------------------------------
+    import pickle
+    import warnings
+    warnings.filterwarnings('ignore')
 
-# Load pickled data
-# import pickle
-# import warnings
-# warnings.filterwarnings('ignore')
-#
-# training_file = '/datasets/traffic-signs-data/train.p'
-# validation_file= '/datasets/traffic-signs-data/valid.p'
-# testing_file = '/datasets/traffic-signs-data/test.p'
-#
-# with open(training_file, mode='rb') as f:
-#     train = pickle.load(f)
-# with open(validation_file, mode='rb') as f:
-#     valid = pickle.load(f)
-# with open(testing_file, mode='rb') as f:
-#     test = pickle.load(f)
-#
-# X_train, y_train = train['features'], train['labels']
-# X_valid, y_valid = valid['features'], valid['labels']
-# X_test, y_test = test['features'], test['labels']
+    training_file = '/datasets/traffic-signs-data/train.p'
+    validation_file= '/datasets/traffic-signs-data/valid.p'
+    testing_file = '/datasets/traffic-signs-data/test.p'
+
+    with open(training_file, mode='rb') as f:
+        train = pickle.load(f)
+    with open(validation_file, mode='rb') as f:
+        valid = pickle.load(f)
+    with open(testing_file, mode='rb') as f:
+        test = pickle.load(f)
+
+    X_train, y_train = train['features'], train['labels']
+    X_valid, y_valid = valid['features'], valid['labels']
+    X_test, y_test = test['features'], test['labels']
 
 
 
@@ -170,7 +159,7 @@ for ii in range(len(X_train)):
     X_train_transf.append(imgout)
     y_train_transf.append(label)
 
-    if args.augmentation:
+    if augmentation:
         for j in range(10):
             imgout = manipulate.augment_img(img)
             imgout.shape = imgout.shape + (1,)
@@ -190,6 +179,9 @@ for ii in range(len(X_test)):
     X_test_transf.append(img)
 
 
+if augmentation:
+    n_train = len(X_train_transf) # Number of training examples
+    log.log("Number of training examples (augmentated) = {}".format(n_train), False)
 
 #Definizione dei placeholder
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))
