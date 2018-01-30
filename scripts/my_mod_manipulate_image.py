@@ -57,15 +57,38 @@ def augment_img(img):
 
 
 
+
 # -----------------------
 # normalization
 # -----------------------
 
 def normalize_img(img):
-    img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0]
+    # img_bl = motion_blur(img)
+    img_bl = sharpen_img(img)
+    img_y = cv2.cvtColor(img_bl, (cv2.COLOR_BGR2YUV))[:,:,0]
     img_y = (img_y / 255.).astype(np.float32)
+
+    # ----- use one of the follow
+    # adjust_log : very very fast,
+    # equalize_adapthist : really slow but accuracy gain
     img_y = exposure.adjust_log(img_y)
     # img_y = (exposure.equalize_adapthist(img_y) - 0.5)
+    # -----
     img_y = img_y.reshape(img_y.shape + (1,))
 
     return img_y
+
+
+# ------------------------
+# blur
+# ------------------------
+
+def motion_blur(img):
+    size = 4
+    # generating the kernel
+    kernel_motion_blur = np.zeros((size, size))
+    kernel_motion_blur[int((size-1)/2), :] = np.ones(size)
+    kernel_motion_blur = kernel_motion_blur / size
+    img_bl = cv2.filter2D(img, -1, kernel_motion_blur)
+
+    return img_bl

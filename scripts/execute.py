@@ -143,7 +143,7 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 
 #------------------------------------------------------------
 # Step 2: Design and Test a Model Architecture
-# Pre-process the Data Set (normalization, grayscale, etc.)
+# Pre-process the Data Set (augmentation, blur, normalization, grayscale, etc.)
 #------------------------------------------------------------
 
 # Transform all images and augment training data
@@ -227,7 +227,7 @@ if net_name == 'LeNet':
     logits = nets.LeNet(x, keep_prob)
     log.log("used net = LeNet", False)
 elif net_name == 'LeNet-adv':
-    logits = nets.LeNet-adv(x, keep_prob)
+    logits = nets.LeNet_adv(x, keep_prob)
     log.log("used net = LeNet-adv", False)
 elif net_name == 'VGGnet':
     logits = nets.VGGnet(x, keep_prob, keep_prob_conv)
