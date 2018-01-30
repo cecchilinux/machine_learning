@@ -1,6 +1,8 @@
 
 import numpy as np
 import cv2
+from skimage import exposure
+
 
 def sharpen_img(img):
     gb = cv2.GaussianBlur(img, (5,5), 20.0)
@@ -8,7 +10,7 @@ def sharpen_img(img):
 
 def transform_img(img_in):
     img_in = img_in.copy()
-    img_out= sharpen_img(img_in)
+    img_out = sharpen_img(img_in)
     img_out = cv2.cvtColor(img_in, cv2.COLOR_RGB2YUV)
 
     img_out[:,:,0] = cv2.equalizeHist(img_out[:,:,0])
@@ -40,14 +42,30 @@ def lin_img(img,s=1.0,m=0.0):
 
 #Change image contrast; s>1 - increase
 def contr_img(img, s=1.0):
-    m=127.0*(1.0-s)
+    m = 127.0*(1.0-s)
     return lin_img(img, s, m)
 
 
 def augment_img(img):
     img = img.copy()
-    img=contr_img(img, 1.8*np.random.rand()+0.2)
-    img=random_rotate_img(img)
-    img=random_scale_img(img)
+    img = contr_img(img, 1.8*np.random.rand()+0.2)
+    img = random_rotate_img(img)
+    img = random_scale_img(img)
 
-    return transform_img(img)
+    # return transform_img(img)
+    return normalize_img(img)
+
+
+
+# -----------------------
+# normalization
+# -----------------------
+
+def normalize_img(img):
+    img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0]
+    img_y = (img_y / 255.).astype(np.float32)
+    img_y = exposure.adjust_log(img_y)
+    # img_y = (exposure.equalize_adapthist(img_y) - 0.5)
+    img_y = img_y.reshape(img_y.shape + (1,))
+
+    return img_y

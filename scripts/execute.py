@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
+# from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+# import random
+
 
 import my_mod_logs as log
 import my_mod_load as load
@@ -28,7 +31,7 @@ parser.add_argument("-b", "--batch_size", help='', default='128')
 parser.add_argument("-d", "--dropout", help='', default='.3')
 parser.add_argument("-e", "--epochs", help='The number of epochs', default='150')
 parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
-parser.add_argument("-n", "--net", help='The net you wanna use (LeNet, LeNet_adv ...)', default='LeNet')
+parser.add_argument("-n", "--net", help='The net you wanna use (LeNet, LeNet-adv, VGGnet)', default='LeNet')
 parser.add_argument("--dataset", help='(online, pickle)', default='online')
 parser.add_argument('--debug', help='Print debug messages', action='store_true')
 parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
@@ -58,8 +61,8 @@ print("dropout: {}".format(dropout))
 # -----------------------------
 # load the log file
 # -----------------------------
-log_file_name = "{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
-    net_name, EPOCHS, LR, BATCH_SIZE, dropout)
+log_file_name = "{}_{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
+    net_name, EPOCHS, LR, BATCH_SIZE, dropout, dataset_gtsrb)
 
 if augmentation :
     log_file_name += "_augm"
@@ -144,39 +147,64 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 #------------------------------------------------------------
 
 # Transform all images and augment training data
-print("Data augmentation\n")
+if augmentation:
+    print("Data augmentation\n")
+
+    # -----
+    # augmentation using keras, work in progress
+    # -----
+
+    # datagen = ImageDataGenerator(
+    #     rotation_range=17,
+    #     width_shift_range=0.1,
+    #     height_shift_range=0.1,
+    #     shear_range=0.3,
+    #     zoom_range=0.15,
+    #     horizontal_flip=False,
+    #     fill_mode='nearest')
+    #
+    # for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train), shuffle=False):
+    #     # print(X_batch.shape)
+    #     X_train_aug = X_batch.astype('uint8')
+    #     y_train_aug = y_batch
+    #     #img_out_rgb = cv2.cvtColor(X_batch[0].astype('float32'), cv2.COLOR_BGR2RGB);
+    #     #cv2.imwrite("out.jpg",img_out_rgb)
+    #     # create a grid of 3x3 images
+    #     break
+
+
 
 X_train_transf = list()
 y_train_transf = list()
 X_test_transf = list()
 X_valid_transf = list()
+
 for ii in range(len(X_train)):
     img = X_train[ii]
     label = y_train[ii]
 
-    imgout = manipulate.transform_img(img)
-    imgout.shape = imgout.shape + (1,)
+    imgout = manipulate.normalize_img(img)
     X_train_transf.append(imgout)
     y_train_transf.append(label)
 
     if augmentation:
-        for j in range(10):
+        for j in range(4):
             imgout = manipulate.augment_img(img)
-            imgout.shape = imgout.shape + (1,)
             X_train_transf.append(imgout)
             y_train_transf.append(label)
 
 for ii in range(len(X_valid)):
     img = X_valid[ii]
-    img = manipulate.transform_img(img)
-    img.shape = img.shape + (1,)
+    img = manipulate.normalize_img(img)
     X_valid_transf.append(img)
 
 for ii in range(len(X_test)):
     img = X_test[ii]
-    img = manipulate.transform_img(img)
-    img.shape = img.shape + (1,)
+    img = manipulate.normalize_img(img)
     X_test_transf.append(img)
+
+
+
 
 
 if augmentation:
@@ -187,6 +215,7 @@ if augmentation:
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))
 y = tf.placeholder(tf.int32, (None))
 keep_prob = tf.placeholder(tf.float32)
+keep_prob_conv = tf.placeholder(tf.float32)
 
 #Restituisce un tensore (a valori binari) contenente valori tutti posti a 0 tranne uno.
 one_hot_y = tf.one_hot(y, 43)
@@ -194,12 +223,18 @@ one_hot_y = tf.one_hot(y, 43)
 
 
 #Variabili necessarie per la fase di training e di testing
-if args.net in 'LeNet':
+if net_name == 'LeNet':
     logits = nets.LeNet(x, keep_prob)
     log.log("used net = LeNet", False)
+elif net_name == 'LeNet-adv':
+    logits = nets.LeNet-adv(x, keep_prob)
+    log.log("used net = LeNet-adv", False)
+elif net_name == 'VGGnet':
+    logits = nets.VGGnet(x, keep_prob, keep_prob_conv)
+    log.log("used net = VGGnet", False)
 else:
-    logits = nets.LeNet_adv(x, keep_prob)
-    log.log("used net = LeNet_adv", False)
+    sys.exit()
+
 
 
 #softmax_cross_entropy_with_logits(_sentinel, labels, logits, dim, name)
@@ -222,7 +257,7 @@ def evaluate(X_data, y_data):
     sess = tf.get_default_session()
     for offset in range(0, num_examples, BATCH_SIZE):
         batch_x, batch_y = X_data[offset:offset+BATCH_SIZE], y_data[offset:offset+BATCH_SIZE]
-        accuracy = sess.run(accuracy_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1.0})
+        accuracy = sess.run(accuracy_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1.0, keep_prob_conv: 1.0})
         total_accuracy += (accuracy * len(batch_x))
     return total_accuracy / num_examples
 
@@ -233,7 +268,7 @@ def predict(X_data):
     predicted_proba = list()
     for offset in range(0, num_examples, BATCH_SIZE):
         batch_x = X_data[offset:offset+BATCH_SIZE]
-        predicted_proba.extend( sess.run(predict_proba_operation, feed_dict={x: batch_x, keep_prob: 1.0}))
+        predicted_proba.extend( sess.run(predict_proba_operation, feed_dict={x: batch_x, keep_prob: 1.0, keep_prob_conv:1}))
 
 
     return predicted_proba
@@ -266,7 +301,6 @@ with tf.Session() as sess:
     log.log("Training... dropout = {} , batch_size = {} , learning rate = {}".format(dropout, BATCH_SIZE, LR), True)
     print()
     for i in range(EPOCHS):
-
         try:
             X_train, y_train = shuffle(X_train, y_train)
 #             print("Before Train %d sec"%(time() - start))
@@ -274,14 +308,15 @@ with tf.Session() as sess:
             for offset in range(0, num_examples, BATCH_SIZE):
                 end = offset + BATCH_SIZE
                 batch_x, batch_y = X_train[offset:end], y_train[offset:end]
-                sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1 - dropout})
+                sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1 - dropout, keep_prob_conv: 0.7})
+                # sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 0.5 , keep_prob_conv: 0.7})
 
 #           print("After Train %d sec"%(time() - start))
 
             validation_accuracy = evaluate(X_valid, y_valid)
             training_accuracy = evaluate(X_train, y_train)
 
-            errors.append((training_accuracy,validation_accuracy))
+            errors.append((training_accuracy, validation_accuracy))
 
 #           calculatiing minutes format
             minutes = int((time() - start)/60)
