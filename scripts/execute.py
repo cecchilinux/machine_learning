@@ -6,8 +6,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-# from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
-# import random
+from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+from sklearn.utils import shuffle
+import random
 
 
 import my_mod_logs as log
@@ -29,7 +30,7 @@ parser = argparse.ArgumentParser(description="Traffic signs classifier")
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
 parser.add_argument("-b", "--batch_size", help='', default='128')
 parser.add_argument("-d", "--dropout", help='', default='.3')
-parser.add_argument("-e", "--epochs", help='The number of epochs', default='150')
+parser.add_argument("-e", "--epochs", help='The number of epochs', default='80')
 parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
 parser.add_argument("-n", "--net", help='The net you wanna use (LeNet, LeNet-adv, VGGnet)', default='LeNet')
 parser.add_argument("--dataset", help='(online, pickle)', default='online')
@@ -149,29 +150,50 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 # Transform all images and augment training data
 if augmentation:
     print("Data augmentation\n")
-
     # -----
     # augmentation using keras, work in progress
     # -----
+    datagen = ImageDataGenerator(
+        rotation_range=17,
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        shear_range=0.3,
+        zoom_range=0.15,
+        horizontal_flip=False,
+        fill_mode='nearest')
 
-    # datagen = ImageDataGenerator(
-    #     rotation_range=17,
-    #     width_shift_range=0.1,
-    #     height_shift_range=0.1,
-    #     shear_range=0.3,
-    #     zoom_range=0.15,
-    #     horizontal_flip=False,
-    #     fill_mode='nearest')
-    #
-    # for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train), shuffle=False):
-    #     # print(X_batch.shape)
-    #     X_train_aug = X_batch.astype('uint8')
-    #     y_train_aug = y_batch
-    #     #img_out_rgb = cv2.cvtColor(X_batch[0].astype('float32'), cv2.COLOR_BGR2RGB);
-    #     #cv2.imwrite("out.jpg",img_out_rgb)
-    #     # create a grid of 3x3 images
-    #     break
 
+    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train), shuffle=False):
+        # print(X_batch.shape)
+        X_train_aug = X_batch.astype('uint8')
+        y_train_aug = y_batch
+        #img_out_rgb = cv2.cvtColor(X_batch[0].astype('float32'), cv2.COLOR_BGR2RGB);
+        #cv2.imwrite("out.jpg",img_out_rgb)
+        # create a grid of 3x3 images
+        break
+
+
+
+
+# separate blur
+X_train_br = list()
+y_train_br = list()
+
+for ii in range(len(X_train)):
+    img = X_train[ii]
+    label = y_train[ii]
+
+    # imgout = manipulate.motion_blur(img)
+    imgout = manipulate.sharpen_img(img)
+    X_train_br.append(imgout)
+    y_train_br.append(label)
+
+if augmentation:
+    X_train = np.concatenate((X_train, X_train_aug, X_train_br), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug, y_train_br), axis=0)
+else:
+    X_train = np.concatenate((X_train, X_train_br), axis=0)
+    y_train = np.concatenate((y_train, y_train_br), axis=0)
 
 
 X_train_transf = list()
@@ -187,11 +209,11 @@ for ii in range(len(X_train)):
     X_train_transf.append(imgout)
     y_train_transf.append(label)
 
-    if augmentation:
-        for j in range(4):
-            imgout = manipulate.augment_img(img)
-            X_train_transf.append(imgout)
-            y_train_transf.append(label)
+    # if augmentation:
+    #     for j in range(4):
+    #         imgout = manipulate.augment_img(img)
+    #         X_train_transf.append(imgout)
+    #         y_train_transf.append(label)
 
 for ii in range(len(X_valid)):
     img = X_valid[ii]
