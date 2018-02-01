@@ -103,10 +103,6 @@ if dataset_gtsrb == "online":
     X_valid, y_valid = valid['features'], valid['labels']
     X_test, y_test = test['features'], test['labels']
 
-    # names = ['features','labels']
-    # formats = ['f8','f8']
-    # dtype = dict(names = names, formats=formats)
-    # X_train = np.array(list(X_train.items()), dtype=dtype)
 
 
 elif dataset_gtsrb == "pickle":
@@ -162,11 +158,20 @@ if augmentation: # using keras ImageDataGenerator, work in progress
         horizontal_flip=False,
         fill_mode='nearest')
 
-    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train), shuffle=False):
+    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
         X_train_aug = X_batch.astype('uint8')
         y_train_aug = y_batch
         break
+    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
+        X_train_aug2 = X_batch.astype('uint8')
+        y_train_aug2 = y_batch
+        break
+    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
+        X_train_aug3 = X_batch.astype('uint8')
+        y_train_aug3 = y_batch
+        break
 
+    # TODO aggiungere fattore moltiplicativo (esguendo più cicli?)
 
 ###### Step 2.2: blurring (duplicate the X_train size)
 if blur:
@@ -186,8 +191,8 @@ if blur:
 
 ###### Step 2.3: concatenation
 if augmentation:
-    X_train = np.concatenate((X_train, X_train_aug), axis=0)
-    y_train = np.concatenate((y_train, y_train_aug), axis=0)
+    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3), axis=0)
 if blur:
     X_train = np.concatenate((X_train, X_train_br), axis=0)
     y_train = np.concatenate((y_train, y_train_br), axis=0)
