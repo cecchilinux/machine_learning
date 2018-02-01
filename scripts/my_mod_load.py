@@ -10,7 +10,7 @@ def row_count(filename):
         return sum(1 for _ in in_file)
 
 
-def load_trainset_validset(trainingset, validset, path, image_size):
+def load_train_valid(train, valid, path, image_size):
     """Load a dataset of images divided by folders
 
     this function look for images on the subfolders of the given path and label
@@ -62,20 +62,20 @@ def load_trainset_validset(trainingset, validset, path, image_size):
                     img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
                     #Se le prime 5 cifre del file coincidono con la track allora --_>  validset
                     if item[:5] == str_track_rnd:
-                        validset['features'].append(np.asarray(img))
-                        validset['labels'].append(label)
+                        valid['features'].append(np.asarray(img))
+                        valid['labels'].append(label)
                     #per tutto il resto c'è mastercard....
                     #...il resto viene campionato come training set
                     else:
-                        trainingset['features'].append(np.asarray(img))
-                        trainingset['labels'].append(label)
+                        train['features'].append(np.asarray(img))
+                        train['labels'].append(label)
                         #assign
                 # ATTENZIONE: exit() per evitare di far eseguire tutti i cicli..
                 #  .. per la computazione completa RIMUOVERLO
                 exit()
 
 
-def load_trainset_validset_2(trainingset, validset, path, image_size):
+def load_train_valid_2(train, valid, path, image_size):
 
 
     for root, dirs, files in os.walk(path):
@@ -121,13 +121,13 @@ def load_trainset_validset_2(trainingset, validset, path, image_size):
                         imgPath = os.path.join(subdir_path, imgName)
                         img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
                         if(key != str_track_rnd):
-                            trainingset['features'].append(np.asarray(img))
-                            trainingset['labels'].append(label)
+                            train['features'].append(np.asarray(img))
+                            train['labels'].append(label)
                         else:
-                            validset['features'].append(np.asarray(img))
-                            validset['labels'].append(label)
+                            valid['features'].append(np.asarray(img))
+                            valid['labels'].append(label)
 
-                
+
 
 
 def load_dataset_labeled_by_dirs(dataset, path, image_size):

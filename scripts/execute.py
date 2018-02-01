@@ -29,6 +29,7 @@ parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
 parser.add_argument("-b", "--batch_size", help='', default='128')
+parser.add_argument('--blur', help='apply the blur function (augment data)', action='store_true')
 parser.add_argument("-d", "--dropout", help='', default='.3')
 parser.add_argument("-e", "--epochs", help='The number of epochs', default='80')
 parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
@@ -48,19 +49,17 @@ dataset_gtsrb = args.dataset
 debug = True if args.debug else False
 quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
+blur = True if args.blur else False
 
 print("\nnet {}".format(net_name))
 print("epochs: {}".format(EPOCHS))
 print("learning rate: {}".format(LR))
 print("bath size: {}".format(BATCH_SIZE))
 print("dropout: {}".format(dropout))
-# print(debug)
-# print(quiet)
-# print(augmentation)
 
 
 # -----------------------------
-# load the log file
+# create and load the log file
 # -----------------------------
 log_file_name = "{}_{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
     net_name, EPOCHS, LR, BATCH_SIZE, dropout, dataset_gtsrb)
@@ -73,37 +72,44 @@ log.setup_file_logger('/logs/{}.log'.format(log_file_name))
 
 
 
-
 #--------------------------------------------------
 # Step 0: Load the Dataset
 #--------------------------------------------------
 
-
-if dataset_gtsrb == "online" :
+if dataset_gtsrb == "online":
     #--------------------------------------------------
     # Load the Dataset from folders
     #--------------------------------------------------
 
-    trainingset = {}
-    trainingset['features'] = []
-    trainingset['labels'] = []
-    validset= {}
-    validset['features'] = []
-    validset['labels'] = []
-    load.load_trainset_validset_2(trainingset, validset, DATASET_DIR, IMAGE_SIZE)
+    train = {}
+    train['features'] = []
+    train['labels'] = []
+    valid = {}
+    valid['features'] = []
+    valid['labels'] = []
+    load.load_train_valid_2(train, valid, DATASET_DIR, IMAGE_SIZE)
     # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
     # dataset_dim = len(dataset['features'])
-    testset = {}
-    testset['features'] = []
-    testset['labels'] = []
+    test = {}
+    test['features'] = []
+    test['labels'] = []
 
-    load.load_dataset_labeled_by_csv(testset, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+    load.load_dataset_labeled_by_csv(test, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
 
-    X_train, y_train = trainingset['features'], trainingset['labels']
-    X_valid, y_valid = validset['features'], validset['labels']
-    X_test, y_test = testset['features'], testset['labels']
+    train['features'] = np.array(train['features'])
+    train['labels'] = np.array(train['labels'])
 
-elif dataset_gtsrb == "pickle" :
+    X_train, y_train = train['features'], train['labels']
+    X_valid, y_valid = valid['features'], valid['labels']
+    X_test, y_test = test['features'], test['labels']
+
+    # names = ['features','labels']
+    # formats = ['f8','f8']
+    # dtype = dict(names = names, formats=formats)
+    # X_train = np.array(list(X_train.items()), dtype=dtype)
+
+
+elif dataset_gtsrb == "pickle":
     #-------------------------------------------------
     # Load the Dataset from pickle (.p files)
     #--------------------------------------------------
@@ -127,8 +133,6 @@ elif dataset_gtsrb == "pickle" :
     X_valid, y_valid = valid['features'], valid['labels']
     X_test, y_test = test['features'], test['labels']
 
-
-
 n_train = len(X_train) # Number of training examples
 n_test = len(X_test) # Number of testing examples.
 n_valid = len(X_valid) # Number of testing examples.
@@ -141,18 +145,14 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 
 
 
-
 #------------------------------------------------------------
 # Step 2: Design and Test a Model Architecture
 # Pre-process the Data Set (augmentation, blur, normalization, grayscale, etc.)
 #------------------------------------------------------------
 
-# Transform all images and augment training data
-if augmentation:
+###### Step 2.1: augmentation (duplicate the X_train size)
+if augmentation: # using keras ImageDataGenerator, work in progress
     print("Data augmentation\n")
-    # -----
-    # augmentation using keras, work in progress
-    # -----
     datagen = ImageDataGenerator(
         rotation_range=17,
         width_shift_range=0.1,
@@ -162,89 +162,83 @@ if augmentation:
         horizontal_flip=False,
         fill_mode='nearest')
 
-
     for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train), shuffle=False):
-        # print(X_batch.shape)
         X_train_aug = X_batch.astype('uint8')
         y_train_aug = y_batch
-        #img_out_rgb = cv2.cvtColor(X_batch[0].astype('float32'), cv2.COLOR_BGR2RGB);
-        #cv2.imwrite("out.jpg",img_out_rgb)
-        # create a grid of 3x3 images
         break
 
 
+###### Step 2.2: blurring (duplicate the X_train size)
+if blur:
+    X_train_br = list()
+    y_train_br = list()
+
+    for ii in range(len(X_train)):
+        img = X_train[ii]
+        label = y_train[ii]
+
+        # imgout = manipulate.motion_blur(img)
+        imgout = manipulate.sharpen_img(img)
+        X_train_br.append(imgout)
+        y_train_br.append(label)
 
 
-# separate blur
-X_train_br = list()
-y_train_br = list()
 
-for ii in range(len(X_train)):
-    img = X_train[ii]
-    label = y_train[ii]
-
-    # imgout = manipulate.motion_blur(img)
-    imgout = manipulate.sharpen_img(img)
-    X_train_br.append(imgout)
-    y_train_br.append(label)
-
+###### Step 2.3: concatenation
 if augmentation:
-    X_train = np.concatenate((X_train, X_train_aug, X_train_br), axis=0)
-    y_train = np.concatenate((y_train, y_train_aug, y_train_br), axis=0)
-else:
+    X_train = np.concatenate((X_train, X_train_aug), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug), axis=0)
+if blur:
     X_train = np.concatenate((X_train, X_train_br), axis=0)
     y_train = np.concatenate((y_train, y_train_br), axis=0)
 
 
-X_train_transf = list()
-y_train_transf = list()
-X_test_transf = list()
-X_valid_transf = list()
+###### Step 2.4: normalization and grayscale
+X_train_norm = list()
+y_train_norm = list()
+X_test_norm = list()
+X_valid_norm = list()
 
 for ii in range(len(X_train)):
     img = X_train[ii]
     label = y_train[ii]
 
     imgout = manipulate.normalize_img(img)
-    X_train_transf.append(imgout)
-    y_train_transf.append(label)
+    X_train_norm.append(imgout)
+    y_train_norm.append(label)
 
     # if augmentation:
     #     for j in range(4):
     #         imgout = manipulate.augment_img(img)
-    #         X_train_transf.append(imgout)
-    #         y_train_transf.append(label)
+    #         X_train_norm.append(imgout)
+    #         y_train_norm.append(label)
 
 for ii in range(len(X_valid)):
     img = X_valid[ii]
     img = manipulate.normalize_img(img)
-    X_valid_transf.append(img)
+    X_valid_norm.append(img)
 
 for ii in range(len(X_test)):
     img = X_test[ii]
     img = manipulate.normalize_img(img)
-    X_test_transf.append(img)
+    X_test_norm.append(img)
 
 
 
-
-
-if augmentation:
-    n_train = len(X_train_transf) # Number of training examples
-    log.log("Number of training examples (augmentated) = {}".format(n_train), False)
+n_train = len(X_train_norm) # Number of training examples
+log.log("Number of training examples (augmentated) = {}".format(n_train), False)
 
 #Definizione dei placeholder
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))
 y = tf.placeholder(tf.int32, (None))
 keep_prob = tf.placeholder(tf.float32)
-keep_prob_conv = tf.placeholder(tf.float32)
+keep_prob_conv = tf.placeholder(tf.float32) # usato da una net, forse verrà rimossa
 
 #Restituisce un tensore (a valori binari) contenente valori tutti posti a 0 tranne uno.
 one_hot_y = tf.one_hot(y, 43)
 
 
 
-#Variabili necessarie per la fase di training e di testing
 if net_name == 'LeNet':
     logits = nets.LeNet(x, keep_prob)
     log.log("used net = LeNet", False)
@@ -303,10 +297,10 @@ def predict(X_data):
 from sklearn.utils import shuffle
 from time import time
 
-X_train = X_train_transf
-X_valid = X_valid_transf
-X_test = X_test_transf
-y_train = y_train_transf
+X_train = X_train_norm
+X_valid = X_valid_norm
+X_test = X_test_norm
+y_train = y_train_norm
 
 #EPOCHS = 150
 #BATCH_SIZE = 128
