@@ -1,7 +1,7 @@
 
 import numpy as np
 import cv2
-from skimage import exposure
+from skimage import exposure # a collection of algorithms for image processing.
 
 
 def sharpen_img(img):
@@ -65,13 +65,23 @@ def augment_img(img):
 def normalize_img(img):
     # img_bl = motion_blur(img)
     #img_bl = sharpen_img(img)
-    img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0]
-    img_y = (img_y / 255.).astype(np.float32)
+    img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0] #converte l'immagine in YUV e tiene il canale Y
+    img_y = (img_y / 255.).astype(np.float32) # rappresenta i valori in un range di [0-1]
 
-    # ----- use one of the follow
+
+    # ----- global equalization
+    img_y = cv2.equalizeHist(img_y)
+
+
+
+    # ----- local equalization: use one of the follow
     # adjust_log : very very fast,
     # equalize_adapthist : really slow but accuracy gain
     #img_y = exposure.adjust_log(img_y)
+
+    # An algorithm for local contrast enhancement, that uses histograms computed
+    # 0 over different tile regions of the image. Local details can therefore be
+    # enhanced even in regions that are darker or lighter than most of the image.
     img_y = (exposure.equalize_adapthist(img_y) - 0.5)
     # -----
     img_y = img_y.reshape(img_y.shape + (1,))

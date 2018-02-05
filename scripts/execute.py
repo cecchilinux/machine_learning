@@ -25,6 +25,10 @@ FINAL_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
 
 IMAGE_SIZE = 32
 
+# data augmentation parameters
+
+
+
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
@@ -150,14 +154,21 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 if augmentation: # using keras ImageDataGenerator, work in progress
     print("Data augmentation\n")
     datagen = ImageDataGenerator(
-        rotation_range=17,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
+        # perturbed in position ([-2, 2] pixels)
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        # perturbed in scale ([.9, 1.1] ratio)
+        rescale=1./255,
+        # perturbed in rotation ([-15, 15] degrees)
+        rotation_range=15,
         shear_range=0.3,
         zoom_range=0.15,
         horizontal_flip=False,
+        vertical_flip=False,
         fill_mode='nearest')
 
+    # TODO aggiungere fattore moltiplicativo (esguendo più cicli?)
+    # i cicli 2 e 3 creano immagini diverse dal primo?
     for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
         X_train_aug = X_batch.astype('uint8')
         y_train_aug = y_batch
@@ -170,8 +181,12 @@ if augmentation: # using keras ImageDataGenerator, work in progress
         X_train_aug3 = X_batch.astype('uint8')
         y_train_aug3 = y_batch
         break
+    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
+        X_train_aug4 = X_batch.astype('uint8')
+        y_train_aug4 = y_batch
+        break
 
-    # TODO aggiungere fattore moltiplicativo (esguendo più cicli?)
+
 
 ###### Step 2.2: blurring (duplicate the X_train size)
 if blur:
@@ -191,8 +206,10 @@ if blur:
 
 ###### Step 2.3: concatenation
 if augmentation:
-    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3), axis=0)
-    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3), axis=0)
+    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, X_train_aug4), axis=0)
+    # X_train = np.concatenate((X_train, X_train_aug), axis=0)
+    # y_train = np.concatenate((y_train, y_train_aug), axis=0)
 if blur:
     X_train = np.concatenate((X_train, X_train_br), axis=0)
     y_train = np.concatenate((y_train, y_train_br), axis=0)
@@ -228,10 +245,12 @@ for ii in range(len(X_test)):
     img = manipulate.normalize_img(img)
     X_test_norm.append(img)
 
-
+###### Step 2.4: normalization and grayscale
 
 n_train = len(X_train_norm) # Number of training examples
 log.log("Number of training examples (augmentated) = {}".format(n_train), False)
+
+
 
 #Definizione dei placeholder
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))

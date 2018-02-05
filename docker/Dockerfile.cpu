@@ -74,7 +74,7 @@ RUN pip --no-cache-dir install \
 
 
 # Install Keras
-RUN conda install keras
+RUN conda install -y keras
 
 # RUN ln -s /usr/bin/python3 /usr/bin/python#
 
