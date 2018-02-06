@@ -1,0 +1,92 @@
+2018-02-06 15:08:42,067 INFO Number of training examples = 152100
+2018-02-06 15:08:42,067 INFO Number of validation examples = 1290
+2018-02-06 15:08:42,067 INFO Number of testing examples = 12569
+2018-02-06 15:08:42,067 INFO Number of classes = 43
+
+2018-02-06 15:08:42,115 INFO used net = LeNet
+2018-02-06 15:08:42,787 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.001
+2018-02-06 15:08:56,674 INFO EPOCH 1 - 14 sec ....0.14 min
+2018-02-06 15:08:56,675 INFO Training error = 0.211 Validation error = 0.248
+2018-02-06 15:09:10,347 INFO EPOCH 2 - 28 sec ....0.28 min
+2018-02-06 15:09:10,348 INFO Training error = 0.134 Validation error = 0.189
+2018-02-06 15:09:23,856 INFO EPOCH 3 - 41 sec ....0.41 min
+2018-02-06 15:09:23,856 INFO Training error = 0.105 Validation error = 0.164
+2018-02-06 15:09:37,228 INFO EPOCH 4 - 54 sec ....0.54 min
+2018-02-06 15:09:37,229 INFO Training error = 0.084 Validation error = 0.139
+2018-02-06 15:09:50,682 INFO EPOCH 5 - 68 sec ....1.8 min
+2018-02-06 15:09:50,682 INFO Training error = 0.074 Validation error = 0.124
+2018-02-06 15:10:03,842 INFO EPOCH 6 - 81 sec ....1.21 min
+2018-02-06 15:10:03,842 INFO Training error = 0.063 Validation error = 0.112
+2018-02-06 15:10:17,557 INFO EPOCH 7 - 95 sec ....1.35 min
+2018-02-06 15:10:17,558 INFO Training error = 0.058 Validation error = 0.116
+2018-02-06 15:10:30,814 INFO EPOCH 8 - 108 sec ....1.48 min
+2018-02-06 15:10:30,814 INFO Training error = 0.052 Validation error = 0.095
+2018-02-06 15:10:44,323 INFO EPOCH 9 - 122 sec ....2.2 min
+2018-02-06 15:10:44,324 INFO Training error = 0.049 Validation error = 0.114
+2018-02-06 15:10:57,614 INFO EPOCH 10 - 135 sec ....2.15 min
+2018-02-06 15:10:57,614 INFO Training error = 0.046 Validation error = 0.097
+2018-02-06 15:11:11,600 INFO EPOCH 11 - 149 sec ....2.29 min
+2018-02-06 15:11:11,600 INFO Training error = 0.043 Validation error = 0.105
+2018-02-06 15:11:25,520 INFO EPOCH 12 - 163 sec ....2.43 min
+2018-02-06 15:11:25,520 INFO Training error = 0.040 Validation error = 0.095
+2018-02-06 15:11:38,899 INFO EPOCH 13 - 176 sec ....2.56 min
+2018-02-06 15:11:38,899 INFO Training error = 0.041 Validation error = 0.091
+2018-02-06 15:11:52,395 INFO EPOCH 14 - 190 sec ....3.10 min
+2018-02-06 15:11:52,395 INFO Training error = 0.033 Validation error = 0.095
+2018-02-06 15:12:05,784 INFO EPOCH 15 - 203 sec ....3.23 min
+2018-02-06 15:12:05,785 INFO Training error = 0.033 Validation error = 0.088
+2018-02-06 15:12:19,310 INFO EPOCH 16 - 216 sec ....3.36 min
+2018-02-06 15:12:19,310 INFO Training error = 0.031 Validation error = 0.080
+2018-02-06 15:12:32,976 INFO EPOCH 17 - 230 sec ....3.50 min
+2018-02-06 15:12:32,976 INFO Training error = 0.032 Validation error = 0.086
+2018-02-06 15:12:46,504 INFO EPOCH 18 - 244 sec ....4.4 min
+2018-02-06 15:12:46,504 INFO Training error = 0.029 Validation error = 0.086
+2018-02-06 15:12:59,933 INFO EPOCH 19 - 257 sec ....4.17 min
+2018-02-06 15:12:59,933 INFO Training error = 0.027 Validation error = 0.083
+2018-02-06 15:13:13,261 INFO EPOCH 20 - 270 sec ....4.30 min
+2018-02-06 15:13:13,262 INFO Training error = 0.027 Validation error = 0.094
+2018-02-06 15:13:26,614 INFO EPOCH 21 - 284 sec ....4.44 min
+2018-02-06 15:13:26,615 INFO Training error = 0.026 Validation error = 0.091
+2018-02-06 15:13:40,185 INFO EPOCH 22 - 297 sec ....4.57 min
+2018-02-06 15:13:40,186 INFO Training error = 0.026 Validation error = 0.088
+2018-02-06 15:13:53,609 INFO EPOCH 23 - 311 sec ....5.11 min
+2018-02-06 15:13:53,610 INFO Training error = 0.025 Validation error = 0.086
+2018-02-06 15:14:06,736 INFO EPOCH 24 - 324 sec ....5.24 min
+2018-02-06 15:14:06,736 INFO Training error = 0.024 Validation error = 0.088
+2018-02-06 15:14:20,271 INFO EPOCH 25 - 337 sec ....5.37 min
+2018-02-06 15:14:20,272 INFO Training error = 0.026 Validation error = 0.105
+2018-02-06 15:14:33,545 INFO EPOCH 26 - 351 sec ....5.51 min
+2018-02-06 15:14:33,545 INFO Training error = 0.024 Validation error = 0.081
+2018-02-06 15:14:46,846 INFO EPOCH 27 - 364 sec ....6.4 min
+2018-02-06 15:14:46,846 INFO Training error = 0.025 Validation error = 0.082
+2018-02-06 15:15:00,155 INFO EPOCH 28 - 377 sec ....6.17 min
+2018-02-06 15:15:00,155 INFO Training error = 0.020 Validation error = 0.071
+2018-02-06 15:15:13,159 INFO EPOCH 29 - 390 sec ....6.30 min
+2018-02-06 15:15:13,160 INFO Training error = 0.023 Validation error = 0.082
+2018-02-06 15:15:26,505 INFO EPOCH 30 - 404 sec ....6.44 min
+2018-02-06 15:15:26,506 INFO Training error = 0.020 Validation error = 0.084
+2018-02-06 15:15:39,796 INFO EPOCH 31 - 417 sec ....6.57 min
+2018-02-06 15:15:39,796 INFO Training error = 0.020 Validation error = 0.081
+2018-02-06 15:15:53,097 INFO EPOCH 32 - 430 sec ....7.10 min
+2018-02-06 15:15:53,097 INFO Training error = 0.021 Validation error = 0.095
+2018-02-06 15:16:06,480 INFO EPOCH 33 - 444 sec ....7.24 min
+2018-02-06 15:16:06,481 INFO Training error = 0.019 Validation error = 0.079
+2018-02-06 15:16:20,110 INFO EPOCH 34 - 457 sec ....7.37 min
+2018-02-06 15:16:20,110 INFO Training error = 0.020 Validation error = 0.082
+2018-02-06 15:16:33,545 INFO EPOCH 35 - 471 sec ....7.51 min
+2018-02-06 15:16:33,546 INFO Training error = 0.020 Validation error = 0.081
+2018-02-06 15:16:46,817 INFO EPOCH 36 - 484 sec ....8.4 min
+2018-02-06 15:16:46,817 INFO Training error = 0.021 Validation error = 0.077
+2018-02-06 15:17:00,064 INFO EPOCH 37 - 497 sec ....8.17 min
+2018-02-06 15:17:00,065 INFO Training error = 0.018 Validation error = 0.086
+2018-02-06 15:17:13,290 INFO EPOCH 38 - 510 sec ....8.30 min
+2018-02-06 15:17:13,290 INFO Training error = 0.018 Validation error = 0.086
+2018-02-06 15:17:26,469 INFO EPOCH 39 - 524 sec ....8.44 min
+2018-02-06 15:17:26,469 INFO Training error = 0.017 Validation error = 0.081
+2018-02-06 15:17:39,925 INFO EPOCH 40 - 537 sec ....8.57 min
+2018-02-06 15:17:39,925 INFO Training error = 0.017 Validation error = 0.083
+2018-02-06 15:17:40,014 INFO Restoring parameters from ./models/lenet
+2018-02-06 15:17:40,041 INFO ACCURACY:
+2018-02-06 15:17:43,670 INFO Accuracy Model On Training Images: 0.983
+2018-02-06 15:17:43,705 INFO Accuracy Model On Validation Images: 0.917
+2018-02-06 15:17:44,008 INFO Accuracy Model On Test Images: 0.977

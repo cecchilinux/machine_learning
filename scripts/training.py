@@ -1,39 +1,24 @@
-#!/usr/local/bin/python3
-
 import sys
+import os
+import warnings
 import argparse
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-
-from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
-from sklearn.utils import shuffle
-import random
-
+import pickle
+import time
+import re
 
 import my_mod_logs as log
-import my_mod_load as load
-import my_mod_manipulate_image as manipulate
 import my_mod_nets as nets
-#import my_mod_eval_predict as eval_pred
-import time
 
-DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
-FINALTEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
-ANNOTATION_FILE = '/notebooks/signnames.csv'
-FINAL_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
-
-IMAGE_SIZE = 32
-
-# data augmentation parameters
-
-
+MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
-parser.add_argument("-b", "--batch_size", help='', default='128')
-parser.add_argument('--blur', help='apply the blur function (augment data)', action='store_true')
+parser.add_argument("-b", "--blur", help='apply the blur function (augment data)', action='store_true')
+parser.add_argument("-s", "--batch_size", help='', default='128')
 parser.add_argument("-d", "--dropout", help='', default='.3')
 parser.add_argument("-e", "--epochs", help='The number of epochs', default='80')
 parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
@@ -61,77 +46,80 @@ print("learning rate: {}".format(LR))
 print("bath size: {}".format(BATCH_SIZE))
 print("dropout: {}".format(dropout))
 
-
 # -----------------------------
 # create and load the log file
 # -----------------------------
 log_file_name = "{}_{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
     net_name, EPOCHS, LR, BATCH_SIZE, dropout, dataset_gtsrb)
 
-if augmentation :
-    log_file_name += "_augm"
 
 log.setup_file_logger('/logs/{}.log'.format(log_file_name))
 
+if dataset_gtsrb == 'online':
+    for root, dirs, files in os.walk(MANIPULATED_DIR):
+        for dirname in sorted(dirs, reverse=True):
+            print(dirname)
+            if 'online' in dirname:
+                train_path = os.path.join(MANIPULATED_DIR, dirname, "train.p")
+                if augmentation:
+                    train_aug1_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug1.p")
+                    train_aug2_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug2.p")
+                    train_aug3_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug3.p")
+                    train_aug4_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug4.p")
+                if blur:
+                    train_br1_path = os.path.join(MANIPULATED_DIR, dirname, "train_br1.p")
 
+                valid_path = os.path.join(MANIPULATED_DIR, dirname, "valid.p")
+                test_path = os.path.join(MANIPULATED_DIR, dirname, "test.p")
+            break
+        break
+elif dataset_gtsrb == 'pickle':
+    print("TODO pickle load")
+    sys.exit()
 
-
+#-------------------------------------------------
+# Load the Dataset from pickle (.p files)
 #--------------------------------------------------
-# Step 0: Load the Dataset
-#--------------------------------------------------
 
-if dataset_gtsrb == "online":
-    #--------------------------------------------------
-    # Load the Dataset from folders
-    #--------------------------------------------------
+warnings.filterwarnings('ignore')
 
-    train = {}
-    train['features'] = []
-    train['labels'] = []
-    valid = {}
-    valid['features'] = []
-    valid['labels'] = []
-    load.load_train_valid_2(train, valid, DATASET_DIR, IMAGE_SIZE)
-    # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
-    # dataset_dim = len(dataset['features'])
-    test = {}
-    test['features'] = []
-    test['labels'] = []
+with open(train_path, mode='rb') as f:
+    train = pickle.load(f)
+X_train, y_train = train['features'], train['labels']
 
-    load.load_dataset_labeled_by_csv(test, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+if augmentation:
+    with open(train_aug1_path, mode='rb') as f:
+        train_aug1 = pickle.load(f)
+    with open(train_aug2_path, mode='rb') as f:
+        train_aug2 = pickle.load(f)
+    with open(train_aug3_path, mode='rb') as f:
+        train_aug3 = pickle.load(f)
+    with open(train_aug4_path, mode='rb') as f:
+        train_aug4 = pickle.load(f)
 
-    train['features'] = np.array(train['features'])
-    train['labels'] = np.array(train['labels'])
+    X_train_aug, y_train_aug = train_aug1['features'], train_aug1['labels']
+    X_train_aug2, y_train_aug2 = train_aug2['features'], train_aug2['labels']
+    X_train_aug3, y_train_aug3 = train_aug3['features'], train_aug3['labels']
+    X_train_aug4, y_train_aug4 = train_aug4['features'], train_aug4['labels']
 
-    X_train, y_train = train['features'], train['labels']
-    X_valid, y_valid = valid['features'], valid['labels']
-    X_test, y_test = test['features'], test['labels']
+    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, y_train_aug4), axis=0)
 
+if blur:
+    with open(train_br1_path, mode='rb') as f:
+        train_br1 = pickle.load(f)
 
+    X_train_br, y_train_br = train_br1['features'], train_br1['labels']
 
-elif dataset_gtsrb == "pickle":
-    #-------------------------------------------------
-    # Load the Dataset from pickle (.p files)
-    #--------------------------------------------------
+    X_train = np.concatenate((X_train, X_train_br), axis=0)
+    y_train = np.concatenate((y_train, y_train_br), axis=0)
 
-    import pickle
-    import warnings
-    warnings.filterwarnings('ignore')
-
-    training_file = '/datasets/traffic-signs-data/train.p'
-    validation_file= '/datasets/traffic-signs-data/valid.p'
-    testing_file = '/datasets/traffic-signs-data/test.p'
-
-    with open(training_file, mode='rb') as f:
-        train = pickle.load(f)
-    with open(validation_file, mode='rb') as f:
-        valid = pickle.load(f)
-    with open(testing_file, mode='rb') as f:
-        test = pickle.load(f)
-
-    X_train, y_train = train['features'], train['labels']
-    X_valid, y_valid = valid['features'], valid['labels']
-    X_test, y_test = test['features'], test['labels']
+with open(valid_path, mode='rb') as f:
+    valid = pickle.load(f)
+X_valid, y_valid = valid['features'], valid['labels']
+with open(test_path, mode='rb') as f:
+    test = pickle.load(f)
+X_test, y_test = test['features'], test['labels']
 
 n_train = len(X_train) # Number of training examples
 n_test = len(X_test) # Number of testing examples.
@@ -143,113 +131,9 @@ log.log("Number of validation examples = {}".format(n_valid), False)
 log.log("Number of testing examples = {}".format(n_test) , False)
 log.log("Number of classes = {}\n".format(n_classes), False)
 
-
-
-#------------------------------------------------------------
-# Step 2: Design and Test a Model Architecture
-# Pre-process the Data Set (augmentation, blur, normalization, grayscale, etc.)
-#------------------------------------------------------------
-
-###### Step 2.1: augmentation (duplicate the X_train size)
-if augmentation: # using keras ImageDataGenerator, work in progress
-    print("Data augmentation\n")
-    datagen = ImageDataGenerator(
-        # perturbed in position ([-2, 2] pixels)
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        # perturbed in scale ([.9, 1.1] ratio)
-        rescale=1./255,
-        # perturbed in rotation ([-15, 15] degrees)
-        rotation_range=15,
-        shear_range=0.3,
-        zoom_range=0.15,
-        horizontal_flip=False,
-        vertical_flip=False,
-        fill_mode='nearest')
-
-    # TODO aggiungere fattore moltiplicativo (esguendo più cicli?)
-    # i cicli 2 e 3 creano immagini diverse dal primo?
-    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
-        X_train_aug = X_batch.astype('uint8')
-        y_train_aug = y_batch
-        break
-    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
-        X_train_aug2 = X_batch.astype('uint8')
-        y_train_aug2 = y_batch
-        break
-    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
-        X_train_aug3 = X_batch.astype('uint8')
-        y_train_aug3 = y_batch
-        break
-    for X_batch, y_batch in datagen.flow(X_train, y_train, batch_size=len(X_train)):
-        X_train_aug4 = X_batch.astype('uint8')
-        y_train_aug4 = y_batch
-        break
-
-
-
-###### Step 2.2: blurring (duplicate the X_train size)
-if blur:
-    X_train_br = list()
-    y_train_br = list()
-
-    for ii in range(len(X_train)):
-        img = X_train[ii]
-        label = y_train[ii]
-
-        # imgout = manipulate.motion_blur(img)
-        imgout = manipulate.sharpen_img(img)
-        X_train_br.append(imgout)
-        y_train_br.append(label)
-
-
-
-###### Step 2.3: concatenation
-if augmentation:
-    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
-    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, y_train_aug4), axis=0)
-    # X_train = np.concatenate((X_train, X_train_aug), axis=0)
-    # y_train = np.concatenate((y_train, y_train_aug), axis=0)
-if blur:
-    X_train = np.concatenate((X_train, X_train_br), axis=0)
-    y_train = np.concatenate((y_train, y_train_br), axis=0)
-
-
-###### Step 2.4: normalization and grayscale
-X_train_norm = list()
-y_train_norm = list()
-X_test_norm = list()
-X_valid_norm = list()
-
-for ii in range(len(X_train)):
-    img = X_train[ii]
-    label = y_train[ii]
-
-    imgout = manipulate.normalize_img(img)
-    X_train_norm.append(imgout)
-    y_train_norm.append(label)
-
-    # if augmentation:
-    #     for j in range(4):
-    #         imgout = manipulate.augment_img(img)
-    #         X_train_norm.append(imgout)
-    #         y_train_norm.append(label)
-
-for ii in range(len(X_valid)):
-    img = X_valid[ii]
-    img = manipulate.normalize_img(img)
-    X_valid_norm.append(img)
-
-for ii in range(len(X_test)):
-    img = X_test[ii]
-    img = manipulate.normalize_img(img)
-    X_test_norm.append(img)
-
-
-n_train = len(X_train_norm) # Number of training examples
-log.log("Number of training examples (augmentated) = {}".format(n_train), False)
-
-
+# -----------------------------
+# Step   : training
+# -----------------------------
 
 #Definizione dei placeholder
 x = tf.placeholder(tf.float32, (None, 32, 32, 1))
@@ -320,10 +204,10 @@ def predict(X_data):
 from sklearn.utils import shuffle
 from time import time
 
-X_train = X_train_norm
-X_valid = X_valid_norm
-X_test = X_test_norm
-y_train = y_train_norm
+# X_train = X_train_norm
+# X_valid = X_valid_norm
+# X_test = X_test_norm
+# y_train = y_train_norm
 
 #EPOCHS = 150
 #BATCH_SIZE = 128
@@ -375,8 +259,6 @@ with tf.Session() as sess:
             break
 
     saver.save(sess, './models/lenet')
-
-
 
 
 
