@@ -58,7 +58,7 @@ log.setup_file_logger('/logs/{}.log'.format(log_file_name))
 if dataset_gtsrb == 'online':
     for root, dirs, files in os.walk(MANIPULATED_DIR):
         for dirname in sorted(dirs, reverse=True):
-            print(dirname)
+            log.log("dataset used = {}".format(dirname), False)
             if 'online' in dirname:
                 train_path = os.path.join(MANIPULATED_DIR, dirname, "train.p")
                 if augmentation:
