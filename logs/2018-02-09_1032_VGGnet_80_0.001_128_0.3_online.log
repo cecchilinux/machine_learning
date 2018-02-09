@@ -1,0 +1,12 @@
+2018-02-09 10:32:47,746 INFO dataset used = 2018-02-06_1645_online_augm_blur
+2018-02-09 10:32:48,723 INFO Number of training examples = 152100
+2018-02-09 10:32:48,723 INFO Number of validation examples = 1290
+2018-02-09 10:32:48,723 INFO Number of testing examples = 12569
+2018-02-09 10:32:48,723 INFO Number of classes = 43
+
+2018-02-09 10:32:48,806 INFO used net = VGGnet
+2018-02-09 10:32:49,269 INFO Restoring parameters from models/aJq9X5vBdur8xSjxYJRGB8/models/2018-02-09_1001/lenet
+2018-02-09 10:32:49,646 INFO ACCURACY:
+2018-02-09 10:33:14,932 INFO Accuracy Model On Training Images: 0.9982
+2018-02-09 10:33:15,177 INFO Accuracy Model On Validation Images: 0.9721
+2018-02-09 10:33:17,280 INFO Accuracy Model On Test Images: 0.9901

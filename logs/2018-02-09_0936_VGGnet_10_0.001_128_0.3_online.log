@@ -1,0 +1,33 @@
+2018-02-09 09:36:51,248 INFO dataset used = 2018-02-06_1645_online_augm_blur
+2018-02-09 09:36:52,263 INFO Number of training examples = 152100
+2018-02-09 09:36:52,263 INFO Number of validation examples = 1290
+2018-02-09 09:36:52,264 INFO Number of testing examples = 12569
+2018-02-09 09:36:52,264 INFO Number of classes = 43
+
+2018-02-09 09:36:52,344 INFO used net = VGGnet
+2018-02-09 09:36:53,187 INFO Training... dropout = 0.3 , batch_size = 128 , learning rate = 0.001
+2018-02-09 09:38:33,598 INFO EPOCH 1 - 100 sec ....1.40 min
+2018-02-09 09:38:33,599 INFO Training error = 0.1347 Validation error = 0.2078
+2018-02-09 09:40:14,087 INFO EPOCH 2 - 201 sec ....3.21 min
+2018-02-09 09:40:14,087 INFO Training error = 0.0366 Validation error = 0.0791
+2018-02-09 09:41:54,390 INFO EPOCH 3 - 301 sec ....5.1 min
+2018-02-09 09:41:54,391 INFO Training error = 0.0187 Validation error = 0.0442
+2018-02-09 09:43:34,728 INFO EPOCH 4 - 402 sec ....6.42 min
+2018-02-09 09:43:34,728 INFO Training error = 0.0152 Validation error = 0.0295
+2018-02-09 09:45:14,469 INFO EPOCH 5 - 501 sec ....8.21 min
+2018-02-09 09:45:14,469 INFO Training error = 0.0084 Validation error = 0.0155
+2018-02-09 09:46:53,523 INFO EPOCH 6 - 600 sec ....10.0 min
+2018-02-09 09:46:53,524 INFO Training error = 0.0088 Validation error = 0.0388
+2018-02-09 09:48:32,886 INFO EPOCH 7 - 700 sec ....11.40 min
+2018-02-09 09:48:32,886 INFO Training error = 0.0080 Validation error = 0.0202
+2018-02-09 09:50:13,476 INFO EPOCH 8 - 800 sec ....13.20 min
+2018-02-09 09:50:13,477 INFO Training error = 0.0046 Validation error = 0.0287
+2018-02-09 09:51:52,897 INFO EPOCH 9 - 900 sec ....15.0 min
+2018-02-09 09:51:52,897 INFO Training error = 0.0045 Validation error = 0.0264
+2018-02-09 09:53:30,924 INFO EPOCH 10 - 998 sec ....16.38 min
+2018-02-09 09:53:30,924 INFO Training error = 0.0032 Validation error = 0.0132
+2018-02-09 09:53:31,079 INFO Restoring parameters from ./models/2018-02-09_0936/lenet
+2018-02-09 09:53:31,126 INFO ACCURACY:
+2018-02-09 09:53:55,567 INFO Accuracy Model On Training Images: 0.9968
+2018-02-09 09:53:55,781 INFO Accuracy Model On Validation Images: 0.9868
+2018-02-09 09:53:57,836 INFO Accuracy Model On Test Images: 0.9885

@@ -19,17 +19,18 @@ MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
-parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
-parser.add_argument("-b", "--blur", help='apply the blur function (augment data)', action='store_true')
-parser.add_argument("-s", "--batch_size", help='', default='128')
-parser.add_argument("-d", "--dropout", help='', default='.3')
-parser.add_argument("-e", "--epochs", help='The number of epochs', default='80')
-parser.add_argument("-l", "--learning_rate", help='', default='1e-3')
-parser.add_argument("-n", "--net", help='The net you wanna use (LeNet, LeNet-adv, VGGnet)', default='LeNet')
-parser.add_argument("-m", "--model", help='', default='')
-parser.add_argument("--dataset", help='(online, pickle)', default='online')
-parser.add_argument('--debug', help='Print debug messages', action='store_true')
-parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
+parser.add_argument("-a", "--augmentation", help="Using augment data or not", action="store_true")
+parser.add_argument("-b", "--blur", help="apply the blur function (augment data)", action="store_true")
+parser.add_argument("-s", "--batch_size", help="", default='128')
+parser.add_argument("-d", "--dropout", help="", default='.3')
+parser.add_argument("-e", "--epochs", help="number of epochs", default='80')
+parser.add_argument("-l", "--learning_rate", help="", default='1e-3')
+parser.add_argument("-n", "--net", help="The net you wanna use (LeNet, LeNet-adv, VGGnet)", default="LeNet-adv")
+parser.add_argument("-m", "--model", help="path to the already trained model", default="")
+parser.add_argument("--dataset", help="(online, pickle)", default="online")
+parser.add_argument("-t", "--test", help="test on new images", action="store_true")
+parser.add_argument("--debug", help="Print debug messages", action="store_true")
+parser.add_argument("--quiet", help="Print only the evaluation", action="store_true")
 args = parser.parse_args()
 #problem_name = args.problem
 net_name = args.net
@@ -40,7 +41,8 @@ dropout = float(args.dropout)
 dataset_gtsrb = args.dataset
 model = args.model
 
-eval_only = False if model == '' else True
+eval_only = False if model == "" else True
+test_new_images = True if args.test else False
 debug = True if args.debug else False
 quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
@@ -71,30 +73,29 @@ else:
 log_file_name = "{}_{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
     net_name, EPOCHS, LR, BATCH_SIZE, dropout, dataset_gtsrb)
 
-
 log.setup_file_logger('/logs/{}.log'.format(log_file_name))
 
-if dataset_gtsrb == 'online':
-    for root, dirs, files in os.walk(MANIPULATED_DIR):
-        for dirname in sorted(dirs, reverse=True):
-            log.log("dataset used = {}".format(dirname), False)
-            if 'online' in dirname:
-                train_path = os.path.join(MANIPULATED_DIR, dirname, "train.p")
-                if augmentation:
-                    train_aug1_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug1.p")
-                    train_aug2_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug2.p")
-                    train_aug3_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug3.p")
-                    train_aug4_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug4.p")
-                if blur:
-                    train_br1_path = os.path.join(MANIPULATED_DIR, dirname, "train_br1.p")
+# -----------------------------
+# load dataset manipulated
+# -----------------------------
 
-                valid_path = os.path.join(MANIPULATED_DIR, dirname, "valid.p")
-                test_path = os.path.join(MANIPULATED_DIR, dirname, "test.p")
-            break
+for root, dirs, files in os.walk(MANIPULATED_DIR):
+    for dirname in sorted(dirs, reverse=True):
+        log.log("dataset used = {}".format(dirname), False)
+        if dataset_gtsrb in dirname: # controllo tra 'online' o 'pickle'
+            train_path = os.path.join(MANIPULATED_DIR, dirname, "train.p")
+            if augmentation:
+                train_aug1_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug1.p")
+                train_aug2_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug2.p")
+                train_aug3_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug3.p")
+                train_aug4_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug4.p")
+            if blur:
+                train_br1_path = os.path.join(MANIPULATED_DIR, dirname, "train_br1.p")
+
+            valid_path = os.path.join(MANIPULATED_DIR, dirname, "valid.p")
+            test_path = os.path.join(MANIPULATED_DIR, dirname, "test.p")
         break
-elif dataset_gtsrb == 'pickle':
-    print("TODO pickle load")
-    sys.exit()
+    break
 
 #-------------------------------------------------
 # Load the Dataset from pickle (.p files)
@@ -166,7 +167,8 @@ one_hot_y = tf.one_hot(y, 43)
 
 
 if net_name == 'LeNet':
-    logits = nets.LeNet(x, keep_prob)
+    #logits = nets.LeNet(x, keep_prob, True)
+    logits = nets.LeNet(x, True)
     log.log("used net = LeNet", False)
 elif net_name == 'LeNet-adv':
     logits = nets.LeNet_adv(x, keep_prob)
@@ -211,8 +213,6 @@ def predict(X_data):
     for offset in range(0, num_examples, BATCH_SIZE):
         batch_x = X_data[offset:offset+BATCH_SIZE]
         predicted_proba.extend( sess.run(predict_proba_operation, feed_dict={x: batch_x, keep_prob: 1.0, keep_prob_conv:1}))
-
-
     return predicted_proba
 
 
@@ -267,7 +267,7 @@ with tf.Session() as sess:
                 seconds = ((time() - start) - (minutes*60))
 
                 log.log("EPOCH %d - %d sec ....%d.%d min"%(i+1, time() - start,  minutes, seconds), True)
-                log.log("Training error = {:.3f} Validation error = {:.3f}".format(1- training_accuracy , 1- validation_accuracy), True)
+                log.log("Training error = {:.4f} Validation error = {:.4f}".format(1- training_accuracy , 1- validation_accuracy), True)
 
                 print()
 
@@ -283,11 +283,54 @@ with tf.Session() as sess:
 
 
 
-
 #Printing accuracy of the model on Training, validation and Testing set.
 with tf.Session() as sess:
     saver.restore(sess, tf.train.latest_checkpoint(newpath))
     log.log("ACCURACY:", False)
-    log.log('Accuracy Model On Training Images: {:.3f}'.format(evaluate(X_train, y_train)), False)
-    log.log('Accuracy Model On Validation Images: {:.3f}'.format(evaluate(X_valid, y_valid)), False)
-    log.log('Accuracy Model On Test Images: {:.3f}'.format(evaluate(X_test, y_test)), False)
+    log.log('Accuracy Model On Training Images: {:.4f}'.format(evaluate(X_train, y_train)), False)
+    log.log('Accuracy Model On Validation Images: {:.4f}'.format(evaluate(X_valid, y_valid)), False)
+    log.log('Accuracy Model On Test Images: {:.4f}'.format(evaluate(X_test, y_test)), False)
+
+if test_new_images:
+    import skimage
+    from skimage import io
+    from skimage import transform
+    from skimage.filters import gaussian
+    import my_mod_manipulate_image as manipulate
+
+
+    # Read the images
+    i=1
+    images_wild = list()
+    labels_wild = list()
+    for line in open('./test_images/data.txt','r'):
+        fname, label = line.strip().split(' ')
+        label = int(label)
+        fname = './test_images/'+fname
+        img = io.imread(fname)
+        img = transform.resize(img,(32,32), order=3)
+        img = gaussian(img,.6,multichannel=True)*255
+        #img = transform_img(img.astype(np.uint8))
+        img = manipulate.normalize_img(img.astype(np.uint8))
+
+        img.shape = (1,) + img.shape
+        images_wild.append(img)
+        labels_wild.append(label)
+
+    images = np.concatenate(images_wild, axis=0)
+
+
+    with tf.Session() as sess:
+        saver.restore(sess, tf.train.latest_checkpoint(newpath))
+
+        predicted_proba = np.vstack(predict(images))
+
+        print('Accuracy Model On Internet Images: {}'.format(evaluate(images, labels_wild)))
+
+
+    for true_label,row in zip(labels_wild,predicted_proba):
+        top5k = np.argsort(row)[::-1][:5]
+        top5p = np.sort(row)[::-1][:5]
+        print('Top 5 Labels for image \'{}\':'.format(true_label))
+        for k,p in zip(top5k,top5p):
+              print(' - \'{}\' with prob = {:.4f} '.format(k, p))
