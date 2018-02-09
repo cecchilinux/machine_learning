@@ -70,6 +70,12 @@ if dataset_gtsrb == "online":
     load.load_train_valid_2(train, valid, DATASET_DIR, IMAGE_SIZE)
     # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
     # dataset_dim = len(dataset['features'])
+    # conversione in np array
+    train['features'] = np.array(train['features'])
+    train['labels'] = np.array(train['labels'])
+    valid['features'] = np.array(valid['features'])
+    valid['labels'] = np.array(valid['labels'])
+
     test = {}
     test['features'] = []
     test['labels'] = []
@@ -77,10 +83,6 @@ if dataset_gtsrb == "online":
     load.load_dataset_labeled_by_csv(test, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
 
     # conversione in np array
-    train['features'] = np.array(train['features'])
-    train['labels'] = np.array(train['labels'])
-    valid['features'] = np.array(valid['features'])
-    valid['labels'] = np.array(valid['labels'])
     test['features'] = np.array(test['features'])
     test['labels'] = np.array(test['labels'])
 
