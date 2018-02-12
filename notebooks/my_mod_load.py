@@ -8,6 +8,15 @@ import pickle
 
 import settings
 
+signnames = pd.read_csv('./signnames.csv')
+signnames.set_index('ClassId',inplace=True)
+
+def get_name_from_label(label):
+    # Helper, transofrm a numeric label into the corresponding strring
+    return signnames.loc[label].SignName
+
+
+
 def load_manipulated_train(dirname):
     train_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train.p")
     train_aug1_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug1.p")
@@ -296,7 +305,7 @@ def load_new_data():
         labels_wild.append(label)
 
     images = np.concatenate(images_wild, axis=0)
-    return images
+    return images, labels_wild
 
 
 def row_count(filename):

@@ -318,6 +318,7 @@ if test_new_images:
         labels_wild.append(label)
 
     images = np.concatenate(images_wild, axis=0)
+    return images
 
 
     with tf.Session() as sess:
