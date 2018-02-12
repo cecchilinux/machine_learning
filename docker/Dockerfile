@@ -90,3 +90,6 @@ RUN conda update -y conda && \
     pip install --upgrade datalab && \
     pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl && \
     conda install keras pytorch torchvision -c soumith
+
+#Install Keras
+RUN conda install keras
