@@ -284,8 +284,9 @@ def my_test():
 
 
     for true_label,row in zip(labels_wild,predicted_proba):
-        top5k = np.argsort(row)[::-1][:5]
-        top5p = np.sort(row)[::-1][:5]
+        top5k = np.argsort(row)[::-1][:3]
+        top5p = np.sort(row)[::-1][:3]
         print('Top 5 Labels for image \'{}\':'.format(load.get_name_from_label(true_label)))
         for k,p in zip(top5k,top5p):
-              print(' - \'{}\' with prob = {:.4f} '.format(k, p))
+              print(' - \'{}\' with prob = {:.4f} '.format(load.get_name_from_label(k), p))
+        print()

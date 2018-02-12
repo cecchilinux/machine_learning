@@ -290,10 +290,10 @@ def load_new_data():
     i=1
     images_wild = list()
     labels_wild = list()
-    for line in open('./test_images/data.txt','r'):
+    for line in open('./Sign_image_resized/data.txt','r'):
         fname, label = line.strip().split(' ')
         label = int(label)
-        fname = './test_images/'+fname
+        fname = './Sign_image_resized/'+fname
         img = io.imread(fname)
         img = transform.resize(img,(32,32), order=3)
         img = gaussian(img,.6,multichannel=True)*255
