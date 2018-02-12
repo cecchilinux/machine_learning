@@ -4,76 +4,71 @@ import pandas as pd
 import os # to work with directories
 import csv
 import random
+import pickle
 
-def row_count(filename):
-    with open(filename) as in_file:
-        return sum(1 for _ in in_file)
+import settings
+
+def load_manipulated_train(dirname):
+    train_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train.p")
+    train_aug1_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug1.p")
+    train_aug2_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug2.p")
+    train_aug3_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug3.p")
+    train_aug4_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug4.p")
+    train_br1_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_br1.p")
+
+    with open(train_path, mode='rb') as f:
+        train = pickle.load(f)
+    X_train, y_train = train['features'], train['labels']
+
+    with open(train_aug1_path, mode='rb') as f:
+        train_aug1 = pickle.load(f)
+    with open(train_aug2_path, mode='rb') as f:
+        train_aug2 = pickle.load(f)
+    with open(train_aug3_path, mode='rb') as f:
+        train_aug3 = pickle.load(f)
+    with open(train_aug4_path, mode='rb') as f:
+        train_aug4 = pickle.load(f)
+
+    X_train_aug, y_train_aug = train_aug1['features'], train_aug1['labels']
+    X_train_aug2, y_train_aug2 = train_aug2['features'], train_aug2['labels']
+    X_train_aug3, y_train_aug3 = train_aug3['features'], train_aug3['labels']
+    X_train_aug4, y_train_aug4 = train_aug4['features'], train_aug4['labels']
+
+    X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
+    y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, y_train_aug4), axis=0)
+
+    with open(train_br1_path, mode='rb') as f:
+        train_br1 = pickle.load(f)
+
+    X_train_br, y_train_br = train_br1['features'], train_br1['labels']
+
+    X_train = np.concatenate((X_train, X_train_br), axis=0)
+    y_train = np.concatenate((y_train, y_train_br), axis=0)
+
+    return X_train, y_train
 
 
-# def load_train_valid(train, valid, path, image_size):
-#     """Load a dataset of images divided by folders
-#
-#     this function look for images on the subfolders of the given path and label
-#     them with the name of the folder where the image is stored
-#
-#     Parameters
-#     ----------
-#     dataset : the dictionary where to add the images
-#     path : the path where the images divided into folders are stored
-#
-#     Returns
-#     -------
-#
-#     """
-#
-#     for root, dirs, files in os.walk(path):
-#         for dirname in sorted(dirs):
-#             subdir_path = os.path.join(path, dirname)
-#
-#             in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
-#             reader = csv.reader(open(in_filename), delimiter=';')
-#
-#             last_line_number = row_count(in_filename)
-#             for row in reader:
-#                 if last_line_number == reader.line_num:
-#
-#                     #aggiungo +1 per stampare il numero corretto di track
-#                     n_track = int(row[0][:5])+1
-#                     print("classe:{}\tnum track:{}".format(dirname, n_track))
-#
-#             #estraggo un numero random tra 0 e il numero di track
-#             track_rnd = random.randint(0,n_track-1)
-#
-#             #controllo per risalire all'etichetta parziale della track
-#             if track_rnd < 10:
-#                 str_track_rnd = '0000'+str(track_rnd)
-#             else:
-#                 str_track_rnd = '000'+str(track_rnd)
-#             print("Random track: {}".format(str_track_rnd))
-#
-#             for f in os.walk(subdir_path):
-#                 #creo un array contenente i nomi dei file .ppm
-#                 file_list = sorted(f[2])
-#
-#                 #ciclo che controlla tutte i file .ppm e controlla se coincidono con la track estratta
-#                 for item in file_list:
-#                     label = int(dirname)
-#                     imgPath = os.path.join(subdir_path, item)
-#                     img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
-#                     #Se le prime 5 cifre del file coincidono con la track allora --_>  validset
-#                     if item[:5] == str_track_rnd:
-#                         valid['features'].append(np.asarray(img))
-#                         valid['labels'].append(label)
-#                     #per tutto il resto c'è mastercard....
-#                     #...il resto viene campionato come training set
-#                     else:
-#                         train['features'].append(np.asarray(img))
-#                         train['labels'].append(label)
-#                         #assign
-#                 # ATTENZIONE: exit() per evitare di far eseguire tutti i cicli..
-#                 #  .. per la computazione completa RIMUOVERLO
-#                 exit()
-#
+def load_normalized_valid(dirname):
+    valid_path = os.path.join(settings.MANIPULATED_DIR, dirname, "valid.p")
+    with open(valid_path, mode='rb') as f:
+        valid = pickle.load(f)
+    X_valid, y_valid = valid['features'], valid['labels']
+    return X_valid, y_valid
+
+
+def load_normalized_test(dirname):
+    test_path = os.path.join(settings.MANIPULATED_DIR, dirname, "test.p")
+    with open(test_path, mode='rb') as f:
+        test = pickle.load(f)
+    X_test, y_test = test['features'], test['labels']
+    return X_test, y_test
+
+
+def load_train_valid_test():
+    train, valid = load_train_valid(settings.DATASET_DIR, settings.IMAGE_SIZE)
+    test = load_dataset_labeled_by_csv(settings.TEST_DIR, settings.TEST_ANNOTATION_FILE, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
+    # return {'train':train, 'valid':valid,'test':test}
+    return train, valid, test
 
 def load_train_valid(path, image_size):
     train = {}
@@ -142,57 +137,57 @@ def load_train_valid(path, image_size):
 
 
 
-def load_train_valid_2(train, valid, path, image_size):
-
-
-    for root, dirs, files in os.walk(path):
-
-        #per ogni classe
-        for dirname in sorted(dirs):
-            subdir_path = os.path.join(path, dirname)
-
-            in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
-            #reader = csv.reader(open(in_filename), delimiter=';')
-            d = {} # dizionario in cui la chiave è la track e il valore è la lista dei nomi delle immagini
-
-            #leggo il csv
-            with open(in_filename, 'r') as data_file:
-                data_file.readline() # Skip first line
-                reader = csv.reader(data_file, delimiter=';')
-                trackName = ""
-
-                # per ogni file della classe
-                for name, _, _, _, _, _, _, classId in reader:
-                    track = name[:5] # nome della track corrente
-                    if(trackName != track): # se è una track nuova
-                        d[track] = [] # inizializzo la lista per la nuova track
-                        trackName = track
-                    d[track].append(name) # appendo l'immagine alla sua track
-                    #print(classId + "  ," + name[:5] + " ," + name)
-
-                n_track = len(d.keys()) # numero di track per la classe
-                #estraggo un numero random tra 0 e il numero di track
-                track_rnd = random.randint(0,n_track-1)
-
-                #controllo per risalire all'etichetta parziale della track
-                if track_rnd < 10:
-                    str_track_rnd = '0000'+str(track_rnd)
-                else:
-                    str_track_rnd = '000'+str(track_rnd)
-
-                # scorro il dizionario track by track
-                for key in d:
-                    # per ogni immagine
-                    for imgName in d[key]:
-                        label = int(os.path.basename(subdir_path))
-                        imgPath = os.path.join(subdir_path, imgName)
-                        img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
-                        if(key != str_track_rnd):
-                            train['features'].append(np.asarray(img))
-                            train['labels'].append(label)
-                        else:
-                            valid['features'].append(np.asarray(img))
-                            valid['labels'].append(label)
+# def load_train_valid_2(train, valid, path, image_size):
+#
+#
+#     for root, dirs, files in os.walk(path):
+#
+#         #per ogni classe
+#         for dirname in sorted(dirs):
+#             subdir_path = os.path.join(path, dirname)
+#
+#             in_filename = "{}/GT-{}.csv".format(subdir_path, dirname)
+#             #reader = csv.reader(open(in_filename), delimiter=';')
+#             d = {} # dizionario in cui la chiave è la track e il valore è la lista dei nomi delle immagini
+#
+#             #leggo il csv
+#             with open(in_filename, 'r') as data_file:
+#                 data_file.readline() # Skip first line
+#                 reader = csv.reader(data_file, delimiter=';')
+#                 trackName = ""
+#
+#                 # per ogni file della classe
+#                 for name, _, _, _, _, _, _, classId in reader:
+#                     track = name[:5] # nome della track corrente
+#                     if(trackName != track): # se è una track nuova
+#                         d[track] = [] # inizializzo la lista per la nuova track
+#                         trackName = track
+#                     d[track].append(name) # appendo l'immagine alla sua track
+#                     #print(classId + "  ," + name[:5] + " ," + name)
+#
+#                 n_track = len(d.keys()) # numero di track per la classe
+#                 #estraggo un numero random tra 0 e il numero di track
+#                 track_rnd = random.randint(0,n_track-1)
+#
+#                 #controllo per risalire all'etichetta parziale della track
+#                 if track_rnd < 10:
+#                     str_track_rnd = '0000'+str(track_rnd)
+#                 else:
+#                     str_track_rnd = '000'+str(track_rnd)
+#
+#                 # scorro il dizionario track by track
+#                 for key in d:
+#                     # per ogni immagine
+#                     for imgName in d[key]:
+#                         label = int(os.path.basename(subdir_path))
+#                         imgPath = os.path.join(subdir_path, imgName)
+#                         img = cv2.resize(cv2.cvtColor(cv2.imread(imgPath), cv2.COLOR_BGR2RGB), (image_size, image_size))
+#                         if(key != str_track_rnd):
+#                             train['features'].append(np.asarray(img))
+#                             train['labels'].append(label)
+#                         else:
+#                             valid['features'].append(np.asarray(img))
+#                             valid['labels'].append(label)
 
 
 
@@ -302,3 +297,8 @@ def load_new_data():
 
     images = np.concatenate(images_wild, axis=0)
     return images
+
+
+def row_count(filename):
+    with open(filename) as in_file:
+        return sum(1 for _ in in_file)
