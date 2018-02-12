@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import my_mod_load as load
+import settings
 
 from tensorflow.contrib.layers import flatten
 
@@ -231,8 +232,8 @@ keep_prob_conv = tf.placeholder(tf.float32) # usato da una net, forse verrà rim
 #Restituisce un tensore (a valori binari) contenente valori tutti posti a 0 tranne uno.
 one_hot_y = tf.one_hot(y, 43)
 
-#logits = VGGnet(x, keep_prob, keep_prob_conv)
-logits = LeNet_adv_single(x, keep_prob)
+logits = VGGnet(x, keep_prob, keep_prob_conv)
+#logits = LeNet_adv_single(x, keep_prob)
 
 #softmax_cross_entropy_with_logits(_sentinel, labels, logits, dim, name)
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=one_hot_y)
@@ -276,17 +277,24 @@ def my_test():
     images, labels_wild = load.load_new_data()
 
     with tf.Session() as sess:
-        saver.restore(sess, tf.train.latest_checkpoint('/notebooks/models/floyd/LeNet-adv_single-dropout/models/2018-02-08_0941'))
+        saver.restore(sess, tf.train.latest_checkpoint(settings.MODEL_PATH_VGG))
 
         predicted_proba = np.vstack(predict(images))
 
         print('Accuracy Model On Internet Images: {}'.format(evaluate(images, labels_wild)))
 
-
+    well_aimed = 0
+    num_images = 0
     for true_label,row in zip(labels_wild,predicted_proba):
+        num_images += 1
         top5k = np.argsort(row)[::-1][:3]
         top5p = np.sort(row)[::-1][:3]
-        print('Top 5 Labels for image \'{}\':'.format(load.get_name_from_label(true_label)))
+        if(true_label == top5k[0]):
+            well_aimed += 1
+
+        print('Top 3 Labels for image \'{}\':'.format(load.get_name_from_label(true_label)))
         for k,p in zip(top5k,top5p):
-              print(' - \'{}\' with prob = {:.4f} '.format(load.get_name_from_label(k), p))
+            print(' - \'{}\' with prob = {:.4f} '.format(load.get_name_from_label(k), p))
         print()
+
+    print("well-aimed: {}/{}".format(well_aimed, num_images))
