@@ -2,6 +2,8 @@
 import numpy as np
 import cv2
 from skimage import exposure # a collection of algorithms for image processing.
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def sharpen_img(img):
@@ -63,6 +65,7 @@ def augment_img(img):
 # -----------------------
 
 def normalize_img(img):
+
     # img_bl = motion_blur(img)
     #img_bl = sharpen_img(img)
     img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0] #converte l'immagine in YUV e tiene il canale Y

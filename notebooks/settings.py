@@ -7,4 +7,4 @@ MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
 MODELS_PATH = '/notebooks/models/floyd/LeNet-adv_single-dropout/models/2018-02-08_0941'
 
 # 99.01
-MODEL_PATH_VGG = '/notebooks/models/floyd/VGGnet/models/2018-02-09_1001'
+MODEL_PATH_VGG = '/notebooks/final_models/VGGnet/2018-02-09_1001'

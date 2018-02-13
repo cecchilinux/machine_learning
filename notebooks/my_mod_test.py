@@ -271,7 +271,6 @@ def predict(X_data):
 
 def my_test():
 
-
     saver = tf.train.Saver()
 
     images, labels_wild = load.load_new_data()
