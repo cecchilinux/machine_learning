@@ -8,8 +8,23 @@ import pickle
 
 import settings
 
-signnames = pd.read_csv('./signnames.csv')
+signnames_path = './signnames.csv'
+signnames = pd.read_csv(signnames_path)
 signnames.set_index('ClassId',inplace=True)
+
+
+def get_classes():
+    list = []
+    with open(signnames_path, 'r') as data_file:
+        data_file.readline() # Skip first line
+        reader = csv.reader(data_file, delimiter=',')
+
+        # per ogni file della classe
+        for classId, SignName in reader:
+            #print(classId, SignName)
+            list.append(classId + ": " + SignName)
+    return(list)
+
 
 def get_name_from_label(label):
     # Helper, transofrm a numeric label into the corresponding strring
@@ -311,3 +326,56 @@ def load_new_data():
 def row_count(filename):
     with open(filename) as in_file:
         return sum(1 for _ in in_file)
+
+
+### Data exploration / visualization
+import matplotlib.pyplot as plt
+# Visualizations will be shown in the notebook.
+#%matplotlib inline
+
+import matplotlib.image as mpimg
+import random
+
+def split_by_class(y_data) :
+    """
+    Returns a dictionary whose keys are the class labels
+    and key values are list of indices with that class label.
+    """
+    img_index = {}
+    labels = set(y_data)
+    for i,y in enumerate(y_data) :
+        if y not in img_index.keys() :
+            img_index[y] = [i]
+        else :
+            img_index[y].append(i)
+    return img_index
+
+def display_sample_images(X_data, y_data, i_start='random') :
+    """
+    Displays images from each class,
+    i_start is the starting index in each class.
+    By default, images are randomly chosen from each class
+    """
+    img_index = split_by_class(y_data)
+    labels = list(set(y_data))[::-1]
+    fig, axes = plt.subplots(3, 15, figsize=(15, 3))
+    for ax in axes.flatten() :
+        if labels :
+            i_img=0
+            if i_start == 'random':
+                i_img = random.choice(img_index[labels.pop()])
+            else :
+                i_img = img_index[labels.pop()][i_start]
+            ax.imshow(X_data[i_img])
+        ax.axis('off')
+
+
+def display_class_distribution(y_data):
+    sign_classes, class_indices, class_counts = np.unique(y_data, return_index = True, return_counts = True)
+
+    plt.figure(figsize=(12, 4))
+    plt.bar(np.arange(43), class_counts, align='center')
+    plt.xlabel('Classe')
+    plt.ylabel('Numero di immagini')
+    plt.xlim(-1, 43)
+    plt.show()
