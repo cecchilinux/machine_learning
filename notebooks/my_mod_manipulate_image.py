@@ -68,7 +68,7 @@ def normalize_img(img):
 
     # img_bl = motion_blur(img)
     #img_bl = sharpen_img(img)
-    img_y = cv2.cvtColor(img, (cv2.COLOR_BGR2YUV))[:,:,0] #converte l'immagine in YUV e tiene il canale Y
+    img_y = cv2.cvtColor(img, (cv2.COLOR_RGB2YUV))[:,:,0] #converte l'immagine in YUV e tiene il canale Y
 
     # ----- global equalization
     img_y = cv2.equalizeHist(img_y)
@@ -87,6 +87,7 @@ def normalize_img(img):
     img_y = (exposure.equalize_adapthist(img_y) - 0.5)
     # -----
     img_y = img_y.reshape(img_y.shape + (1,))
+
 
     return img_y
 

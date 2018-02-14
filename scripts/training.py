@@ -291,47 +291,46 @@ with tf.Session() as sess:
     log.log('Accuracy Model On Validation Images: {:.4f}'.format(evaluate(X_valid, y_valid)), False)
     log.log('Accuracy Model On Test Images: {:.4f}'.format(evaluate(X_test, y_test)), False)
 
-if test_new_images:
-    import skimage
-    from skimage import io
-    from skimage import transform
-    from skimage.filters import gaussian
-    import my_mod_manipulate_image as manipulate
+    if test_new_images:
+        import skimage
+        from skimage import io
+        from skimage import transform
+        from skimage.filters import gaussian
+        import my_mod_manipulate_image as manipulate
 
 
-    # Read the images
-    i=1
-    images_wild = list()
-    labels_wild = list()
-    for line in open('./test_images/data.txt','r'):
-        fname, label = line.strip().split(' ')
-        label = int(label)
-        fname = './test_images/'+fname
-        img = io.imread(fname)
-        img = transform.resize(img,(32,32), order=3)
-        img = gaussian(img,.6,multichannel=True)*255
-        #img = transform_img(img.astype(np.uint8))
-        img = manipulate.normalize_img(img.astype(np.uint8))
+        # Read the images
+        i=1
+        images_wild = list()
+        labels_wild = list()
+        for line in open('./test_images/data.txt','r'):
+            fname, label = line.strip().split(' ')
+            label = int(label)
+            fname = './test_images/'+fname
+            img = io.imread(fname)
+            img = transform.resize(img,(32,32), order=3)
+            img = gaussian(img,.6,multichannel=True)*255
+            #img = transform_img(img.astype(np.uint8))
+            img = manipulate.normalize_img(img.astype(np.uint8))
 
-        img.shape = (1,) + img.shape
-        images_wild.append(img)
-        labels_wild.append(label)
+            img.shape = (1,) + img.shape
+            images_wild.append(img)
+            labels_wild.append(label)
 
-    images = np.concatenate(images_wild, axis=0)
-    return images
-
-
-    with tf.Session() as sess:
-        saver.restore(sess, tf.train.latest_checkpoint(newpath))
-
-        predicted_proba = np.vstack(predict(images))
-
-        print('Accuracy Model On Internet Images: {}'.format(evaluate(images, labels_wild)))
+        images = np.concatenate(images_wild, axis=0)
 
 
-    for true_label,row in zip(labels_wild,predicted_proba):
-        top5k = np.argsort(row)[::-1][:5]
-        top5p = np.sort(row)[::-1][:5]
-        print('Top 5 Labels for image \'{}\':'.format(true_label))
-        for k,p in zip(top5k,top5p):
-              print(' - \'{}\' with prob = {:.4f} '.format(k, p))
+        with tf.Session() as sess:
+            saver.restore(sess, tf.train.latest_checkpoint(newpath))
+
+            predicted_proba = np.vstack(predict(images))
+
+            print('Accuracy Model On Internet Images: {}'.format(evaluate(images, labels_wild)))
+
+
+        for true_label,row in zip(labels_wild,predicted_proba):
+            top5k = np.argsort(row)[::-1][:5]
+            top5p = np.sort(row)[::-1][:5]
+            print('Top 5 Labels for image \'{}\':'.format(true_label))
+            for k,p in zip(top5k,top5p):
+                  print(' - \'{}\' with prob = {:.4f} '.format(k, p))
