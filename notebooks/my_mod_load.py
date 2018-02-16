@@ -305,10 +305,12 @@ def load_new_data():
     i=1
     images_wild = list()
     labels_wild = list()
+    list_fname = []
     for line in open('./Sign_image_resized/data.txt','r'):
         fname, label = line.strip().split(' ')
         label = int(label)
-        fname = './Sign_image_resized/'+fname
+        fname = './Sign_image_resized/' + fname
+        list_fname.append(fname)
         img = io.imread(fname)
         img = transform.resize(img,(32,32), order=3)
         img = gaussian(img,.6,multichannel=True)*255
@@ -320,9 +322,9 @@ def load_new_data():
         labels_wild.append(label)
 
     images = np.concatenate(images_wild, axis=0)
-    return images, labels_wild
+    return images, labels_wild, list_fname
 
-
+    
 def row_count(filename):
     with open(filename) as in_file:
         return sum(1 for _ in in_file)

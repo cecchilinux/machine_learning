@@ -25,7 +25,7 @@ def my_test(model, learning_rate, batch_size):
 
     list = []
 
-    images, labels_wild = load.load_new_data()
+    images, labels_wild, list_fname= load.load_new_data()
 
     json_file = open("{}.json".format(model), 'r')
     loaded_model_json = json_file.read()
@@ -58,4 +58,4 @@ def my_test(model, learning_rate, batch_size):
 
     print("well-aimed: {}/{}".format(well_aimed, num_images))
     print("well-aimed: {:.4f}".format(well_aimed/num_images))
-    return list
+    return list, len(images), list_fname
