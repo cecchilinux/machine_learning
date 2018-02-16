@@ -20,8 +20,8 @@ import settings
 
 def my_test(model, learning_rate, batch_size):
 
-    LR = model
-    BATCH_SIZE = learning_rate
+    LR = learning_rate
+    BATCH_SIZE = batch_size
 
     list = []
 
@@ -50,7 +50,7 @@ def my_test(model, learning_rate, batch_size):
         if(true_label == top3k[0]):
             well_aimed += 1
         # print('Top 3 Labels for image \'{}\':'.format(load.get_name_from_label(true_label)))
-        list.append((image[num_images], true_label, top3k, top3p))
+        list.append((images[num_images], true_label, top3k, top3p))
         # for k,p in zip(top3k,top3p):
             #   print(' - \'{}\' with prob = {:.4f} '.format(load.get_name_from_label(k), p))
         # print()
