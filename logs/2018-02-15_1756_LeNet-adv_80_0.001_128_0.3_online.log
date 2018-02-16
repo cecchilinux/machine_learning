@@ -1,0 +1,13 @@
+2018-02-15 17:56:37,927 INFO dataset used = 2018-02-06_1645_online_augm_blur
+2018-02-15 17:56:39,087 INFO Number of training examples = 152100
+2018-02-15 17:56:39,087 INFO Number of validation examples = 1290
+2018-02-15 17:56:39,087 INFO Number of testing examples = 12569
+2018-02-15 17:56:39,087 INFO Number of classes = 43
+
+2018-02-15 17:59:59,742 INFO Saving...
+2018-02-15 17:59:59,769 INFO Saved model to disk
+2018-02-15 17:59:59,931 INFO Loaded model from disk
+
+2018-02-15 17:59:59,931 INFO Testing: 
+2018-02-15 18:00:06,940 INFO 
+Categorical Accuracy Score : 0.845015514361

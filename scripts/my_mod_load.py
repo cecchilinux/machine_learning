@@ -5,6 +5,10 @@ import os # to work with directories
 import csv
 import random
 
+signnames_path = '/notebooks/signnames.csv'
+signnames = pd.read_csv(signnames_path)
+signnames.set_index('ClassId',inplace=True)
+
 def row_count(filename):
     with open(filename) as in_file:
         return sum(1 for _ in in_file)
@@ -200,3 +204,38 @@ def load_dataset_labeled_by_csv(dataset, path, file_csv, delimiter, index_col, l
 
                 dataset['features'].append(np.asarray(img))
                 dataset['labels'].append(label)
+
+
+
+import skimage
+from skimage import io
+from skimage import transform
+from skimage.filters import gaussian
+import my_mod_manipulate_image as manipulate
+
+def load_new_data():
+
+    # Read the images
+    i=1
+    images_wild = list()
+    labels_wild = list()
+    for line in open('/notebooks/Sign_image_resized/data.txt','r'):
+        fname, label = line.strip().split(' ')
+        label = int(label)
+        fname = '/notebooks/Sign_image_resized/'+fname
+        img = io.imread(fname)
+        img = transform.resize(img,(32,32), order=3)
+        img = gaussian(img,.6,multichannel=True)*255
+        #img = transform_img(img.astype(np.uint8))
+        img = manipulate.normalize_img(img.astype(np.uint8))
+
+        img.shape = (1,) + img.shape
+        images_wild.append(img)
+        labels_wild.append(label)
+
+    images = np.concatenate(images_wild, axis=0)
+    return images, labels_wild
+
+def get_name_from_label(label):
+    # Helper, transofrm a numeric label into the corresponding strring
+    return signnames.loc[label].SignName

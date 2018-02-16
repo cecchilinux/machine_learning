@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 from skimage import exposure # a collection of algorithms for image processing.
+import warnings
 warnings.filterwarnings("ignore")
 
 # -----------------------
