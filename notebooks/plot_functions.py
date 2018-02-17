@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import my_mod_manipulate_image as mod
+import numpy as np
+import my_mod_load as mml
+import my_mod_test_new as test_new
 
 def original_vs_normalized(img): 
     fig = plt.figure(figsize=(12, 4))
@@ -42,4 +45,26 @@ def orginal_vs_blurred(img):
     ax2.set_title('Blurred-Normalized',fontsize=16)
     plt.axis('off')
 
+    plt.show()
+    
+    
+def final_image():
+    
+    l , n_examples, list_fname = test_new.my_test('./final_models/keras/model_108-108_ep20', learning_rate=0.01, batch_size=128)
+    fig, ax = plt.subplots(n_examples, 2,figsize=(12,60))
+
+    for i in range(n_examples):
+        labels = l[i][1]
+        img = mpimg.imread(list_fname[i])
+        names = mml.get_name_from_label(l[i][2])
+        bar_locations = np.arange(3)[::-1]
+        ax[i,0].imshow(img)
+        ax[i,0].axis('off')
+        ax[i,1].barh(bar_locations, l[i][3])
+        ax[i,1].set_yticks(0.5+bar_locations)
+        ax[i,1].set_yticklabels(names)
+        ax[i,1].yaxis.tick_right()
+        ax[i,1].set_xlim([0,1])
+    ax[0,1].set_title('Model Prediction')
+    plt.tight_layout()
     plt.show()
