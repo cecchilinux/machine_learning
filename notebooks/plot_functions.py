@@ -48,9 +48,9 @@ def orginal_vs_blurred(img):
     plt.show()
     
     
-def final_image():
+def final_image(model):
     
-    l , n_examples, list_fname = test_new.my_test('./final_models/keras/model_108-108_ep20', learning_rate=0.01, batch_size=128)
+    l , n_examples, list_fname = test_new.my_test(model, learning_rate=0.01, batch_size=128)
     fig, ax = plt.subplots(n_examples, 2,figsize=(12,60))
 
     for i in range(n_examples):
