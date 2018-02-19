@@ -37,6 +37,8 @@ BATCH_SIZE = int(args.batch_size)
 dropout = float(args.dropout)
 dataset_gtsrb = args.dataset
 model = args.model
+IMG_SIZE = 32
+NUM_CLASSES = 43
 
 eval_only = False if model == "" else True
 # test_new_images = True if args.test else False
@@ -45,16 +47,22 @@ quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
 blur = True if args.blur else False
 
-#178 ML
+# #178 ML
 net_name = "sol178ML"
 features = [108, 108]
 dense_hidden_units = [100]
-dropouts = [0.2, 0.3, 0.5]
+dropouts = [0.2, 0.2, 0.5]
+
+#178 ML
+# net_name = "sol200ML"
+# features = [108, 200]
+# dense_hidden_units = [100]
+# dropouts = [0.2, 0.2, 0.5]
 
 #26
 # features = [38, 64]
 # dense_hidden_units = [256]
-# dropouts = [0.2, 0.3, 0.5]
+# dropouts = [0.2, 0.2, 0.5]
 
 
 print("net {}".format(net_name))
@@ -173,59 +181,82 @@ from keras.utils import np_utils
 from keras.layers import Input, Dense
 from keras.models import Model
 from keras.optimizers import SGD
+
 from keras.models import model_from_json
 from keras.callbacks import LearningRateScheduler, ModelCheckpoint
 
-
-# if net_name == 'LeNet':
-#     log.log("used net = LeNet", False)
-# elif net_name == 'LeNet-adv':
-#     log.log("used net = LeNet-adv", False)
-# elif net_name == 'VGGnet':
-#     log.log("used net = VGGnet", False)
-# else:
-#     sys.exit()
 
 
 y_train = np_utils.to_categorical(y_train, 43)
 y_valid = np_utils.to_categorical(y_valid, 43)
 y_test = np_utils.to_categorical(y_test, 43)
 
+# ----------------
 
+# inputs = Input(shape=(32, 32, 1))
+#
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+#
+# first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
+# drop_1 = Dropout(dropouts[0])(first_p_layer)
+#
+# second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
+#
+# first_input_layer = Flatten()(second_p_layer)
+#
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+#
+# third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
+# drop_2 = Dropout(dropouts[1])(third_p_layer)
+#
+# second_input_layer = Flatten()(drop_2)
+#
+# input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+# drop = Dropout(dropouts[2])(hidden_layer)
+# predictions = Dense(43, activation='softmax')(drop)
+#
+# model = Model(input=inputs, output=predictions)
+
+## -- sequential
 
 inputs = Input(shape=(32, 32, 1))
 
 first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
-first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+#first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
 
 first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
 drop_1 = Dropout(dropouts[0])(first_p_layer)
 
 second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
 
-first_input_layer = Flatten()(second_p_layer)
+#first_input_layer = Flatten()(second_p_layer)
 
 second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
-second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+#second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
 
 third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
 drop_2 = Dropout(dropouts[1])(third_p_layer)
 
 second_input_layer = Flatten()(drop_2)
 
-input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
-hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+#input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+#hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(second_input_layer)
 drop = Dropout(dropouts[2])(hidden_layer)
 predictions = Dense(43, activation='softmax')(drop)
 
 model = Model(input=inputs, output=predictions)
 
-## --
+# ----- end Sequential
 
 def lr_schedule(epoch):
     return LR * (0.1 ** int(EPOCHS / 10))
 
 if not eval_only:
+
     sgd = SGD(lr=LR, decay=1e-6, momentum=0.9, nesterov=True)
 
     model.compile(optimizer=sgd,
@@ -237,9 +268,10 @@ if not eval_only:
     history_callback = model.fit(X_train, y_train,
               batch_size=BATCH_SIZE,
               epochs=EPOCHS,
-              validation_data=(X_valid, y_valid),
-              callbacks=[LearningRateScheduler(lr_schedule),
-                         ModelCheckpoint('{}.h5'.format(model_path), save_best_only=True)]
+              validation_data=(X_valid, y_valid)
+            #   ,
+            #   callbacks=[LearningRateScheduler(lr_schedule),
+            #              ModelCheckpoint('{}.h5'.format(model_path), save_best_only=True)]
                   )
 
     loss_history = history_callback.history["loss"]
