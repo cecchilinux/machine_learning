@@ -4,6 +4,7 @@
 !/.gitignore
 
 notebooks/models/
+notebooks/FloydFiles/
 scripts/models/
 scripts/training.log
 scripts/accuracy_output.txt
