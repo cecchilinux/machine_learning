@@ -370,7 +370,7 @@ def display_sample_images(X_data, y_data, i_start='random') :
                 i_img = img_index[labels.pop()][i_start]
             ax.imshow(X_data[i_img])
         ax.axis('off')
-
+    plt.show()
 
 def display_class_distribution(y_data):
     sign_classes, class_indices, class_counts = np.unique(y_data, return_index = True, return_counts = True)

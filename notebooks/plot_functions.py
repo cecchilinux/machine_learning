@@ -51,7 +51,7 @@ def orginal_vs_blurred(img):
 def final_image(model):
     
     l , n_examples, list_fname = test_new.my_test(model, learning_rate=0.01, batch_size=128)
-    fig, ax = plt.subplots(n_examples, 2,figsize=(12,60))
+    fig, ax = plt.subplots(n_examples, 2,figsize=(12,35))
 
     for i in range(n_examples):
         labels = l[i][1]
@@ -61,7 +61,7 @@ def final_image(model):
         ax[i,0].imshow(img)
         ax[i,0].axis('off')
         ax[i,1].barh(bar_locations, l[i][3])
-        ax[i,1].set_yticks(0.5+bar_locations)
+        ax[i,1].set_yticks(0.1+bar_locations)
         ax[i,1].set_yticklabels(names)
         ax[i,1].yaxis.tick_right()
         ax[i,1].set_xlim([0,1])
