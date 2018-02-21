@@ -178,7 +178,7 @@ if blur:
     for ii in range(len(X_train)):
         img = X_train[ii]
         label = y_train[ii]
-        imgout = manipulate.sharpen_img(img)
+        imgout = manipulate.motion_blur(img)
         X_train_br.append(imgout)
         y_train_br.append(label)
 
