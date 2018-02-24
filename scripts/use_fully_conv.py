@@ -4,6 +4,7 @@ from skimage import io
 from skimage import transform
 from skimage.filters import gaussian
 
+import tensorflow as tf
 from keras.layers import Dense, Dropout, Flatten, merge
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
@@ -77,8 +78,8 @@ def to_fully_conv(model):
 
     return new_model
 
-model = '/notebooks/final_models/keras/2018-02-23_1203/model_108-108-100_ep40'
-# model = './models/2018-02-19_2104/model_108-108-100_ep80'
+# model = '/notebooks/final_models/keras/2018-02-23_1203/model_108-108-100_ep40'
+model = '/notebooks/final_models/keras/2018-02-24_1111/model_108-108-100_ep40'
 
 LR = 0.01
 
@@ -120,6 +121,16 @@ print("Testing: ")
 
 predicted_proba = loaded_model_2.predict(img)
 print(predicted_proba.shape)
+
+
+# it's height, width in TF - not width, height
+new_height = int(round(224))
+new_width = int(round(224))
+resized = tf.image.resize_images(predicted_proba, [new_height, new_width])
+print(predicted_proba.shape)
+
+
+
 #print(predicted_proba)
 print(predicted_proba.shape[2])
 num = predicted_proba.shape[2]
@@ -128,7 +139,7 @@ for i in range(0, num):
     for j in range(0, num):
         top1 = np.sort(predicted_proba[0][i][j])[42]
         if(top1 >= 0.8):
-            print(top1)
+            #print(top1)
             m+=1
 
 print(m)
