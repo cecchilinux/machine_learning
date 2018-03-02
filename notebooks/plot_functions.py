@@ -68,3 +68,32 @@ def final_image(model):
     ax[0,1].set_title('Model Prediction')
     plt.tight_layout()
     plt.show()
+    
+def bad_aimed(model):
+    count = 0
+    index = []
+    l , n_examples, list_fname = test_new.my_test(model, learning_rate=0.01, batch_size=128)
+
+    for i in range(n_examples):
+        if l[i][1] != l[i][2][0]:
+            index.append(i)
+            count += 1
+
+    fig, ax = plt.subplots(count, 2,figsize=(15,8))
+
+    for ii in range(count):
+        i = index[ii]
+        labels = l[i][1]
+        img = mpimg.imread(list_fname[i])
+        names = mml.get_name_from_label(l[i][2])
+        bar_locations = np.arange(3)[::-1]
+        ax[ii,0].imshow(img)
+        ax[ii,0].axis('off')
+        ax[ii,1].barh(bar_locations, l[i][3])
+        ax[ii,1].set_yticks(0.1+bar_locations)
+        ax[ii,1].set_yticklabels(names)
+        ax[ii,1].yaxis.tick_right()
+        ax[ii,1].set_xlim([0,1])
+    ax[0,1].set_title('Model Prediction')
+    plt.tight_layout()
+    plt.show()
