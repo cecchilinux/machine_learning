@@ -10,6 +10,7 @@ import time
 import re
 
 import my_mod_logs as log
+import my_mod_nets as nets
 
 import settings
 
@@ -17,7 +18,6 @@ parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action="store_true")
 parser.add_argument("-b", "--blur", help="apply the blur function (augment data)", action="store_true")
-parser.add_argument("-c", "--color", help="", action="store_true")
 parser.add_argument("-s", "--batch_size", help="", default='128')
 parser.add_argument("-d", "--dropout", help="", default='.3')
 parser.add_argument("-e", "--epochs", help="number of epochs", default='20')
@@ -46,7 +46,6 @@ debug = True if args.debug else False
 quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
 blur = True if args.blur else False
-color = True if args.color else False
 
 # #178 ML
 net_name = "sol178ML"
@@ -144,8 +143,6 @@ if augmentation:
 
     X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
     y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, y_train_aug4), axis=0)
-    # X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3), axis=0)
-    # y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3), axis=0)
 
 if blur:
     with open(train_br1_path, mode='rb') as f:
@@ -181,9 +178,10 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 from keras.layers import Dense, Dropout, Flatten, merge
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
-from keras.layers import Input, Dense
+from keras.layers import Input, Dense, GlobalMaxPooling2D
 from keras.models import Model
 from keras.optimizers import SGD
+from utils.BilinearUpSampling import *
 
 from keras.models import model_from_json
 from keras.callbacks import LearningRateScheduler, ModelCheckpoint
@@ -194,9 +192,8 @@ y_train = np_utils.to_categorical(y_train, 43)
 y_valid = np_utils.to_categorical(y_valid, 43)
 y_test = np_utils.to_categorical(y_test, 43)
 
-# ----------------
-# 1 conv per stage padding valid
-
+# # ----------------
+#
 # # input image
 # inputs = Input(shape=(32, 32, 1))
 #
@@ -216,91 +213,96 @@ y_test = np_utils.to_categorical(y_test, 43)
 # # Branch 1:
 # # Max pooling: 2x2 stride, outputs 7x7x108
 # second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
-# first_input_layer = Flatten()(second_p_layer)
+# #first_input_layer = Flatten()(second_p_layer)
 # # Branch 2:
-# # Second conv: 5x5 kernel, 1x1 stride, valid padding, outputs 10x10x108
-# second_layer = Convolution2D(nb_filter = features[1], nb_row = 5, nb_col = 5, border_mode='valid', subsample=(1, 1), activation='relu')(drop_1)
-# # Max pooling: 2x2 stride, outputs 5x5x108
+# # Second conv: 5x5 kernel, 1x1 stride, same padding, outputs 14x14x108
+# second_layer = Convolution2D(nb_filter = features[1], nb_row = 5, nb_col = 5, border_mode='same', subsample=(1, 1), activation='relu')(drop_1)
+# # Max pooling: 2x2 stride, outputs 7x7x108
 # third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
 # # Dropout: 0.2
 # drop_2 = Dropout(dropouts[1])(third_p_layer)
-# second_input_layer = Flatten()(drop_2)
+# #second_input_layer = Flatten()(drop_2)
 #
 # # ---
 # # Classifier
 # # ---------
 # # Merge the two branches
-# input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
-# # Fully connected layer: 100 neurons
-# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
-# # Dropout: 0.5
-# drop = Dropout(dropouts[2])(hidden_layer)
-# # Softmax: 43 neurons
-# predictions = Dense(43, activation='softmax')(drop)
+# # input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+#
+#
+# input_layer = merge([second_p_layer, drop_2], mode='concat', concat_axis=1)
+#
+# # Third conv: 7x7 kernel, 1x1 stride, same padding, outputs 1x1x216
+# third_layer = Convolution2D(nb_filter = 216, nb_row = 7, nb_col = 7, border_mode='same', subsample=(1, 1), activation='relu')(input_layer)
+#
+# # Last conv: 1x1 kernel, 1x1 stride, same padding, outputs 1x1x43
+# last_layer = Convolution2D(nb_filter = 43, nb_row = 1, nb_col = 1, border_mode='same', subsample=(1, 1), activation='linear')(third_layer)
+#
+# # predictions = BilinearUpSampling2D(size=(32, 32))(last_layer)
+# predictions = GlobalMaxPooling2D()(last_layer)
+# # # Fully connected layer: 100 neurons
+# # hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+# # # Dropout: 0.5
+# # drop = Dropout(dropouts[2])(hidden_layer)
+# # # Softmax: 43 neurons
+# #predictions = Dense(43, activation='softmax')(drop)
+#
 # model = Model(input=inputs, output=predictions)
 
-# ---------------------
-# 2 conv per stage padding valid
 
-if color:
-    inputs = Input(shape=(32, 32, 3))
-else:
-    inputs = Input(shape=(32, 32, 1))
-
-first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
-first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
-
-first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
-drop_1 = Dropout(dropouts[0])(first_p_layer)
-
-second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
-
-first_input_layer = Flatten()(second_p_layer)
-
-second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
-second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
-
-third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
-drop_2 = Dropout(dropouts[1])(third_p_layer)
-
-second_input_layer = Flatten()(drop_2)
-
-input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
-hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
-drop = Dropout(dropouts[2])(hidden_layer)
-predictions = Dense(43, activation='softmax')(drop)
-
-model = Model(input=inputs, output=predictions)
-
-## -- sequential
 
 # inputs = Input(shape=(32, 32, 1))
 #
 # first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
-# #first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
 #
 # first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
 # drop_1 = Dropout(dropouts[0])(first_p_layer)
 #
 # second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
 #
-# #first_input_layer = Flatten()(second_p_layer)
+# first_input_layer = Flatten()(second_p_layer)
 #
 # second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
-# #second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
 #
 # third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
 # drop_2 = Dropout(dropouts[1])(third_p_layer)
 #
 # second_input_layer = Flatten()(drop_2)
 #
-# #input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
-# #hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
-# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(second_input_layer)
+# input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
 # drop = Dropout(dropouts[2])(hidden_layer)
 # predictions = Dense(43, activation='softmax')(drop)
 #
 # model = Model(input=inputs, output=predictions)
+
+# -- sequential
+
+inputs = Input(shape=(32, 32, 1))
+
+first_layer = Convolution2D(features[0], 3, 3, activation='relu', border_mode="same")(inputs)
+first_layer = Convolution2D(features[0], 3, 3, activation='relu', border_mode="same")(first_layer)
+
+first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
+drop_1 = Dropout(dropouts[0])(first_p_layer)
+
+# second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
+
+second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(drop_1)
+second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(second_layer)
+
+third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
+drop_2 = Dropout(dropouts[1])(third_p_layer)
+
+second_input_layer = Flatten()(drop_2)
+
+hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(second_input_layer)
+drop = Dropout(dropouts[2])(hidden_layer)
+predictions = Dense(43, activation='softmax')(drop)
+
+model = Model(input=inputs, output=predictions)
 
 # ----- end Sequential
 
@@ -329,8 +331,11 @@ if not eval_only:
     loss_history = history_callback.history["loss"]
     log.log("loss:", False)
     log.log(loss_history, False)
-    val_acc = history_callback.history["val_acc"]
+    acc = history_callback.history["acc"]
     log.log("accuracy:", False)
+    log.log(acc, False)
+    val_acc = history_callback.history["val_acc"]
+    log.log("val accuracy:", False)
     log.log(val_acc, False)
 
     time.sleep(0.1)
