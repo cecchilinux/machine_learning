@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import time
 import pickle
+import settings
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 from sklearn.utils import shuffle
@@ -12,14 +13,6 @@ import random
 
 import my_mod_load as load
 import my_mod_manipulate_image as manipulate
-
-DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
-FINALTEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
-ANNOTATION_FILE = '/notebooks/signnames.csv'
-FINAL_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
-MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
-
-IMAGE_SIZE = 32
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
@@ -51,7 +44,7 @@ if augmentation :
 if blur :
     folder += "_blur"
 
-newpath = os.path.join(MANIPULATED_DIR, folder)
+newpath = os.path.join(settings.MANIPULATED_DIR, folder)
 if not os.path.exists(newpath):
     os.makedirs(newpath)
 
@@ -71,8 +64,8 @@ if dataset_gtsrb == "online":
     valid = {}
     valid['features'] = []
     valid['labels'] = []
-    load.load_train_valid_2(train, valid, DATASET_DIR, IMAGE_SIZE)
-    # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
+    load.load_train_valid_2(train, valid, settings.DATASET_DIR, settings.IMAGE_SIZE)
+    # log.log("Dataset dimension on {} = {}".format(settings.DATASET_DIR, len(dataset['features'])), False)
     # dataset_dim = len(dataset['features'])
     # conversione in np array
     train['features'] = np.array(train['features'])
@@ -84,7 +77,7 @@ if dataset_gtsrb == "online":
     test['features'] = []
     test['labels'] = []
 
-    load.load_dataset_labeled_by_csv(test, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+    load.load_dataset_labeled_by_csv(test, settings.TEST_DIR, settings.TEST_ANNOTATION_FILE, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
 
     # conversione in np array
     test['features'] = np.array(test['features'])

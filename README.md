@@ -1,13 +1,29 @@
-# machine_learning
+# Traffic sign classifier
+Machine learning course project. We build a traffic sign classifier with multi-scale Convolutional Networks using Keras starting from [this]("http://ieeexplore.ieee.org/document/6033589/") publication, obtaining the result of 99.33% in the [GTSRB dataset]("http://benchmark.ini.rub.de/?section=gtsrb&subsection=news") version online-competition (the same used on the publication) improving the accuracy on test-set.
 
-## Docker
-If you want to use Docker read the docker/INSTRUCTIONS.md
+You can find all the details on this Jupiter [notebook]("notebooks/report.ipynb") written in Italian :'( .
 
-## Execute
+## Requirements
+If you want to use Docker read the [docker/README.md]("https://github.com/CecchiLinux/machine_learning/tree/master/docker"), otherwise you need on your system:
+- python3
+- jupyter
+- numpy
+- pandas
+- scikit-learn
+- matplotlib
+- scikit-image
+- glob2
+- opencv
+- keras
+
+## Usage
 
 ```bash
 cd scripts
-python execute.py --help
+python preprocessing.py --help
+python training.py --help
+python test_on_testset.py --help
+python test_on_new.py --help
 
-python execute.py --epoch=4
+python training.py --augmentation --blur --epochs 40 -- dataset online
 ```

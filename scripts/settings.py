@@ -1,5 +1,6 @@
-IMAGE_SIZE = 32
+IMAGE_SIZE = 48
 DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
+ANNOTATION_FILE = '/notebooks/signnames.csv'
 TEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
 TEST_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
 MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'

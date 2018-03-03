@@ -37,7 +37,7 @@ BATCH_SIZE = int(args.batch_size)
 dropout = float(args.dropout)
 dataset_gtsrb = args.dataset
 model = args.model
-IMG_SIZE = 32
+# IMG_SIZE = 32
 NUM_CLASSES = 43
 
 eval_only = False if model == "" else True
