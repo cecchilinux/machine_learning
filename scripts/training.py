@@ -326,14 +326,16 @@ if not eval_only:
             #              ModelCheckpoint('{}.h5'.format(model_path), save_best_only=True)]
                   )
 
-    loss_history = history_callback.history["loss"]
-    log.log("loss:", False)
-    log.log(loss_history, False)
-    val_acc = history_callback.history["val_acc"]
-    log.log("accuracy:", False)
-    log.log(val_acc, False)
 
-    time.sleep(0.1)
+    loss_history = history_callback.history["loss"]
+    log("loss:", False)
+    log(loss_history, False)
+    val_acc = history_callback.history["val_acc"]
+    log("val accuracy:", False)
+    log(val_acc, False)
+    acc = history_callback.history["acc"]
+    log("accuracy:", False)
+    log(acc, False)    time.sleep(0.1)
 
     log.log("Saving...", False)
     model_json = model.to_json()

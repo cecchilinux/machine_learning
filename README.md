@@ -1,10 +1,10 @@
 # Traffic sign classifier
-Machine learning course project. We build a traffic sign classifier with multi-scale Convolutional Networks using Keras starting from [this]("http://ieeexplore.ieee.org/document/6033589/") publication, obtaining the result of 99.33% in the [GTSRB dataset]("http://benchmark.ini.rub.de/?section=gtsrb&subsection=news") version online-competition (the same used on the publication) improving the accuracy on test-set.
+Machine learning course project. We build a traffic sign classifier with multi-scale Convolutional Networks using Keras starting from [this](http://ieeexplore.ieee.org/document/6033589/) publication, obtaining the result of 99.33% in the [GTSRB dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=news) version online-competition (the same used on the publication) improving the accuracy on test-set.
 
-You can find all the details on this Jupiter [notebook]("notebooks/report.ipynb") written in Italian :'( .
+You can find all the details on this Jupiter [notebook](notebooks/report.ipynb) written in Italian :'( .
 
 ## Requirements
-If you want to use Docker read the [docker/README.md]("https://github.com/CecchiLinux/machine_learning/tree/master/docker"), otherwise you need on your system:
+If you want to use Docker read the [docker/README.md](docker), otherwise you need on your system:
 - python3
 - jupyter
 - numpy
