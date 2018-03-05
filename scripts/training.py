@@ -10,29 +10,26 @@ import time
 import re
 
 import my_mod_logs as log
-import my_mod_nets as nets
 
-MODEL_DIR = './models/'
-MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
-
-
+import settings
 
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 #parser.add_argument('problem', help='The problem name (inside ./in folder)')
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action="store_true")
 parser.add_argument("-b", "--blur", help="apply the blur function (augment data)", action="store_true")
+parser.add_argument("-c", "--color", help="", action="store_true")
 parser.add_argument("-s", "--batch_size", help="", default='128')
 parser.add_argument("-d", "--dropout", help="", default='.3')
-parser.add_argument("-e", "--epochs", help="number of epochs", default='80')
-parser.add_argument("-l", "--learning_rate", help="", default='1e-3')
-parser.add_argument("-n", "--net", help="The net you wanna use (LeNet, LeNet-adv, VGGnet)", default="LeNet-adv")
+parser.add_argument("-e", "--epochs", help="number of epochs", default='20')
+parser.add_argument("-l", "--learning_rate", help="", default='1e-2')
+parser.add_argument("-n", "--net", help="The net you wanna use (now locked sol178ML)", default="sol178ML")
 parser.add_argument("-m", "--model", help="path to the already trained model", default="")
 parser.add_argument("--dataset", help="(online, pickle)", default="online")
-parser.add_argument("-t", "--test", help="test on new images", action="store_true")
+# parser.add_argument("-t", "--test", help="test on new images", action="store_true")
 parser.add_argument("--debug", help="Print debug messages", action="store_true")
 parser.add_argument("--quiet", help="Print only the evaluation", action="store_true")
 args = parser.parse_args()
-#problem_name = args.problem
+# problem_name = args.problem
 net_name = args.net
 EPOCHS = int(args.epochs)
 LR = float(args.learning_rate)
@@ -40,15 +37,36 @@ BATCH_SIZE = int(args.batch_size)
 dropout = float(args.dropout)
 dataset_gtsrb = args.dataset
 model = args.model
+# IMG_SIZE = 32
+NUM_CLASSES = 43
 
 eval_only = False if model == "" else True
-test_new_images = True if args.test else False
+# test_new_images = True if args.test else False
 debug = True if args.debug else False
 quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
 blur = True if args.blur else False
+color = True if args.color else False
 
-print("\nnet {}".format(net_name))
+# #178 ML
+net_name = "sol178ML"
+features = [108, 108]
+dense_hidden_units = [100]
+dropouts = [0.2, 0.2, 0.5]
+
+#178 ML
+# net_name = "sol200ML"
+# features = [108, 200]
+# dense_hidden_units = [100]
+# dropouts = [0.2, 0.2, 0.5]
+
+#26
+# features = [38, 64]
+# dense_hidden_units = [256]
+# dropouts = [0.2, 0.2, 0.5]
+
+
+print("net {}".format(net_name))
 print("epochs: {}".format(EPOCHS))
 print("learning rate: {}".format(LR))
 print("bath size: {}".format(BATCH_SIZE))
@@ -59,12 +77,14 @@ if not eval_only:
     # new model folder
     date = time.strftime("%Y-%m-%d_%H%M")
     new_model_folder = "{}".format(date)
-    newpath = os.path.join(MODEL_DIR, new_model_folder)
+    newpath = os.path.join(settings.MODELS_DIR, new_model_folder)
     if not os.path.exists(newpath):
         os.makedirs(newpath)
-    model_lenet_path = os.path.join(newpath, 'lenet')
+    model_name = 'model_{}-{}-{}_ep{}'.format(features[0], features[1], dense_hidden_units[0], EPOCHS)
+    model_path = os.path.join(newpath, model_name)
+
 else:
-    newpath = model
+    model_path = model
 
 
 # -----------------------------
@@ -73,27 +93,27 @@ else:
 log_file_name = "{}_{}_{}_{}_{}_{}_{}".format(time.strftime("%Y-%m-%d_%H%M"),
     net_name, EPOCHS, LR, BATCH_SIZE, dropout, dataset_gtsrb)
 
-log.setup_file_logger('/logs/{}.log'.format(log_file_name))
+log.setup_file_logger('{}{}.log'.format(settings.LOG_DIR, log_file_name))
 
 # -----------------------------
 # load dataset manipulated
 # -----------------------------
 
-for root, dirs, files in os.walk(MANIPULATED_DIR):
+for root, dirs, files in os.walk(settings.MANIPULATED_DIR):
     for dirname in sorted(dirs, reverse=True):
         log.log("dataset used = {}".format(dirname), False)
         if dataset_gtsrb in dirname: # controllo tra 'online' o 'pickle'
-            train_path = os.path.join(MANIPULATED_DIR, dirname, "train.p")
+            train_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train.p")
             if augmentation:
-                train_aug1_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug1.p")
-                train_aug2_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug2.p")
-                train_aug3_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug3.p")
-                train_aug4_path = os.path.join(MANIPULATED_DIR, dirname, "train_aug4.p")
+                train_aug1_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug1.p")
+                train_aug2_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug2.p")
+                train_aug3_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug3.p")
+                train_aug4_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_aug4.p")
             if blur:
-                train_br1_path = os.path.join(MANIPULATED_DIR, dirname, "train_br1.p")
+                train_br1_path = os.path.join(settings.MANIPULATED_DIR, dirname, "train_br1.p")
 
-            valid_path = os.path.join(MANIPULATED_DIR, dirname, "valid.p")
-            test_path = os.path.join(MANIPULATED_DIR, dirname, "test.p")
+            valid_path = os.path.join(settings.MANIPULATED_DIR, dirname, "valid.p")
+            test_path = os.path.join(settings.MANIPULATED_DIR, dirname, "test.p")
         break
     break
 
@@ -124,6 +144,8 @@ if augmentation:
 
     X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3, X_train_aug4), axis=0)
     y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3, y_train_aug4), axis=0)
+    # X_train = np.concatenate((X_train, X_train_aug, X_train_aug2, X_train_aug3), axis=0)
+    # y_train = np.concatenate((y_train, y_train_aug, y_train_aug2, y_train_aug3), axis=0)
 
 if blur:
     with open(train_br1_path, mode='rb') as f:
@@ -155,182 +177,191 @@ log.log("Number of classes = {}\n".format(n_classes), False)
 # Step   : training
 # -----------------------------
 
-#Definizione dei placeholder
-x = tf.placeholder(tf.float32, (None, 32, 32, 1))
-y = tf.placeholder(tf.int32, (None))
-keep_prob = tf.placeholder(tf.float32)
-keep_prob_conv = tf.placeholder(tf.float32) # usato da una net, forse verrà rimossa
 
-#Restituisce un tensore (a valori binari) contenente valori tutti posti a 0 tranne uno.
-one_hot_y = tf.one_hot(y, 43)
+from keras.layers import Dense, Dropout, Flatten, merge
+from keras.layers import Convolution2D, MaxPooling2D
+from keras.utils import np_utils
+from keras.layers import Input, Dense
+from keras.models import Model
+from keras.optimizers import SGD
+
+from keras.models import model_from_json
+from keras.callbacks import LearningRateScheduler, ModelCheckpoint
 
 
 
-if net_name == 'LeNet':
-    #logits = nets.LeNet(x, keep_prob, True)
-    logits = nets.LeNet(x, True)
-    log.log("used net = LeNet", False)
-elif net_name == 'LeNet-adv':
-    logits = nets.LeNet_adv(x, keep_prob)
-    log.log("used net = LeNet-adv", False)
-elif net_name == 'VGGnet':
-    logits = nets.VGGnet(x, keep_prob, keep_prob_conv)
-    log.log("used net = VGGnet", False)
+y_train = np_utils.to_categorical(y_train, 43)
+y_valid = np_utils.to_categorical(y_valid, 43)
+y_test = np_utils.to_categorical(y_test, 43)
+
+# ----------------
+# 1 conv per stage padding valid
+
+# # input image
+# inputs = Input(shape=(32, 32, 1))
+#
+# # ---
+# # Stage 1
+# # --------
+# # First conv: 5x5 kernel, 1x1 stride, valid padding, outputs 28x28x108
+# first_layer = Convolution2D(nb_filter = features[0], nb_row = 5, nb_col = 5, border_mode='valid', subsample=(1, 1), activation='relu')(inputs)
+# # Max pooling: 2x2 stride, outputs 14x14x108
+# first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
+# # Dropout: 0.2
+# drop_1 = Dropout(dropouts[0])(first_p_layer)
+#
+# # ---
+# # Stage 2
+# # ----------
+# # Branch 1:
+# # Max pooling: 2x2 stride, outputs 7x7x108
+# second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
+# first_input_layer = Flatten()(second_p_layer)
+# # Branch 2:
+# # Second conv: 5x5 kernel, 1x1 stride, valid padding, outputs 10x10x108
+# second_layer = Convolution2D(nb_filter = features[1], nb_row = 5, nb_col = 5, border_mode='valid', subsample=(1, 1), activation='relu')(drop_1)
+# # Max pooling: 2x2 stride, outputs 5x5x108
+# third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
+# # Dropout: 0.2
+# drop_2 = Dropout(dropouts[1])(third_p_layer)
+# second_input_layer = Flatten()(drop_2)
+#
+# # ---
+# # Classifier
+# # ---------
+# # Merge the two branches
+# input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+# # Fully connected layer: 100 neurons
+# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+# # Dropout: 0.5
+# drop = Dropout(dropouts[2])(hidden_layer)
+# # Softmax: 43 neurons
+# predictions = Dense(43, activation='softmax')(drop)
+# model = Model(input=inputs, output=predictions)
+
+# ---------------------
+# 2 conv per stage padding valid
+
+if color:
+    inputs = Input(shape=(32, 32, 3))
 else:
-    sys.exit()
+    inputs = Input(shape=(32, 32, 1))
+
+first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
+first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+
+first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
+drop_1 = Dropout(dropouts[0])(first_p_layer)
+
+second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
+
+first_input_layer = Flatten()(second_p_layer)
+
+second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
+second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+
+third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
+drop_2 = Dropout(dropouts[1])(third_p_layer)
+
+second_input_layer = Flatten()(drop_2)
+
+input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+drop = Dropout(dropouts[2])(hidden_layer)
+predictions = Dense(43, activation='softmax')(drop)
+
+model = Model(input=inputs, output=predictions)
+
+## -- sequential
+
+# inputs = Input(shape=(32, 32, 1))
+#
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
+# #first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+#
+# first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
+# drop_1 = Dropout(dropouts[0])(first_p_layer)
+#
+# second_p_layer = MaxPooling2D(pool_size=(2, 2))(drop_1)
+#
+# #first_input_layer = Flatten()(second_p_layer)
+#
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
+# #second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+#
+# third_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
+# drop_2 = Dropout(dropouts[1])(third_p_layer)
+#
+# second_input_layer = Flatten()(drop_2)
+#
+# #input_layer = merge([first_input_layer, second_input_layer], mode='concat', concat_axis=1)
+# #hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(input_layer)
+# hidden_layer = Dense(dense_hidden_units[0], activation='sigmoid')(second_input_layer)
+# drop = Dropout(dropouts[2])(hidden_layer)
+# predictions = Dense(43, activation='softmax')(drop)
+#
+# model = Model(input=inputs, output=predictions)
+
+# ----- end Sequential
+
+def lr_schedule(epoch):
+    return LR * (0.1 ** int(EPOCHS / 10))
+
+if not eval_only:
+
+    sgd = SGD(lr=LR, decay=1e-6, momentum=0.9, nesterov=True)
+
+    model.compile(optimizer=sgd,
+                    metrics=['accuracy'],
+                    loss='categorical_crossentropy')
 
 
 
-#softmax_cross_entropy_with_logits(_sentinel, labels, logits, dim, name)
-cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=one_hot_y)
-loss_operation = tf.reduce_mean(cross_entropy)
-optimizer = tf.train.AdamOptimizer(learning_rate = LR)
-training_operation = optimizer.minimize(loss_operation)
-predict_operation = tf.argmax(logits, 1)
-predict_proba_operation = tf.nn.softmax(logits=logits)
-
-correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(one_hot_y, 1))
-accuracy_operation = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(one_hot_y, 1))
-accuracy_operation = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-def evaluate(X_data, y_data):
-    num_examples = len(X_data)
-    total_accuracy = 0
-    sess = tf.get_default_session()
-    for offset in range(0, num_examples, BATCH_SIZE):
-        batch_x, batch_y = X_data[offset:offset+BATCH_SIZE], y_data[offset:offset+BATCH_SIZE]
-        accuracy = sess.run(accuracy_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1.0, keep_prob_conv: 1.0})
-        total_accuracy += (accuracy * len(batch_x))
-    return total_accuracy / num_examples
+    history_callback = model.fit(X_train, y_train,
+              batch_size=BATCH_SIZE,
+              epochs=EPOCHS,
+              validation_data=(X_valid, y_valid)
+            #   ,
+            #   callbacks=[LearningRateScheduler(lr_schedule),
+            #              ModelCheckpoint('{}.h5'.format(model_path), save_best_only=True)]
+                  )
 
 
-def predict(X_data):
-    num_examples = len(X_data)
-    sess = tf.get_default_session()
-    predicted_proba = list()
-    for offset in range(0, num_examples, BATCH_SIZE):
-        batch_x = X_data[offset:offset+BATCH_SIZE]
-        predicted_proba.extend( sess.run(predict_proba_operation, feed_dict={x: batch_x, keep_prob: 1.0, keep_prob_conv:1}))
-    return predicted_proba
+    loss_history = history_callback.history["loss"]
+    log("loss:", False)
+    log(loss_history, False)
+    val_acc = history_callback.history["val_acc"]
+    log("val accuracy:", False)
+    log(val_acc, False)
+    acc = history_callback.history["acc"]
+    log("accuracy:", False)
+    log(acc, False)    time.sleep(0.1)
+
+    log.log("Saving...", False)
+    model_json = model.to_json()
+    with open('{}.json'.format(model_path), "w") as json_file:
+        json_file.write(model_json)
+    model.save_weights('{}.h5'.format(model_path))
+    log.log("Saved model to disk", False)
 
 
-#------------------------------------------------------------------------------
-# Training
-#------------------------------------------------------------------------------
+json_file = open('{}.json'.format(model_path), 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+loaded_model = model_from_json(loaded_model_json)
+loaded_model.load_weights('{}.h5'.format(model_path))
+log.log("Loaded model from disk\n", False)
+log.log(("Testing: "), False)
+sgd = SGD(lr=LR, decay=1e-6, momentum=0.9, nesterov=True)
 
-from sklearn.utils import shuffle
-from time import time
+loaded_model.compile(optimizer=sgd,
+                metrics=['accuracy'],
+                loss='categorical_crossentropy')
 
+score = loaded_model.evaluate(X_test, y_test, verbose=1)
+log.log('\nTest accuracy : ' + str(score[1]), False)
 
-# X_train = X_train_norm
-# X_valid = X_valid_norm
-# X_test = X_test_norm
-# y_train = y_train_norm
-
-#EPOCHS = 150
-#BATCH_SIZE = 128
-#dropout = .3
-
-errors = list()
-
-saver = tf.train.Saver()
-start = time()
-with tf.Session() as sess:
-    if not eval_only:
-        sess.run(tf.global_variables_initializer())
-        num_examples = len(X_train)
-
-        log.log("Training... dropout = {} , batch_size = {} , learning rate = {}".format(dropout, BATCH_SIZE, LR), True)
-        print()
-        for i in range(EPOCHS):
-            try:
-                X_train, y_train = shuffle(X_train, y_train)
-    #             print("Before Train %d sec"%(time() - start))
-
-                for offset in range(0, num_examples, BATCH_SIZE):
-                    end = offset + BATCH_SIZE
-                    batch_x, batch_y = X_train[offset:end], y_train[offset:end]
-                    sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 1 - dropout, keep_prob_conv: 0.7})
-                    # sess.run(training_operation, feed_dict={x: batch_x, y: batch_y, keep_prob: 0.5 , keep_prob_conv: 0.7})
-
-    #           print("After Train %d sec"%(time() - start))
-
-                validation_accuracy = evaluate(X_valid, y_valid)
-                training_accuracy = evaluate(X_train, y_train)
-
-                errors.append((training_accuracy, validation_accuracy))
-
-    #           calculatiing minutes format
-                minutes = int((time() - start)/60)
-                seconds = ((time() - start) - (minutes*60))
-
-                log.log("EPOCH %d - %d sec ....%d.%d min"%(i+1, time() - start,  minutes, seconds), True)
-                log.log("Training error = {:.4f} Validation error = {:.4f}".format(1- training_accuracy , 1- validation_accuracy), True)
-
-                print()
-
-    #             print("After error computation %d sec"%(time() - start))
-                if i > 5 and i % 3 == 0:
-                    saver.save(sess, model_lenet_path)
-                    print("Model saved %d sec"%(time() - start))
-            except KeyboardInterrupt:
-                print('Accuracy Model On Test Images: {}'.format(evaluate(X_test,y_test)))
-                break
-
-        saver.save(sess, model_lenet_path)
-
-
-
-#Printing accuracy of the model on Training, validation and Testing set.
-with tf.Session() as sess:
-    saver.restore(sess, tf.train.latest_checkpoint(newpath))
-    log.log("ACCURACY:", False)
-    log.log('Accuracy Model On Training Images: {:.4f}'.format(evaluate(X_train, y_train)), False)
-    log.log('Accuracy Model On Validation Images: {:.4f}'.format(evaluate(X_valid, y_valid)), False)
-    log.log('Accuracy Model On Test Images: {:.4f}'.format(evaluate(X_test, y_test)), False)
-
-    if test_new_images:
-        import skimage
-        from skimage import io
-        from skimage import transform
-        from skimage.filters import gaussian
-        import my_mod_manipulate_image as manipulate
-
-
-        # Read the images
-        i=1
-        images_wild = list()
-        labels_wild = list()
-        for line in open('./test_images/data.txt','r'):
-            fname, label = line.strip().split(' ')
-            label = int(label)
-            fname = './test_images/'+fname
-            img = io.imread(fname)
-            img = transform.resize(img,(32,32), order=3)
-            img = gaussian(img,.6,multichannel=True)*255
-            #img = transform_img(img.astype(np.uint8))
-            img = manipulate.normalize_img(img.astype(np.uint8))
-
-            img.shape = (1,) + img.shape
-            images_wild.append(img)
-            labels_wild.append(label)
-
-        images = np.concatenate(images_wild, axis=0)
-
-
-        with tf.Session() as sess:
-            saver.restore(sess, tf.train.latest_checkpoint(newpath))
-
-            predicted_proba = np.vstack(predict(images))
-
-            print('Accuracy Model On Internet Images: {}'.format(evaluate(images, labels_wild)))
-
-
-        for true_label,row in zip(labels_wild,predicted_proba):
-            top5k = np.argsort(row)[::-1][:5]
-            top5p = np.sort(row)[::-1][:5]
-            print('Top 5 Labels for image \'{}\':'.format(true_label))
-            for k,p in zip(top5k,top5p):
-                  print(' - \'{}\' with prob = {:.4f} '.format(k, p))
+# predict and evaluate
+# y_pred = model.predict_classes(X_test)
+# acc = np.sum(y_pred == y_test) / np.size(y_pred)
+# log.log("Test accuracy = {}".format(acc), False)

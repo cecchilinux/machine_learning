@@ -1,4 +1,5 @@
 import sys
+import scipy
 import skimage
 from skimage import io
 from skimage import transform
@@ -124,25 +125,46 @@ print(predicted_proba.shape)
 
 
 # it's height, width in TF - not width, height
-new_height = int(round(224))
-new_width = int(round(224))
-resized = tf.image.resize_images(predicted_proba, [new_height, new_width])
-print(predicted_proba.shape)
+# new_height = int(round(224))
+# new_width = int(round(224))
+#
+# resized = tf.image.resize_images(predicted_proba, [new_height, new_width])
+# print(resized.shape)
 
+resized = scipy.ndimage.zoom(predicted_proba, (1,224/49,224/49,1), order=0)
+print(resized.shape)
 
 
 #print(predicted_proba)
-print(predicted_proba.shape[2])
-num = predicted_proba.shape[2]
+print(resized.shape[2])
+num = resized.shape[2]
+
+new_matrix = [[0 for x in range(num)] for y in range(num)]
+
 m = 0
 for i in range(0, num):
     for j in range(0, num):
-        top1 = np.sort(predicted_proba[0][i][j])[42]
-        if(top1 >= 0.8):
-            #print(top1)
-            m+=1
+        a = resized[0][i][j]
+        max_prob = max(a)
+        for i1, j1 in enumerate(a):
+             if j1 == max_prob:
+                if max_prob >= 0.8:
+                    new_matrix[i][j] = i1
+                else:
+                    new_matrix[i][j] = -1
 
-print(m)
+
+        # top1 = np.sort(resized[0][i][j])[42]
+        # if(top1 >= 0.8):
+        #     #print(top1)
+        #     m+=1
+
+# print(new_matrix)
+from pylab import *
+# A = rand(5,5)
+figure(1)
+imshow(new_matrix, interpolation='nearest')
+grid(True)
 # for i in range(0, predicted_proba)
 # for row in predicted_proba:
 #     top3p = np.sort(row)[::-1][:3]

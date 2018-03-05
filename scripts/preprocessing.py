@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import time
 import pickle
+import settings
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 from sklearn.utils import shuffle
@@ -13,17 +14,10 @@ import random
 import my_mod_load as load
 import my_mod_manipulate_image as manipulate
 
-DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
-FINALTEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
-ANNOTATION_FILE = '/notebooks/signnames.csv'
-FINAL_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
-MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
-
-IMAGE_SIZE = 32
-
 parser = argparse.ArgumentParser(description="Traffic signs classifier")
 parser.add_argument("-a", "--augmentation", help="Using augment data or not", action='store_true')
 parser.add_argument("-b", "--blur", help='apply the blur function (augment data)', action='store_true')
+parser.add_argument("-c", "--color", help="", action="store_true")
 parser.add_argument("--dataset", help='(online, pickle)', default='online')
 parser.add_argument('--debug', help='Print debug messages', action='store_true')
 parser.add_argument('--quiet', help='Print only the evaluation', action='store_true')
@@ -35,6 +29,7 @@ debug = True if args.debug else False
 quiet = True if args.quiet else False
 augmentation = True if args.augmentation else False
 blur = True if args.blur else False
+color = True if args.color else False
 
 
 # -----------------------------
@@ -42,12 +37,14 @@ blur = True if args.blur else False
 # -----------------------------
 date = time.strftime("%Y-%m-%d_%H%M")
 folder = "{}_{}".format(date, dataset_gtsrb)
+if color:
+    folder += "_color"
 if augmentation :
     folder += "_augm"
 if blur :
     folder += "_blur"
 
-newpath = os.path.join(MANIPULATED_DIR, folder)
+newpath = os.path.join(settings.MANIPULATED_DIR, folder)
 if not os.path.exists(newpath):
     os.makedirs(newpath)
 
@@ -67,8 +64,8 @@ if dataset_gtsrb == "online":
     valid = {}
     valid['features'] = []
     valid['labels'] = []
-    load.load_train_valid_2(train, valid, DATASET_DIR, IMAGE_SIZE)
-    # log.log("Dataset dimension on {} = {}".format(DATASET_DIR, len(dataset['features'])), False)
+    load.load_train_valid_2(train, valid, settings.DATASET_DIR, settings.IMAGE_SIZE)
+    # log.log("Dataset dimension on {} = {}".format(settings.DATASET_DIR, len(dataset['features'])), False)
     # dataset_dim = len(dataset['features'])
     # conversione in np array
     train['features'] = np.array(train['features'])
@@ -80,7 +77,7 @@ if dataset_gtsrb == "online":
     test['features'] = []
     test['labels'] = []
 
-    load.load_dataset_labeled_by_csv(test, FINALTEST_DIR, FINAL_ANNOTATION_FILE, ';', 'Filename', 'ClassId', IMAGE_SIZE)
+    load.load_dataset_labeled_by_csv(test, settings.TEST_DIR, settings.TEST_ANNOTATION_FILE, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
 
     # conversione in np array
     test['features'] = np.array(test['features'])
@@ -193,7 +190,7 @@ X_valid_norm = list()
 for ii in range(len(X_train)):
     img = X_train[ii]
     label = y_train[ii]
-    imgout = manipulate.normalize_img(img)
+    imgout = manipulate.normalize_img(img, color)
     X_train_norm.append(imgout)
     y_train_norm.append(label)
 
@@ -219,25 +216,25 @@ if augmentation:
     for ii in range(len(X_train_aug)):
         img = X_train_aug[ii]
         label = y_train_aug[ii]
-        imgout = manipulate.normalize_img(img)
+        imgout = manipulate.normalize_img(img, color)
         X_train_norm.append(imgout)
         y_train_norm.append(label)
 
         img = X_train_aug2[ii]
         label = y_train_aug2[ii]
-        imgout = manipulate.normalize_img(img)
+        imgout = manipulate.normalize_img(img, color)
         X_train2_norm.append(imgout)
         y_train2_norm.append(label)
 
         img = X_train_aug3[ii]
         label = y_train_aug3[ii]
-        imgout = manipulate.normalize_img(img)
+        imgout = manipulate.normalize_img(img, color)
         X_train3_norm.append(imgout)
         y_train3_norm.append(label)
 
         img = X_train_aug4[ii]
         label = y_train_aug4[ii]
-        imgout = manipulate.normalize_img(img)
+        imgout = manipulate.normalize_img(img, color)
         X_train4_norm.append(imgout)
         y_train4_norm.append(label)
 
@@ -284,7 +281,7 @@ if blur:
     for ii in range(len(X_train_br)):
         img = X_train_br[ii]
         label = y_train_br[ii]
-        imgout = manipulate.normalize_img(img)
+        imgout = manipulate.normalize_img(img, color)
         X_train_norm.append(imgout)
         y_train_norm.append(label)
 
@@ -302,7 +299,7 @@ y_valid_norm = list()
 for ii in range(len(X_valid)):
     img = X_valid[ii]
     label = y_valid[ii]
-    imgout = manipulate.normalize_img(img)
+    imgout = manipulate.normalize_img(img, color)
     X_valid_norm.append(imgout)
     y_valid_norm.append(label)
 
@@ -320,7 +317,7 @@ y_test_norm = list()
 for ii in range(len(X_test)):
     img = X_test[ii]
     label = y_test[ii]
-    imgout = manipulate.normalize_img(img)
+    imgout = manipulate.normalize_img(img, color)
     X_test_norm.append(imgout)
     y_test_norm.append(label)
 

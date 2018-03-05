@@ -1,4 +1,6 @@
 IMAGE_SIZE = 32
+
+LOG_DIR = '/logs/'
 DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
 TEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
 TEST_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
