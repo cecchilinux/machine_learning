@@ -118,8 +118,7 @@ def bad_aimed(model):
     ax[0,1].set_title('Model Prediction')
     plt.tight_layout()
     plt.show()
-<<<<<<< HEAD
-    
+
 def bad_test_aimed(model, X_test_nm):
     dataset_gtsrb = "online"
 
@@ -135,7 +134,7 @@ def bad_test_aimed(model, X_test_nm):
                 test_path = os.path.join(settings.MANIPULATED_DIR, dirname, "test.p")
             break
         break
-        
+
     #-------------------------------------------------
     # Load the Dataset from pickle (.p files)
     #--------------------------------------------------
@@ -144,8 +143,8 @@ def bad_test_aimed(model, X_test_nm):
     with open(test_path, mode='rb') as f:
         test = pickle.load(f)
     X_test, y_test = test['features'], test['labels']
-    
-    
+
+
     n_test = len(X_test) # Number of testing examples.
 
     json_file = open("{}.json".format(model), 'r')
@@ -169,28 +168,31 @@ def bad_test_aimed(model, X_test_nm):
     well_aimed = 0
     num_images = 0
     X_bad_aimed = list()
+    X_bad_aimed_labels = list()
     for true_label,row in zip(labels_wild, predicted_proba):
-        num_images += 1
         topk = np.argsort(row)[::-1][:1]
         topp = np.sort(row)[::-1][:1]
         if(true_label == topk[0]):
             well_aimed += 1
         else:
             X_bad_aimed.append(X_test_nm[num_images])
-            
-    #plotting image bad aimed        
+            X_bad_aimed_labels.append(load.get_name_from_label(topk[0]))
+
+        num_images += 1
+
+    # plotting image bad aimed
     fig, axes = plt.subplots(8, 11, figsize=(15, 8))
     ii = 0
     for ax in axes.flatten() :
-        ax.imshow(X_bad_aimed[ii])
+        if ii < len(X_bad_aimed) :
+            ax.imshow(X_bad_aimed[ii])
         ax.axis('off')
         ii += 1
     plt.show()
-   
+
     #print("well-aimed: {}/{}".format(well_aimed, num_images))
     #print("well-aimed: {:.4f}".format(well_aimed/num_images))
-    return X_bad_aimed
-=======
+    return X_bad_aimed_labels
 
 
 
@@ -258,4 +260,3 @@ def learning_curve(last=False, file_name=""):
     plt.savefig('images/learning_curve.png')
     plt.ylabel('Error')
     plt.xlabel('Epoch');
->>>>>>> c43e633319686db36a05e5a7d11012141eb2fc37
