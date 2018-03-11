@@ -94,6 +94,14 @@ def load_train_valid_test():
     # return {'train':train, 'valid':valid,'test':test}
     return train, valid, test
 
+def load_official_testset():
+    test = load_dataset_labeled_by_csv(settings.TEST_DIR_OFFICIAL , settings.TEST_ANNOTATION_FILE_OFFICIAL, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
+    return test
+
+def load_online_testset():
+    test = load_dataset_labeled_by_csv(settings.TEST_DIR, settings.TEST_ANNOTATION_FILE, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
+    return test
+
 def load_train_valid(path, image_size):
     train = {}
     train['features'] = []
@@ -324,7 +332,7 @@ def load_new_data():
     images = np.concatenate(images_wild, axis=0)
     return images, labels_wild, list_fname
 
-    
+
 def row_count(filename):
     with open(filename) as in_file:
         return sum(1 for _ in in_file)

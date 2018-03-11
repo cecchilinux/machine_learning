@@ -1,4 +1,4 @@
-2018-02-20 22:27:48,021 INFO dataset used = 2018-02-20_2146_online_augm_blur
+2018-02-20 22:27:48,021 INFO dataset used = 2018-02-20_2146_pickle_augm_blur
 2018-02-20 22:27:49,346 INFO Number of training examples = 208794
 2018-02-20 22:27:49,347 INFO Number of validation examples = 4410
 2018-02-20 22:27:49,347 INFO Number of testing examples = 12630
@@ -12,6 +12,6 @@
 2018-02-21 00:51:30,354 INFO Saved model to disk
 2018-02-21 00:51:30,508 INFO Loaded model from disk
 
-2018-02-21 00:51:30,508 INFO Testing: 
-2018-02-21 00:51:36,240 INFO 
+2018-02-21 00:51:30,508 INFO Testing:
+2018-02-21 00:51:36,240 INFO
 Test accuracy : 0.991132224937

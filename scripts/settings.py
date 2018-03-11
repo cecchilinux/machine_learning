@@ -11,3 +11,7 @@ MODELS_PATH = '/notebooks/models/floyd/LeNet-adv_single-dropout/models/2018-02-0
 
 # 99.01
 MODEL_PATH_VGG = '/notebooks/final_models/VGGnet/2018-02-14_0750'
+
+
+TEST_DIR_OFFICIAL = '/datasets/GTSRB/Final_Test/Images/'
+TEST_ANNOTATION_FILE_OFFICIAL = '/notebooks/old/GT-final_test.csv'

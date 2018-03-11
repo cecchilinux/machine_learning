@@ -119,7 +119,7 @@ def bad_aimed(model):
     plt.tight_layout()
     plt.show()
 
-def bad_test_aimed(model, X_test_nm):
+def bad_test_aimed(model, X_test, y_test, X_test_nm):
     dataset_gtsrb = "online"
 
     LR = 0.01
@@ -140,9 +140,9 @@ def bad_test_aimed(model, X_test_nm):
     #--------------------------------------------------
     warnings.filterwarnings('ignore')
 
-    with open(test_path, mode='rb') as f:
-        test = pickle.load(f)
-    X_test, y_test = test['features'], test['labels']
+    # with open(test_path, mode='rb') as f:
+    #     test = pickle.load(f)
+    # X_test, y_test = test['features'], test['labels']
 
 
     n_test = len(X_test) # Number of testing examples.
@@ -176,16 +176,18 @@ def bad_test_aimed(model, X_test_nm):
             well_aimed += 1
         else:
             X_bad_aimed.append(X_test_nm[num_images])
+            # X_bad_aimed.append(X_test[num_images])
             X_bad_aimed_labels.append(load.get_name_from_label(topk[0]))
 
         num_images += 1
 
     # plotting image bad aimed
-    fig, axes = plt.subplots(8, 11, figsize=(15, 8))
+    # fig, axes = plt.subplots(8, 11, figsize=(15, 8))
+    fig, axes = plt.subplots(13, 11, figsize=(15, 15))
     ii = 0
     for ax in axes.flatten() :
         if ii < len(X_bad_aimed) :
-            ax.imshow(X_bad_aimed[ii])
+            ax.imshow(X_bad_aimed[ii].squeeze(), cmap='gray')
         ax.axis('off')
         ii += 1
     plt.show()
