@@ -48,14 +48,14 @@ augmentation = True if args.augmentation else False
 blur = True if args.blur else False
 color = True if args.color else False
 
-# #178 ML
+# #178 SS
 net_name = "sol178SS"
 features = [108, 108]
 dense_hidden_units = [100]
 dropouts = [0.2, 0.2, 0.5]
 
-#178 ML
-# net_name = "sol200ML"
+#178 SS
+# net_name = "sol200SS"
 # features = [108, 200]
 # dense_hidden_units = [100]
 # dropouts = [0.2, 0.2, 0.5]
