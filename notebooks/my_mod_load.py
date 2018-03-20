@@ -244,7 +244,7 @@ def load_dataset_labeled_by_dirs(dataset, path, image_size):
         for file in files: # one image by one
 
             _, file_extension = os.path.splitext(file) # extension control
-            if file_extension == '.ppm':
+            if file_extension == '.ppm' or file_extension == 'png':
                 label = os.path.basename(subdir) # obtain the image label (name of the folder)
                 imgPath = os.path.join(path, label, file) # the path of the image
 
@@ -288,7 +288,7 @@ def load_dataset_labeled_by_csv(path, file_csv, delimiter, index_col, label_col,
         for file in files: # one image by one
 
             filename, file_extension = os.path.splitext(file) # extension control
-            if file_extension == '.ppm':
+            if file_extension == '.ppm' or file_extension == '.png':
                 label = final_test_csv.loc[filename + file_extension].ClassId # obtain the image label
                 imgPath = os.path.join(path, file) # the path of the image
 
@@ -389,3 +389,13 @@ def display_class_distribution(y_data):
     plt.ylabel('Numero di immagini')
     plt.xlim(-1, 43)
     plt.show()
+
+
+
+def load_DIST_testset():
+    # test = {}
+    # test['features'] = []
+    # test['labels'] = []
+    test = load_dataset_labeled_by_csv(settings.DITS_TEST_DIR, settings.DITS_ANNOTATION_FILE, ';', 'Filename', 'ClassId', settings.IMAGE_SIZE)
+    # load_dataset_labeled_by_dirs(test, settings.DITS_TEST_DIR, 32)
+    return test

@@ -2,6 +2,7 @@ IMAGE_SIZE = 48
 DATASET_DIR = '/datasets/GTSRB/trainingSet_online/'
 ANNOTATION_FILE = '/notebooks/signnames.csv'
 TEST_DIR = '/datasets/GTSRB/testSet_online/Images/'
+DITS_TEST_DIR = '/datasets/DITS-classification/classification-test/'
 TEST_ANNOTATION_FILE = '/notebooks/GT-online_test.csv'
 MANIPULATED_DIR = '/datasets/GTSRB/manipulated/'
 MODELS_DIR = './models/'
