@@ -29,6 +29,20 @@ def normalize_img(img):
 
     return img_y
 
+def normalize_img_color(img):
+    img = cv2.cvtColor(img, (cv2.COLOR_RGB2YUV)) #converte l'immagine in YUV
+    # ----- global equalization
+    img[:,:,0] = cv2.equalizeHist(img[:,:,0])
+    img = (img / 255.).astype(np.float32) # rappresenta i valori in un range di [0-1]
+
+    # ----- local equalization
+
+    # An algorithm for local contrast enhancement, that uses histograms computed
+    # 0 over different tile regions of the image. Local details can therefore be
+    # enhanced even in regions that are darker or lighter than most of the image.
+    img = (exposure.equalize_adapthist(img) - 0.5)
+
+    return img
 
 # ------------------------
 # blurring

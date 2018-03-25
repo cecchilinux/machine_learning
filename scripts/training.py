@@ -306,7 +306,7 @@ model = Model(input=inputs, output=predictions)
 
 if not eval_only:
 
-    sgd = SGD(lr=LR, decay=1e-6, momentum=0.9, nesterov=True)
+    sgd = SGD(lr=LR, decay=1e-4, momentum=0.9, nesterov=True)
 
     model.compile(optimizer=sgd,
                     metrics=['accuracy'],

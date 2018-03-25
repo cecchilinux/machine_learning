@@ -183,7 +183,7 @@ def bad_test_aimed(model, X_test, y_test, X_test_nm):
 
     # plotting image bad aimed
     # fig, axes = plt.subplots(8, 11, figsize=(15, 8))
-    fig, axes = plt.subplots(13, 11, figsize=(15, 15))
+    fig, axes = plt.subplots(11, 11, figsize=(15, 15))
     ii = 0
     for ax in axes.flatten() :
         if ii < len(X_bad_aimed) :
