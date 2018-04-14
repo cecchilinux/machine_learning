@@ -49,7 +49,7 @@ blur = True if args.blur else False
 color = True if args.color else False
 
 # #178 SS
-net_name = "sol178SS"
+net_name = "sol178SSsame"
 features = [108, 108]
 dense_hidden_units = [100]
 dropouts = [0.2, 0.2, 0.5]
@@ -200,16 +200,18 @@ if color:
 else:
     inputs = Input(shape=(32, 32, 1))
 
-first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
-first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(inputs)
+# first_layer = Convolution2D(features[0], 3, 3, activation='relu')(first_layer)
+first_layer = Convolution2D(features[0], 3, 3, activation='relu', border_mode="same")(inputs)
+first_layer = Convolution2D(features[0], 3, 3, activation='relu', border_mode="same")(first_layer)
 
 first_p_layer = MaxPooling2D(pool_size=(2, 2))(first_layer)
 drop_1 = Dropout(dropouts[0])(first_p_layer)
 
-# second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(drop_1)
-# second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(second_layer)
-second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
-second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
+second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(drop_1)
+second_layer = Convolution2D(features[1], 3, 3, activation='relu', border_mode="same")(second_layer)
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(drop_1)
+# second_layer = Convolution2D(features[1], 3, 3, activation='relu')(second_layer)
 
 second_p_layer = MaxPooling2D(pool_size=(2, 2))(second_layer)
 drop_2 = Dropout(dropouts[1])(second_p_layer)
