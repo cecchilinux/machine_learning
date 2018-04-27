@@ -5,6 +5,7 @@
 
 notebooks/models/
 notebooks/old/
+notebooks/_old/
 notebooks/output_*
 notebooks/notebook.tex
 notebooks/FloydFiles/
@@ -12,6 +13,7 @@ notebooks/nb_utils/
 
 scripts/models/
 scripts/old/
+scripts/_old/
 scripts/training.log
 scripts/accuracy_output.txt
 oldLogs/

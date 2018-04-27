@@ -89,7 +89,7 @@ nvidia-docker run \
 -p 8888:8888 \
 -v ~/ML_fileLocali/notebooks:/notebooks/samples \
 -v ~/ML_fileLocali/datasets:/datasets \
--v ~/git-repo/mine-repo/machine_learning/notebooks:/notebooks \
--v ~/git-repo/mine-repo/machine_learning/scripts:/scripts \
+-v ~/machine_learning/notebooks:/notebooks \
+-v ~/machine_learning/scripts:/scripts \
 ml-final-8-6
 ```
